@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14C2043" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="HospitalModel" representedClassName="HospitalModel" syncable="YES">
+        <attribute name="hosName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hosNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hosRight" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PatientInfoModel" representedClassName="PatientInfoModel" syncable="YES">
+        <attribute name="addDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="baseXueyaCheckDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bingchuangNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="chubuZZ" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="doctorName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hosNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="idCard" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isImportPatient" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isShow" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="jianhuLel" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="job" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="keshi" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="menzhenNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientAge" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientSex" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientTall" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientWeight" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subTermType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="telNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="terminNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updateTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="youbianNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="zhuyuanNo" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="PersonSettingModel" representedClassName="PersonSettingModel" syncable="YES">
+        <attribute name="huxidownvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="huxiupvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailvdownvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailvupvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="patientNo" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shousuoyadownvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shousuoyaupvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shuzhangyadownvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shuzhangyaupvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="xinlvdownvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="xinlvupvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="xueyangdownvalue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="xueyangupvalue" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="PatientInfoModel" positionX="-63" positionY="-18" width="128" height="450"/>
+        <element name="PersonSettingModel" positionX="-54" positionY="-9" width="128" height="240"/>
+        <element name="HospitalModel" positionX="-36" positionY="9" width="128" height="90"/>
+    </elements>
+</model>

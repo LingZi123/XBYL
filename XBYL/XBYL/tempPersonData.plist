@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>胡建华</string>
+		<key>sex</key>
+		<string>男</string>
+		<key>age</key>
+		<string>55</string>
+		<key>number</key>
+		<string>2839403983</string>
+		<key>isonline</key>
+		<true/>
+		<key>onlinedec</key>
+		<string>在线</string>
+		<key>type</key>
+		<string>手动测量血压</string>
+		<key>xueyadown</key>
+		<string></string>
+		<key>xueyaup</key>
+		<string></string>
+		<key>xinlv</key>
+		<string>66</string>
+		<key>xueyang</key>
+		<string>97</string>
+		<key>mailv</key>
+		<string>69</string>
+		<key>huxi</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>饶红春</string>
+		<key>sex</key>
+		<string>女</string>
+		<key>age</key>
+		<string>55</string>
+		<key>number</key>
+		<string>2839403983</string>
+		<key>isonline</key>
+		<true/>
+		<key>onlinedec</key>
+		<string>在线</string>
+		<key>type</key>
+		<string>手动测量血压</string>
+		<key>xueyadown</key>
+		<string></string>
+		<key>xueyaup</key>
+		<string></string>
+		<key>xinlv</key>
+		<string>66</string>
+		<key>xueyang</key>
+		<string>97</string>
+		<key>mailv</key>
+		<string>69</string>
+		<key>huxi</key>
+		<string></string>
+	</dict>
+</array>
+</plist>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14C2043" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="RefashView" id="iN0-l3-epB" customClass="RefashView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LNT-Cr-qnO">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                </pickerView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="LNT-Cr-qnO" secondAttribute="trailing" id="jNo-JD-QGi"/>
+                <constraint firstAttribute="bottom" secondItem="LNT-Cr-qnO" secondAttribute="bottom" id="lqi-7q-gy4"/>
+                <constraint firstItem="LNT-Cr-qnO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ujV-Fb-W87"/>
+                <constraint firstItem="LNT-Cr-qnO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="x79-lQ-tsd"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="currentPickerView" destination="LNT-Cr-qnO" id="vGw-g3-dzd"/>
+            </connections>
+            <point key="canvasLocation" x="323" y="424"/>
+        </view>
+    </objects>
+</document>
