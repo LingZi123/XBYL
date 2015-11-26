@@ -24,6 +24,7 @@
 //    NSInteger showRowCount;//显示的cell 数量
     __weak IBOutlet UIButton *reconnectBtn;
     
+    __weak IBOutlet UIView *nodataView;//不存在数据
     
     
 }

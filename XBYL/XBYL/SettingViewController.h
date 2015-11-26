@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "HeadView.h"
-#import "PickViewController.h"
+#import "AlarmPickView.h"
 
 @protocol SettingViewControllerDelegate <NSObject>
 
@@ -16,7 +16,7 @@
 
 @end
 
-@interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HeadViewDelegate,UIActionSheetDelegate,PickViewControllerDelegate>{
+@interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HeadViewDelegate,UIActionSheetDelegate,AlarmPickViewDelegate>{
     
     __weak IBOutlet UISegmentedControl *segmentSelected;
     __weak IBOutlet UIView *dateSelectedView;

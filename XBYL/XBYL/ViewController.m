@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "MainTableViewCell.h"
 #import "PersonSettingViewController.h"
-#import "nstdcomm/nstdcomm/nstdcomm.h"
+//#import "nstdcomm.h"
 #import "PatientInfo.h"
 #import "XueyaModel.h"
 #import "MulDataModel.h"
@@ -73,9 +73,9 @@
 //        }
 //    }
         //开启接收数据
-    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
-    [nstdcomm stdcommRefreshHosList];
-    [nstdcomm stdcommRefreshPatList];
+//    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
+//    [nstdcomm stdcommRefreshHosList];
+//    [nstdcomm stdcommRefreshPatList];
     
     //开启刷新时间
     if (refashTimer==nil) {
@@ -85,11 +85,18 @@
 }
 
 -(void)refashTimerClick:(NSTimer *)timer{
-    
-    [_contentTablvView reloadData];
+    if (infoArray.count<=0) {
+        nodataView.hidden=NO;
+        _contentTablvView.hidden=YES;
+    }
+    else{
+        nodataView.hidden=YES;
+        _contentTablvView.hidden=NO;
+        [_contentTablvView reloadData];
+    }
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    [nstdcomm stdRegMessageBox:nil andSelect:@selector(stdMessageBox:andMsg:)];
+//    [nstdcomm stdRegMessageBox:nil andSelect:@selector(stdMessageBox:andMsg:)];
     //停止时间
     [refashTimer setFireDate:[NSDate distantFuture]];
     refashTimer=nil;
@@ -97,12 +104,23 @@
 }
 -(void)makeView{
     UIBarButtonItem *leftBar=[[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
+     [leftBar setTintColor:[UIColor whiteColor]];
     UIBarButtonItem *rightBar2=[[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting:)];
+     [rightBar2 setTintColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItem=leftBar;
     self.navigationItem.rightBarButtonItem=rightBar2;
     
     self.navigationItem.title=@"重庆新标医疗设备有限公司";
+    //选择自己喜欢的颜色
+    UIColor * color = [UIColor whiteColor];
+    
+    //这里我们设置的是颜色，还可以设置shadow等，具体可以参见api
+    NSDictionary * dict = [NSDictionary dictionaryWithObject:color forKey:UITextAttributeTextColor];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"header"] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
+    
     CGSize tempSize=self.navigationItem.titleView.frame.size;
+    
     NSLog(@"size width=%f  height=%f",tempSize.width,tempSize.height);
     
     detailTextLabel=[[UILabel alloc]initWithFrame:CGRectMake(10,20, self.navigationItem.titleView.frame.size.width, 20)];
@@ -129,7 +147,7 @@
     NSDictionary *userInfoDic=[LoginUserInfo getDicWithModel:appDelegate.loginUserInfo];
     [defaults setObject:userInfoDic forKey:user_loginUserInfo];
     [defaults synchronize];
-    [nstdcomm stdcommClose];
+//    [nstdcomm stdcommClose];
     LoginViewController *loginVC=[appDelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
     [loginVC loginSucess:^(LoginUserInfo *tempUserInfo) {
         [loginVC dismissViewControllerAnimated:YES completion:nil];
@@ -302,12 +320,16 @@
 }
 - (IBAction)reConnect:(id)sender {
     
-    if (appDelegate.systemSetting) {
-        [nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:appDelegate.systemSetting.port andWebPort:appDelegate.systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-    }
-    //只有登陆才能收到数据
-    [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
+//    if (appDelegate.systemSetting) {
+//        [nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:appDelegate.systemSetting.port andWebPort:appDelegate.systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+//    }
+//    //只有登陆才能收到数据
+//    [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
     
+
+    PersonSettingViewController *p=[appDelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"PersonSettingViewController"];
+//    p.patient=patient;
+    [self.navigationController pushViewController:p animated:YES];
 }
 
 #pragma mark-回调函数

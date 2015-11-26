@@ -9,7 +9,7 @@
 #import "LoginViewController.h"
 #import "SystemSettingViewController.h"
 #import "AppDelegate.h"
-#import "nstdcomm/nstdcomm/nstdcomm.h"
+//#import "nstdcomm.h"
 #import "SVProgressHUD/SVProgressHUD.h"
 #import "ViewController.h"
 
@@ -33,22 +33,22 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     //注册回调
-    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
+//    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
     
     //读取本地系统设置参数
     
     NSUserDefaults *defausts=[NSUserDefaults standardUserDefaults];
     NSDictionary *dic=[defausts objectForKey:user_systemsetting];
     systemSetting=[SystemSettingModel getModelWithDic:dic];
-    if (systemSetting) {
+//    if (systemSetting) {
 //        //开始链接
-        [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-    }
-    else{
-        //弹出提示框
-        UIAlertView *alter=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还没有进行系统设置，是否前往设置"delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
-        [alter show];
-    }
+//        [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+//    }
+//    else{
+//        //弹出提示框
+//        UIAlertView *alter=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还没有进行系统设置，是否前往设置"delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
+//        [alter show];
+//    }
     
     //填充界面
     [self makeView];
@@ -75,7 +75,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     //注销回调
-     [nstdcomm stdRegMessageBox:nil andSelect:@selector(stdMessageBox:andMsg:)];
+//     [nstdcomm stdRegMessageBox:nil andSelect:@selector(stdMessageBox:andMsg:)];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -99,14 +99,17 @@
 }
 - (IBAction)login:(id)sender {
     [self dismissKeyBoard];
-    if (userNameTextField.text.length<=0||pwdTextField.text.length<=0) {
-        //提示
-        tipView.message=@"用户名、密码不能为空";
-        [tipView show];
-    }
-    [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-    //登录操作
-    [nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text];
+//    if (userNameTextField.text.length<=0||pwdTextField.text.length<=0) {
+//        //提示
+//        tipView.message=@"用户名、密码不能为空";
+//        [tipView show];
+//    }
+//    [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+//    //登录操作
+//    [nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text];
+    LoginUserInfo *user=[[LoginUserInfo alloc]init];
+    
+    self.block(nil);
 }
 
 - (IBAction)remeberPwd:(id)sender {

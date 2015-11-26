@@ -10,8 +10,9 @@
 #import "PickViewController.h"
 #import "PatientInfo.h"
 #import "PersonSettingInfo.h"
+#import "AlarmPickView.h"
 
-@interface PersonSettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,PickViewControllerDelegate>
+@interface PersonSettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,AlarmPickViewDelegate>
 {
 //    NSInteger shousuoUpValue;
 //    NSInteger shuzhangUpValue;

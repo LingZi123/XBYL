@@ -8,7 +8,7 @@
 
 #import "SystemSettingViewController.h"
 #import "SystemSettingModel.h"
-#import "nstdcomm/nstdcomm/nstdcomm.h"
+//#import "nstdcomm.h"
 
 @interface SystemSettingViewController ()
 
@@ -20,6 +20,7 @@
     [super viewDidLoad];
     tipView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"数据不能为空" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
     tipView.hidden=YES;
+    
 }
 
 - (void)didReceiveMemoryWarning {

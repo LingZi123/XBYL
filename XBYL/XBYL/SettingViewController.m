@@ -11,10 +11,12 @@
 #import "HeadView.h"
 #import "HospitalInfo.h"
 #import "PatientInfo.h"
-#import "nstdcomm/nstdcomm/nstdcomm.h"
+//#import "nstdcomm.h"
 #import "AppDelegate.h"
 #import "PickViewController.h"
 #import "PersonSettingInfo.h"
+#import "AlarmPickView.h"
+#import "LewPopupViewAnimationSpring.h"
 
 @interface SettingViewController ()
 
@@ -36,6 +38,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     //从本地数据库读取数据
     [self setExtraCellLineHidden:settingTableView];
+    [self setExtraCellLineHidden:armTableView];
     
     //开启接收数据
 //    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
@@ -50,9 +53,11 @@
 -(void)makeView{
     segmentSelected.selectedSegmentIndex=0;
     UIBarButtonItem *rightBar=[[UIBarButtonItem alloc]initWithTitle:@"默认" style:UIBarButtonItemStylePlain target:self action:@selector(recoverDefault:)];
+    [rightBar setTintColor:[UIColor whiteColor]];
     self.navigationItem.rightBarButtonItem=rightBar;
     self.navigationItem.title=@"设置";
     UIBarButtonItem *leftBar=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    [leftBar setTintColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItem=leftBar;
     
     //xib注册
@@ -286,6 +291,7 @@
         NSDictionary *dic=[alarmArray objectAtIndex:indexPath.row];
         cell.textLabel.text=[dic objectForKey:@"title"];
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%ld~%ld",[[dic objectForKey:@"downValue"]integerValue],[[dic objectForKey:@"upValue"]integerValue]] ;
+//        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
         
         return cell;
     }
@@ -330,10 +336,12 @@
     }
     else{
         
-        AppDelegate *appdelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
-        PickViewController *vc=[appdelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"PickViewController"];
-        vc.selectRow=indexPath;
-        vc.delegate=self;
+        AlarmPickView *alarmpickview=[AlarmPickView defaultPopupView];
+        alarmpickview.parentVC = self;
+        alarmpickview.delegate=self;
+//        AppDelegate *appdelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+//        PickViewController *vc=[appdelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"PickViewController"];
+        alarmpickview.selectRow=indexPath;
         NSMutableArray *upArray=[[NSMutableArray alloc]init];
         NSMutableArray *downArray=[[NSMutableArray alloc]init];
         for (int i=1; i<300; i++) {
@@ -343,11 +351,16 @@
             
         }
         NSMutableDictionary *data=[alarmArray objectAtIndex:indexPath.row];
-        vc.updataArray=upArray;
-        vc.downDataArray=downArray;
-        vc.upValue=[data objectForKey:@"upValue"];
-        vc.downValue=[data objectForKey:@"downValue"];
-        [self.navigationController pushViewController:vc animated:YES];
+        alarmpickview.titleValue=[data objectForKey:@"title"];
+        alarmpickview.updataArray=upArray;
+        alarmpickview.downDataArray=downArray;
+        alarmpickview.upValue=[data objectForKey:@"upValue"];
+        alarmpickview.downValue=[data objectForKey:@"downValue"];
+        [alarmpickview makeView];
+        [self lew_presentPopupView:alarmpickview animation:[LewPopupViewAnimationSpring new] dismissed:^{
+            NSLog(@"动画结束");
+        }];
+//        [self.navigationController pushViewController:vc animated:YES];
     }
     
 }
@@ -405,11 +418,11 @@
 }
 
 #pragma mark-去掉多余的分割线
-- (void)setExtraCellLineHidden: (UITableView *)tableView
-{
+- (void)setExtraCellLineHidden: (UITableView *)tableView{
     UIView *view =[ [UIView alloc]init];
     view.backgroundColor = [UIColor clearColor];
     [tableView setTableFooterView:view];
+    [tableView setTableHeaderView:view];
 }
 
 #pragma mark-PickViewControllerDelegate
@@ -460,4 +473,6 @@
     //刷新
     [armTableView reloadRowsAtIndexPaths:[[NSArray alloc]initWithObjects:row, nil] withRowAnimation:UITableViewRowAnimationNone];
 }
+
+
 @end

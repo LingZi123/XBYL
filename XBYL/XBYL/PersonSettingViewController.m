@@ -10,6 +10,8 @@
 #import "PickViewController.h"
 #import "AppDelegate.h"
 #import "PersonSettingInfo.h"
+#import "AlarmPickView.h"
+#import "LewPopupViewAnimationSpring.h"
 
 @interface PersonSettingViewController ()
 
@@ -71,9 +73,12 @@
 -(void)makeView{
     
     UIBarButtonItem *rightBar=[[UIBarButtonItem alloc]initWithTitle:@"默认" style:UIBarButtonItemStylePlain target:self action:@selector(recoveDefault:)];
+     [rightBar setTintColor:[UIColor whiteColor]];
     UIBarButtonItem *leftBar=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+     [leftBar setTintColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItem=leftBar;
     self.navigationItem.rightBarButtonItem=rightBar;
+    [self setExtraCellLineHidden:dataTableView];
     
 }
 
@@ -127,7 +132,7 @@
     NSMutableDictionary *data=[dataArray objectAtIndex:indexPath.row];
     cell.textLabel.text=[data objectForKey:@"title"];
     cell.detailTextLabel.text=[NSString stringWithFormat:@"%@~%@",[data objectForKey:@"downValue"],[data objectForKey:@"upValue"]];
-    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
+//    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -139,10 +144,11 @@
     }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    AppDelegate *appdelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
-    PickViewController *vc=[appdelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"PickViewController"];
-    vc.selectRow=indexPath;
-    vc.delegate=self;
+    AlarmPickView *alarmpickview=[AlarmPickView defaultPopupView];
+    alarmpickview.parentVC = self;
+    alarmpickview.delegate=self;
+
+    alarmpickview.selectRow=indexPath;
     NSMutableArray *upArray=[[NSMutableArray alloc]init];
     NSMutableArray *downArray=[[NSMutableArray alloc]init];
     for (int i=1; i<300; i++) {
@@ -152,11 +158,16 @@
         
     }
     NSMutableDictionary *data=[dataArray objectAtIndex:indexPath.row];
-    vc.updataArray=upArray;
-    vc.downDataArray=downArray;
-    vc.upValue=[data objectForKey:@"upValue"];
-    vc.downValue=[data objectForKey:@"downValue"];
-    [self.navigationController pushViewController:vc animated:YES];
+    alarmpickview.titleValue=[data objectForKey:@"title"];
+    alarmpickview.updataArray=upArray;
+    alarmpickview.downDataArray=downArray;
+    alarmpickview.upValue=[data objectForKey:@"upValue"];
+    alarmpickview.downValue=[data objectForKey:@"downValue"];
+    [alarmpickview makeView];
+    [self lew_presentPopupView:alarmpickview animation:[LewPopupViewAnimationSpring new] dismissed:^{
+        NSLog(@"动画结束");
+    }];
+    //        [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark-PickViewControllerDelegate
@@ -205,5 +216,13 @@
     
     NSArray *indexPaths = [[NSArray alloc] initWithObjects:row, nil];
     [dataTableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+}
+
+#pragma mark-去掉多余的分割线
+- (void)setExtraCellLineHidden: (UITableView *)tableView{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    [tableView setTableHeaderView:view];
 }
 @end

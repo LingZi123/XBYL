@@ -26,16 +26,18 @@
 
 -(void)makeView{
     UIBarButtonItem *rightBar=[[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(complate:)];
+    [rightBar setTintColor:[UIColor whiteColor]];
     UIBarButtonItem *leftBar=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
+    [leftBar setTintColor:[UIColor whiteColor]];
     self.navigationItem.leftBarButtonItem=leftBar;
     self.navigationItem.rightBarButtonItem=rightBar;
     
-    upPickView=[[UIPickerView alloc]initWithFrame:CGRectMake((CGRectGetWidth(self.view.bounds)-30)/2+20, 74, (CGRectGetWidth(self.view.bounds)-30)/2, CGRectGetHeight(self.view.frame)-84)];
+    upPickView=[[UIPickerView alloc]initWithFrame:CGRectMake((CGRectGetWidth(self.view.bounds)-40)/2+20, 10, (CGRectGetWidth(self.view.bounds)-100)/2, CGRectGetHeight(self.view.frame)-50)];
     upPickView.delegate=self;
     upPickView.dataSource=self;
     upPickView.backgroundColor=[UIColor whiteColor];
     [self.view addSubview:upPickView];
-    downPickerView=[[UIPickerView alloc]initWithFrame:CGRectMake(10, 74, (CGRectGetWidth(self.view.bounds)-30)/2, CGRectGetHeight(self.view.frame)-84)];
+    downPickerView=[[UIPickerView alloc]initWithFrame:CGRectMake(40, 10, (CGRectGetWidth(self.view.bounds)-100)/2, CGRectGetHeight(self.view.frame)-50)];
     downPickerView.dataSource=self;
     downPickerView.delegate=self;
     downPickerView.backgroundColor=[UIColor whiteColor];

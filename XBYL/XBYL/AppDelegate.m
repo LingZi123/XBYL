@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "ViewController.h"
-#import "nstdcomm/nstdcomm/nstdcomm.h"
+//#import "nstdcomm.h"
 #import "LoginUserInfo.h"
 #import "SystemSettingModel.h"
 #import "PatientInfo.h"
@@ -33,7 +33,7 @@
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     
     //通信IO反应堆初始化(应用启动时调用,建议在APP启动后调用,只调用一次)
-    [nstdcomm stdcommStart];
+//    [nstdcomm stdcommStart];
     NSDictionary *systemSettingDic=[defaults objectForKey:user_systemsetting];
     _systemSetting=[SystemSettingModel getModelWithDic:systemSettingDic];
     
@@ -46,11 +46,11 @@
         
         LoginViewController *loginVc=[self.mainStoryBoard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [loginVc loginSucess:^(LoginUserInfo *tempUserinfo) {
-            _loginUserInfo.userName=tempUserinfo.userName;
-            _loginUserInfo.pwd=tempUserinfo.pwd;
-            _loginUserInfo.isLoginOut=tempUserinfo.isLoginOut;
-            _loginUserInfo.isRemeberPwd=tempUserinfo.isRemeberPwd;
-            
+//            _loginUserInfo.userName=tempUserinfo.userName;
+//            _loginUserInfo.pwd=tempUserinfo.pwd;
+//            _loginUserInfo.isLoginOut=tempUserinfo.isLoginOut;
+//            _loginUserInfo.isRemeberPwd=tempUserinfo.isRemeberPwd;
+//            
             ViewController *mainVc=[self.mainStoryBoard instantiateViewControllerWithIdentifier:@"ViewController"];
              _mainnav=[[UINavigationController alloc]initWithRootViewController:mainVc];
             self.window.rootViewController=_mainnav;
@@ -60,11 +60,11 @@
     }
     else{
         
-        if (_systemSetting) {
-            [nstdcomm stdcommConnect:_systemSetting.ip andPort:_systemSetting.port andWebPort:_systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-        }
-        //只有登陆才能收到数据
-        [nstdcomm stdcommLogin:_loginUserInfo.userName andPwd:_loginUserInfo.pwd];
+//        if (_systemSetting) {
+//            [nstdcomm stdcommConnect:_systemSetting.ip andPort:_systemSetting.port andWebPort:_systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+//        }
+//        //只有登陆才能收到数据
+//        [nstdcomm stdcommLogin:_loginUserInfo.userName andPwd:_loginUserInfo.pwd];
         ViewController *mainVc=[self.mainStoryBoard instantiateViewControllerWithIdentifier:@"ViewController"];
         _mainnav=[[UINavigationController alloc]initWithRootViewController:mainVc];
         self.window.rootViewController=_mainnav;
@@ -96,32 +96,32 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
 //再重新连接
-    [nstdcomm stdcommClose];
-    if (_systemSetting) {
-        [nstdcomm stdcommConnect:_systemSetting.ip andPort:_systemSetting.port andWebPort:_systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-        if (_loginUserInfo) {
-               [nstdcomm stdcommLogin:_loginUserInfo.userName andPwd:_loginUserInfo.pwd];
-        }
-    }
-    //检查数据库是否过期
-    NSDate *today=[NSDate date];
-    //获取所有病人信息
-    NSMutableArray *patients=[PatientInfo getAllModel];
-    if (patients&&patients.count>0) {
-        //比较日期
-        for (PatientInfo *patient in patients) {
-            NSTimeInterval interval = [patient.addDate timeIntervalSinceDate:today];
-            if (interval>=60*60*24*30) {
-                [PatientInfo deleteModelWithPatientNo:patient.patientNo];
-            }
-        }
-    }
+//    [nstdcomm stdcommClose];
+//    if (_systemSetting) {
+//        [nstdcomm stdcommConnect:_systemSetting.ip andPort:_systemSetting.port andWebPort:_systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+//        if (_loginUserInfo) {
+//               [nstdcomm stdcommLogin:_loginUserInfo.userName andPwd:_loginUserInfo.pwd];
+//        }
+//    }
+//    //检查数据库是否过期
+//    NSDate *today=[NSDate date];
+//    //获取所有病人信息
+//    NSMutableArray *patients=[PatientInfo getAllModel];
+//    if (patients&&patients.count>0) {
+//        //比较日期
+//        for (PatientInfo *patient in patients) {
+//            NSTimeInterval interval = [patient.addDate timeIntervalSinceDate:today];
+//            if (interval>=60*60*24*30) {
+//                [PatientInfo deleteModelWithPatientNo:patient.patientNo];
+//            }
+//        }
+//    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [nstdcomm stdcommEnd];
+//    [nstdcomm stdcommEnd];
     [self saveContext];
 }
 
