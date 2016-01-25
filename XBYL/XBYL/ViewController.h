@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "SettingViewController.h"
 
-@interface ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SettingViewControllerDelegate,appMessgeDelegate>
+@interface ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SettingViewControllerDelegate,AppMessgeDelegate,UIAlertViewDelegate>
 {
     
     __weak IBOutlet UITableView *_contentTablvView;
@@ -25,6 +25,7 @@
     __weak IBOutlet UIButton *reconnectBtn;
     
     __weak IBOutlet UIView *nodataView;//不存在数据
+    UIBarButtonItem *leftBar;
     
     
 }

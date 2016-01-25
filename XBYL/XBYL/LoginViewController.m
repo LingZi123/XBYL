@@ -9,7 +9,7 @@
 #import "LoginViewController.h"
 #import "SystemSettingViewController.h"
 #import "AppDelegate.h"
-//#import "nstdcomm.h"
+#import "nstdcomm.h"
 #import "SVProgressHUD/SVProgressHUD.h"
 #import "ViewController.h"
 
@@ -23,6 +23,7 @@
     [super viewDidLoad];
     tipView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
     tipView.hidden=YES;
+    [self appDelegate].appMessageDelegate=self;
     
 }
 
@@ -32,23 +33,22 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    //注册回调
-//    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
+    [self appDelegate].appMessageDelegate=self;
     
     //读取本地系统设置参数
     
     NSUserDefaults *defausts=[NSUserDefaults standardUserDefaults];
     NSDictionary *dic=[defausts objectForKey:user_systemsetting];
     systemSetting=[SystemSettingModel getModelWithDic:dic];
-//    if (systemSetting) {
+    if (systemSetting) {
 //        //开始链接
 //        [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-//    }
-//    else{
-//        //弹出提示框
-//        UIAlertView *alter=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还没有进行系统设置，是否前往设置"delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
-//        [alter show];
-//    }
+    }
+    else{
+        //弹出提示框
+        UIAlertView *alter=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还没有进行系统设置，是否前往设置"delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
+        [alter show];
+    }
     
     //填充界面
     [self makeView];
@@ -74,6 +74,8 @@
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
+    [self appDelegate].appMessageDelegate=nil;
+
     //注销回调
 //     [nstdcomm stdRegMessageBox:nil andSelect:@selector(stdMessageBox:andMsg:)];
 }
@@ -99,17 +101,15 @@
 }
 - (IBAction)login:(id)sender {
     [self dismissKeyBoard];
-//    if (userNameTextField.text.length<=0||pwdTextField.text.length<=0) {
-//        //提示
-//        tipView.message=@"用户名、密码不能为空";
-//        [tipView show];
-//    }
-//    [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-//    //登录操作
-//    [nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text];
-    LoginUserInfo *user=[[LoginUserInfo alloc]init];
+    if (userNameTextField.text.length<=0||pwdTextField.text.length<=0) {
+        //提示
+        tipView.message=@"用户名、密码不能为空";
+        [tipView show];
+    }
+    [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
     
-    self.block(nil);
+    //登录操作
+    [nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text];
 }
 
 - (IBAction)remeberPwd:(id)sender {
@@ -128,39 +128,48 @@
     self.block=block;
 }
 
-#pragma mark-回调函数
--(void)stdMessageBox:(NSString*)cmd andMsg:(NSString*)msg{
-    //登录界面只接受登陆返回的信息
-    NSLog(@"msg=%@,cmd=%@",msg,cmd);
-    if ([cmd isEqualToString:@"loginACK"]) {
-        if ([msg isEqualToString:@"success"]) {
-            //写入本地
-            NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-            LoginUserInfo *tempUserInfo=[[LoginUserInfo alloc]init];
-            tempUserInfo.userName=userNameTextField.text;
-            tempUserInfo.pwd=pwdTextField.text;
-            tempUserInfo.isLoginOut=NO;
-            tempUserInfo.isRemeberPwd=isremeberPwd;
-            NSDictionary *userInfoDic=[LoginUserInfo getDicWithModel:tempUserInfo];
-            [defaults setObject:userInfoDic forKey:user_loginUserInfo];
-            [defaults synchronize];
-
-            [self dismissViewControllerAnimated:YES completion:nil];
-                        if (self.block!=nil) {
-            
-                            self.block(tempUserInfo);
-                        }
-            
+#pragma mark-appdelegate
+-(void)logingMessage:(NSString *)mes{
+    
+    if ([mes isEqualToString:@"success"]) {
+        //写入本地
+        NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+        if ([self appDelegate].loginUserInfo==nil) {
+            [self appDelegate].loginUserInfo=[[LoginUserInfo alloc]init];
         }
-        else{
-            //给出提示
-            [SVProgressHUD showErrorWithStatus:@"登陆失败"];
-//            tipView.message=msg;
-//            [tipView show];
+        
+        [self appDelegate].loginUserInfo.userName=userNameTextField.text;
+        [self appDelegate].loginUserInfo.pwd=pwdTextField.text;
+        [self appDelegate].loginUserInfo.isLoginOut=NO;
+        [self appDelegate].loginUserInfo.isRemeberPwd=isremeberPwd;
+        NSDictionary *userInfoDic=[LoginUserInfo getDicWithModel:[self appDelegate].loginUserInfo];
+        [defaults setObject:userInfoDic forKey:user_loginUserInfo];
+        [defaults synchronize];
+        if (self.block!=nil) {
+            
+            self.block([self appDelegate].loginUserInfo);
         }
         
     }
+    else{
+        //给出提示
+        [SVProgressHUD showErrorWithStatus:@"登陆失败"];
+    }
+
+
 }
+
+-(void)patientMessage:(NSString*)cmd andMsg:(NSString*)msg{
+    
+}
+-(void)hosMessage:(NSString *)mes{
+    
+}
+-(void)networkMessage:(NSString *)mes{
+    
+}
+#pragma mark-回调函数
+
 #pragma mark-UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     //进入系统设置界面
@@ -198,5 +207,9 @@
     }
     
     return YES;
+}
+
+-(AppDelegate *)appdelegate{
+    return (AppDelegate *)[[UIApplication sharedApplication]delegate];
 }
 @end

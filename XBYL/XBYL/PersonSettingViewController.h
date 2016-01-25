@@ -7,33 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PickViewController.h"
 #import "PatientInfo.h"
 #import "PersonSettingInfo.h"
 #import "AlarmPickView.h"
 
 @interface PersonSettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,AlarmPickViewDelegate>
 {
-//    NSInteger shousuoUpValue;
-//    NSInteger shuzhangUpValue;
-//    NSInteger xueyangUpValue;
-//    NSInteger xinlvUpValue;
-//    NSInteger mailvUpValue;
-//    NSInteger huxiUpValue;
-//    NSInteger xinlvDownValue;
-//    NSInteger mailvDownValue;
-//    NSInteger huxiDownValue;
-//    NSInteger xueyangDownValue;
-//    NSInteger shousuoDownValue;
-//    NSInteger shuzhangDownValue;
     NSString *titleName;
     PersonSettingInfo *personSetting;
     
     __weak IBOutlet UITableView *dataTableView;
     NSMutableArray *dataArray;
 }
-- (IBAction)add:(id)sender;
-- (IBAction)substract:(id)sender;
+
 - (IBAction)saveData:(id)sender;
 
 -(instancetype)initWithTitle:(NSString *)title_;

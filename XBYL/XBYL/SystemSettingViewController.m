@@ -8,7 +8,7 @@
 
 #import "SystemSettingViewController.h"
 #import "SystemSettingModel.h"
-//#import "nstdcomm.h"
+#import "AppDelegate.h"
 
 @interface SystemSettingViewController ()
 
@@ -28,14 +28,11 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)viewWillAppear:(BOOL)animated{
-    //取出本地数据填充
-    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSDictionary *systemDic=[defaults objectForKey:user_systemsetting];
-    SystemSettingModel *model=[SystemSettingModel getModelWithDic:systemDic];
-    if (model) {
-        ipField.text=model.ip;
-        portField.text=[NSString stringWithFormat:@"%d",model.port];
-        webField.text=[NSString stringWithFormat:@"%d",model.webPort];
+
+    if ([self appdelegate].systemSetting) {
+        ipField.text=[self appdelegate].systemSetting.ip;
+        portField.text=[NSString stringWithFormat:@"%d",[self appdelegate].systemSetting.port];
+        webField.text=[NSString stringWithFormat:@"%d",[self appdelegate].systemSetting.webPort];
     }
 }
 
@@ -122,16 +119,25 @@
 }
 
 -(void)saveToLocalIp:(NSString *)ip andPort:(int)port andWebport:(int)webport{
+    if ([self appdelegate].systemSetting==nil) {
+        [self appdelegate].systemSetting=[[SystemSettingModel alloc]init];
+        
+    }
     //保存
-    SystemSettingModel *model=[[SystemSettingModel alloc]init];
-    model.ip=ip;
-    model.port=port;
-    model.webPort=webport;
-    NSDictionary *dic=[SystemSettingModel getDicWithModel:model];
+    
+    [self appdelegate].systemSetting.ip=ip;
+    [self appdelegate].systemSetting.port=port;
+    [self appdelegate].systemSetting.webPort=webport;
+    NSDictionary *dic=[SystemSettingModel getDicWithModel:[self appdelegate].systemSetting];
     
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     [defaults setObject:dic forKey:user_systemsetting];
     [defaults synchronize];
 
 }
+
+-(AppDelegate *)appdelegate{
+    return (AppDelegate *)[[UIApplication sharedApplication]delegate];
+}
+
 @end

@@ -11,12 +11,31 @@
 #import "HeadView.h"
 #import "HospitalInfo.h"
 #import "PatientInfo.h"
-//#import "nstdcomm.h"
+#import "nstdcomm.h"
 #import "AppDelegate.h"
-#import "PickViewController.h"
 #import "PersonSettingInfo.h"
 #import "AlarmPickView.h"
 #import "LewPopupViewAnimationSpring.h"
+#import "SVProgressHUD/SVProgressHUD.h"
+
+
+#define def_shousuoUpValue @"shousuoUpValue"
+#define def_shousuoDownValue @"shousuoDownValue"
+
+#define def_shuzhangUpValue @"shuzhangUpValue"
+#define def_shuzhangDownValue @"shuzhangDownValue"
+
+#define def_xueyangUpValue @"xueyangUpValue"
+#define def_xueyangDownValue @"xueyangDownValue"
+
+#define def_xinlvUpValue @"xinlvUpValue"
+#define def_xinlvDownValue @"xinlvDownValue"
+
+#define def_mailvUpValue @"mailvUpValue"
+#define def_mailvDownValue @"mailvDownValue"
+
+#define def_huxiUpValue @"huxiUpValue"
+#define def_huxiDownValue @"huxiDownValue"
 
 @interface SettingViewController ()
 
@@ -82,20 +101,22 @@
     
     //填充报警参数值
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    alarmDic=[defaults objectForKey:user_defaultAlarmSetting];
+    if (alarmDic==nil) {
+        alarmDic=[[NSMutableDictionary alloc]initWithDictionary:[defaults objectForKey:user_defaultAlarmSetting]];
+    }
     if (alarmDic) {
-        shousuoUpValue=[[alarmDic objectForKey:@"shousuoUpValue"]integerValue];
-        shuzhangUpValue=[[alarmDic objectForKey:@"shuzhangUpValue"]integerValue];
-        xueyangUpValue=[[alarmDic objectForKey:@"xueyangUpValue"]integerValue];
-        xinlvUpValue=[[alarmDic objectForKey:@"xinlvUpValue"]integerValue];
-        mailvUpValue=[[alarmDic objectForKey:@"mailvUpValue"]integerValue];
-        huxiUpValue=[[alarmDic objectForKey:@"huxiUpValue"]integerValue];
-        xinlvDownValue=[[alarmDic objectForKey:@"xinlvDownValue"]integerValue];
-        mailvDownValue=[[alarmDic objectForKey:@"mailvDownValue"]integerValue];
-        huxiDownValue=[[alarmDic objectForKey:@"huxiDownValue"]integerValue];
-        xueyangDownValue=[[alarmDic objectForKey:@"xueyangDownValue"]integerValue];
-        shousuoDownValue=[[alarmDic objectForKey:@"shousuoDownValue"]integerValue];
-        shuzhangDownValue=[[alarmDic objectForKey:@"shuzhangDownValue"]integerValue];
+        shousuoUpValue=[[alarmDic objectForKey:def_shousuoUpValue]integerValue];
+        shuzhangUpValue=[[alarmDic objectForKey:def_shuzhangUpValue]integerValue];
+        xueyangUpValue=[[alarmDic objectForKey:def_xueyangUpValue]integerValue];
+        xinlvUpValue=[[alarmDic objectForKey:def_xinlvUpValue]integerValue];
+        mailvUpValue=[[alarmDic objectForKey:def_mailvUpValue]integerValue];
+        huxiUpValue=[[alarmDic objectForKey:def_huxiUpValue]integerValue];
+        xinlvDownValue=[[alarmDic objectForKey:def_xinlvDownValue]integerValue];
+        mailvDownValue=[[alarmDic objectForKey:def_mailvDownValue]integerValue];
+        huxiDownValue=[[alarmDic objectForKey:def_huxiDownValue]integerValue];
+        xueyangDownValue=[[alarmDic objectForKey:def_xueyangDownValue]integerValue];
+        shousuoDownValue=[[alarmDic objectForKey:def_shousuoDownValue]integerValue];
+        shuzhangDownValue=[[alarmDic objectForKey:def_shuzhangDownValue]integerValue];
     }
     else{
         [self defuaultAlarmDic];
@@ -119,19 +140,19 @@
     shousuoDownValue=Default_Shousuoya_Down;
     shuzhangDownValue=Default_Shuzhangye_Down;
     alarmDic=[[NSMutableDictionary alloc]init];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shousuoUpValue] forKey:@"shousuoUpValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shuzhangUpValue] forKey:@"shuzhangUpValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xueyangUpValue] forKey:@"xueyangUpValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xinlvUpValue] forKey:@"xinlvUpValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",mailvUpValue] forKey:@"mailvUpValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",huxiUpValue] forKey:@"huxiUpValue"];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shousuoUpValue] forKey:def_shousuoUpValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shuzhangUpValue] forKey:def_shuzhangUpValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xueyangUpValue] forKey:def_xueyangUpValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xinlvUpValue] forKey:def_xinlvUpValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",mailvUpValue] forKey:def_mailvUpValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",huxiUpValue] forKey:def_huxiUpValue];
     
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xinlvDownValue] forKey:@"xinlvDownValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",mailvDownValue] forKey:@"mailvDownValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",huxiDownValue] forKey:@"huxiDownValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xueyangDownValue] forKey:@"xueyangDownValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shousuoDownValue] forKey:@"shousuoDownValue"];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shuzhangDownValue] forKey:@"shuzhangDownValue"];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xinlvDownValue] forKey:def_xinlvDownValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",mailvDownValue] forKey:def_mailvDownValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",huxiDownValue] forKey:def_huxiDownValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xueyangDownValue] forKey:def_xueyangDownValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shousuoDownValue] forKey:def_shousuoDownValue];
+    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shuzhangDownValue] forKey:def_shuzhangDownValue];
 
 }
 
@@ -202,6 +223,7 @@
     
     //修改所有病人的设置
     [PersonSettingInfo updateAllModelWithDic:alarmDic];
+    [SVProgressHUD showErrorWithStatus:@"修改成功"];
 }
 
 - (IBAction)refashRateClick:(id)sender {
@@ -219,7 +241,7 @@
             }
         }
     }
-    
+    [SVProgressHUD showErrorWithStatus:@"保存完成"];
     //保存刷新
     
 }
@@ -437,38 +459,38 @@
     if (row.row==0) {
         shousuoDownValue=[downValue integerValue];
         shousuoUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:@"shousuoDownValue"];
-        [alarmDic setObject:upvalue forKey:@"shousuoUpValue"];
+        [alarmDic setObject:downValue forKey:def_shousuoDownValue];
+        [alarmDic setObject:upvalue forKey:def_shousuoUpValue];
     }
     else if (row.row==1){
         shuzhangDownValue=[downValue integerValue];
         shuzhangUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:@"shuzhangDownValue"];
-        [alarmDic setObject:upvalue forKey:@"shuzhangUpValue"];
+        [alarmDic setObject:downValue forKey:def_shuzhangDownValue];
+        [alarmDic setObject:upvalue forKey:def_shuzhangUpValue];
     }
     else if (row.row==2){
         xueyangDownValue=[downValue integerValue];
         xueyangUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:@"xueyangDownValue"];
-        [alarmDic setObject:upvalue forKey:@"xueyangUpValue"];
+        [alarmDic setObject:downValue forKey:def_xueyangDownValue];
+        [alarmDic setObject:upvalue forKey:def_xueyangUpValue];
     }
     else if (row.row==3){
         xinlvDownValue=[downValue integerValue];
         xinlvUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:@"xinlvDownValue"];
-        [alarmDic setObject:upvalue forKey:@"xinlvUpValue"];
+        [alarmDic setObject:downValue forKey:def_xinlvDownValue];
+        [alarmDic setObject:upvalue forKey:def_xinlvUpValue];
     }
     else if (row.row==4){
         mailvDownValue=[downValue integerValue];
         mailvUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:@"mailvDownValue"];
-        [alarmDic setObject:upvalue forKey:@"mailvUpValue"];
+        [alarmDic setObject:downValue forKey:def_mailvDownValue];
+        [alarmDic setObject:upvalue forKey:def_mailvUpValue];
     }
     else if (row.row==5){
         huxiDownValue=[downValue integerValue];
         huxiUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:@"huxiDownValue"];
-        [alarmDic setObject:upvalue forKey:@"huxiUpValue"];
+        [alarmDic setObject:downValue forKey:def_huxiDownValue];
+        [alarmDic setObject:upvalue forKey:def_huxiUpValue];
     }
     //刷新
     [armTableView reloadRowsAtIndexPaths:[[NSArray alloc]initWithObjects:row, nil] withRowAnimation:UITableViewRowAnimationNone];

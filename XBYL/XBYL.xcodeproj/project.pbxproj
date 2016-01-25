@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		36BB35061B822E2500B2167A /* PickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35051B822E2500B2167A /* PickViewController.m */; };
 		36BB35221B887FA200B2167A /* SystemSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35211B887FA200B2167A /* SystemSettingModel.m */; };
 		36BB352B1B89779200B2167A /* LoginUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB352A1B89779200B2167A /* LoginUserInfo.m */; };
 		36BB352E1B89B65300B2167A /* PatientInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB352D1B89B65300B2167A /* PatientInfo.m */; };
@@ -54,16 +53,18 @@
 		36F6A8711B75D9840024E783 /* RefashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A8701B75D9840024E783 /* RefashView.m */; };
 		36F6A8731B75D99C0024E783 /* RefashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F6A8721B75D99C0024E783 /* RefashView.xib */; };
 		36F6A8761B75F3320024E783 /* HeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A8751B75F3320024E783 /* HeadView.m */; };
-		A6568B8E1C059B3000D78DD1 /* AlarmPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B8D1C059B3000D78DD1 /* AlarmPickView.m */; settings = {ASSET_TAGS = (); }; };
-		A6568B901C059B4000D78DD1 /* AlarmPickView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6568B8F1C059B4000D78DD1 /* AlarmPickView.xib */; settings = {ASSET_TAGS = (); }; };
-		A6568B9F1C059D4500D78DD1 /* LewPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B941C059D4500D78DD1 /* LewPopupBackgroundView.m */; settings = {ASSET_TAGS = (); }; };
-		A6568BA01C059D4500D78DD1 /* LewPopupViewAnimationDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B961C059D4500D78DD1 /* LewPopupViewAnimationDrop.m */; settings = {ASSET_TAGS = (); }; };
-		A6568BA11C059D4500D78DD1 /* LewPopupViewAnimationFade.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B981C059D4500D78DD1 /* LewPopupViewAnimationFade.m */; settings = {ASSET_TAGS = (); }; };
-		A6568BA21C059D4500D78DD1 /* LewPopupViewAnimationSlide.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B9A1C059D4500D78DD1 /* LewPopupViewAnimationSlide.m */; settings = {ASSET_TAGS = (); }; };
-		A6568BA31C059D4500D78DD1 /* LewPopupViewAnimationSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B9C1C059D4500D78DD1 /* LewPopupViewAnimationSpring.m */; settings = {ASSET_TAGS = (); }; };
-		A6568BA41C059D4500D78DD1 /* UIViewController+LewPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B9E1C059D4500D78DD1 /* UIViewController+LewPopupViewController.m */; settings = {ASSET_TAGS = (); }; };
+		A64B22C61C4DE971001FB46F /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04421BFDD14F00D7BB71 /* Realm.framework */; };
+		A6568B8E1C059B3000D78DD1 /* AlarmPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B8D1C059B3000D78DD1 /* AlarmPickView.m */; };
+		A6568B901C059B4000D78DD1 /* AlarmPickView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6568B8F1C059B4000D78DD1 /* AlarmPickView.xib */; };
+		A6568B9F1C059D4500D78DD1 /* LewPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B941C059D4500D78DD1 /* LewPopupBackgroundView.m */; };
+		A6568BA01C059D4500D78DD1 /* LewPopupViewAnimationDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B961C059D4500D78DD1 /* LewPopupViewAnimationDrop.m */; };
+		A6568BA11C059D4500D78DD1 /* LewPopupViewAnimationFade.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B981C059D4500D78DD1 /* LewPopupViewAnimationFade.m */; };
+		A6568BA21C059D4500D78DD1 /* LewPopupViewAnimationSlide.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B9A1C059D4500D78DD1 /* LewPopupViewAnimationSlide.m */; };
+		A6568BA31C059D4500D78DD1 /* LewPopupViewAnimationSpring.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B9C1C059D4500D78DD1 /* LewPopupViewAnimationSpring.m */; };
+		A6568BA41C059D4500D78DD1 /* UIViewController+LewPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B9E1C059D4500D78DD1 /* UIViewController+LewPopupViewController.m */; };
+		A659A79B1C4F265300E0F9BE /* libnstdcomm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A659A7991C4F265300E0F9BE /* libnstdcomm.a */; };
+		A659A79C1C4F265300E0F9BE /* nstdcommTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = A659A79A1C4F265300E0F9BE /* nstdcommTests.xctest */; };
 		A67C043A1BFDA75B00D7BB71 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04391BFDA75B00D7BB71 /* libstdc++.tbd */; };
-		A67C04431BFDD14F00D7BB71 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04421BFDD14F00D7BB71 /* Realm.framework */; };
 		A67C04441BFDD14F00D7BB71 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04421BFDD14F00D7BB71 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -92,8 +93,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		36BB35041B822E2500B2167A /* PickViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickViewController.h; sourceTree = "<group>"; };
-		36BB35051B822E2500B2167A /* PickViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickViewController.m; sourceTree = "<group>"; };
 		36BB35131B88789E00B2167A /* xybl_Header.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xybl_Header.pch; sourceTree = "<group>"; };
 		36BB35201B887FA200B2167A /* SystemSettingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemSettingModel.h; path = Model/SystemSettingModel.h; sourceTree = "<group>"; };
 		36BB35211B887FA200B2167A /* SystemSettingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SystemSettingModel.m; path = Model/SystemSettingModel.m; sourceTree = "<group>"; };
@@ -166,6 +165,7 @@
 		36F6A8721B75D99C0024E783 /* RefashView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefashView.xib; sourceTree = "<group>"; };
 		36F6A8741B75F3320024E783 /* HeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadView.h; sourceTree = "<group>"; };
 		36F6A8751B75F3320024E783 /* HeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadView.m; sourceTree = "<group>"; };
+		A62F97D41C4E363F001A8C1E /* AppMessgeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppMessgeDelegate.h; sourceTree = "<group>"; };
 		A6568B8C1C059B3000D78DD1 /* AlarmPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmPickView.h; sourceTree = "<group>"; };
 		A6568B8D1C059B3000D78DD1 /* AlarmPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmPickView.m; sourceTree = "<group>"; };
 		A6568B8F1C059B4000D78DD1 /* AlarmPickView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmPickView.xib; sourceTree = "<group>"; };
@@ -181,6 +181,9 @@
 		A6568B9C1C059D4500D78DD1 /* LewPopupViewAnimationSpring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LewPopupViewAnimationSpring.m; sourceTree = "<group>"; };
 		A6568B9D1C059D4500D78DD1 /* UIViewController+LewPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+LewPopupViewController.h"; sourceTree = "<group>"; };
 		A6568B9E1C059D4500D78DD1 /* UIViewController+LewPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+LewPopupViewController.m"; sourceTree = "<group>"; };
+		A659A7981C4F265300E0F9BE /* nstdcomm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nstdcomm.h; sourceTree = "<group>"; };
+		A659A7991C4F265300E0F9BE /* libnstdcomm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libnstdcomm.a; sourceTree = "<group>"; };
+		A659A79A1C4F265300E0F9BE /* nstdcommTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = nstdcommTests.xctest; sourceTree = "<group>"; };
 		A67C04391BFDA75B00D7BB71 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		A67C04421BFDD14F00D7BB71 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -190,10 +193,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A64B22C61C4DE971001FB46F /* Realm.framework in Frameworks */,
 				A67C043A1BFDA75B00D7BB71 /* libstdc++.tbd in Frameworks */,
+				A659A79B1C4F265300E0F9BE /* libnstdcomm.a in Frameworks */,
 				36BB35561BA5745A00B2167A /* SVProgressHUD.bundle in Frameworks */,
 				36BB35501B951EF200B2167A /* CFNetwork.framework in Frameworks */,
-				A67C04431BFDD14F00D7BB71 /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,8 +346,7 @@
 				36F6A85D1B6368710024E783 /* SystemSettingViewController.m */,
 				36F6A8621B6A54F40024E783 /* PersonSettingViewController.h */,
 				36F6A8631B6A54F40024E783 /* PersonSettingViewController.m */,
-				36BB35041B822E2500B2167A /* PickViewController.h */,
-				36BB35051B822E2500B2167A /* PickViewController.m */,
+				A62F97D41C4E363F001A8C1E /* AppMessgeDelegate.h */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 		A6568B911C059D1400D78DD1 /* OtherClass */ = {
 			isa = PBXGroup;
 			children = (
+				A659A7951C4F265300E0F9BE /* Release-iphonesimulator */,
 				A6568B921C059D4500D78DD1 /* popupViewController */,
 			);
 			name = OtherClass;
@@ -406,6 +410,32 @@
 				A6568B9E1C059D4500D78DD1 /* UIViewController+LewPopupViewController.m */,
 			);
 			path = popupViewController;
+			sourceTree = "<group>";
+		};
+		A659A7951C4F265300E0F9BE /* Release-iphonesimulator */ = {
+			isa = PBXGroup;
+			children = (
+				A659A7961C4F265300E0F9BE /* include */,
+				A659A7991C4F265300E0F9BE /* libnstdcomm.a */,
+				A659A79A1C4F265300E0F9BE /* nstdcommTests.xctest */,
+			);
+			path = "Release-iphonesimulator";
+			sourceTree = "<group>";
+		};
+		A659A7961C4F265300E0F9BE /* include */ = {
+			isa = PBXGroup;
+			children = (
+				A659A7971C4F265300E0F9BE /* nstdcomm */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		A659A7971C4F265300E0F9BE /* nstdcomm */ = {
+			isa = PBXGroup;
+			children = (
+				A659A7981C4F265300E0F9BE /* nstdcomm.h */,
+			);
+			path = nstdcomm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -490,6 +520,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				36F6A8351B62FC5F0024E783 /* Main.storyboard in Resources */,
+				A659A79C1C4F265300E0F9BE /* nstdcommTests.xctest in Resources */,
 				36F6A8671B6A5DC80024E783 /* tempPersonData.plist in Resources */,
 				36BB35541BA5725E00B2167A /* SVProgressHUD in Resources */,
 				36F6A83A1B62FC5F0024E783 /* LaunchScreen.xib in Resources */,
@@ -522,7 +553,6 @@
 				A6568BA41C059D4500D78DD1 /* UIViewController+LewPopupViewController.m in Sources */,
 				36F6A82F1B62FC5F0024E783 /* XBYL.xcdatamodeld in Sources */,
 				36F6A82C1B62FC5F0024E783 /* AppDelegate.m in Sources */,
-				36BB35061B822E2500B2167A /* PickViewController.m in Sources */,
 				36BB35221B887FA200B2167A /* SystemSettingModel.m in Sources */,
 				36F6A8761B75F3320024E783 /* HeadView.m in Sources */,
 				36BB353F1B8F49A900B2167A /* PersonSettingInfo.m in Sources */,
@@ -689,6 +719,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -700,12 +731,14 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = XBYL/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XBYL",
+					"$(PROJECT_DIR)/XBYL/Release-iphonesimulator",
 				);
+				OTHER_LDFLAGS = "-lstdc++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -719,6 +752,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -730,12 +764,14 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
 				INFOPLIST_FILE = XBYL/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/XBYL",
+					"$(PROJECT_DIR)/XBYL/Release-iphonesimulator",
 				);
+				OTHER_LDFLAGS = "-lstdc++";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

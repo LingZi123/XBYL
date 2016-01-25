@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>E340E7F1-611E-43AE-BB76-0FD4E2B8F135</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>XBYL</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>F59C4AFA9128955E93A54A2DD9E0DD2A7385A859</key>
 		<string>https://github.com/LingZi123/XBYL.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>XBYL/XBYL.xcodeproj/project.xcworkspace</string>
+	<string>XBYL/XBYL.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>F59C4AFA9128955E93A54A2DD9E0DD2A7385A859</key>

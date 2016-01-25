@@ -7,11 +7,11 @@
 //
 
 #import "PersonSettingViewController.h"
-#import "PickViewController.h"
 #import "AppDelegate.h"
 #import "PersonSettingInfo.h"
 #import "AlarmPickView.h"
 #import "LewPopupViewAnimationSpring.h"
+#import "SVProgressHUD/SVProgressHUD.h"
 
 @interface PersonSettingViewController ()
 
@@ -105,11 +105,18 @@
 }
 
 - (IBAction)saveData:(id)sender {
+    BOOL result=NO;
     if ([PersonSettingInfo getModelWithPatientNo:personSetting.patientNo]!=nil) {
-        [PersonSettingInfo updateModelWithModel:personSetting];
+        result=[PersonSettingInfo updateModelWithModel:personSetting];
     }
     else{
-        [PersonSettingInfo InsertModelWithModel:personSetting];
+        result=[PersonSettingInfo InsertModelWithModel:personSetting];
+    }
+    if (result) {
+        [SVProgressHUD showErrorWithStatus:@"保存成功"];
+    }
+    else{
+        [SVProgressHUD showErrorWithStatus:@"保存失败"];
     }
 }
 

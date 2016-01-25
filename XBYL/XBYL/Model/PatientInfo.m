@@ -177,6 +177,9 @@
 }
 //添加数据
 +(BOOL)InsertModelWithModel:(PatientInfo *)info{
+    if (info==nil) {
+        return false;
+    }
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context=appDelegate.managedObjectContext;
     

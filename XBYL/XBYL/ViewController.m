@@ -12,7 +12,7 @@
 #import "AppDelegate.h"
 #import "MainTableViewCell.h"
 #import "PersonSettingViewController.h"
-//#import "nstdcomm.h"
+#import "nstdcomm.h"
 #import "PatientInfo.h"
 #import "XueyaModel.h"
 #import "MulDataModel.h"
@@ -49,8 +49,17 @@
     else{
         refashValue=[tempvalue integerValue];
     }
-    appDelegate.appMessageDelegate=self;
+    
+    if (appDelegate.systemSetting) {
+        int a=[nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:appDelegate.systemSetting.port andWebPort:appDelegate.systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+        NSLog(@"a=%d",a);
 
+        if (appDelegate.loginUserInfo) {
+             int b=  [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
+            NSLog(@"b=%d",b);
+        }
+    }
+   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,25 +67,56 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
+        self.navigationItem.leftBarButtonItem=nil;
+       UIAlertView *tipView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有登录" delegate:self cancelButtonTitle:@"去登陆" otherButtonTitles:nil, nil];
+        [tipView show];
+    }
+    else{
+        self.navigationItem.leftBarButtonItem=leftBar;
+        if (appDelegate.loginUserInfo) {
+            loginNameLabel.text=appDelegate.loginUserInfo.userName;
+            reconnectBtn.hidden=YES;
+        }
+    }
+}
+
 -(void)viewDidAppear:(BOOL)animated{
     
+     appDelegate.appMessageDelegate=self;
     //从本地数据库读取数据
-    [infoArray removeAllObjects];
+//    [infoArray removeAllObjects];
 //    [showArray removeAllObjects];
-    NSArray *tempArray=[PatientInfo getAllModel];
-    if (tempArray) {
-        [infoArray addObjectsFromArray:tempArray];
-    }
-//    for (PatientInfo *patient in tempArray) {
-//        if (patient.isShown) {
-//            [showArray addObject:patient];
-//        }
-//    }
-        //开启接收数据
-//    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
-//    [nstdcomm stdcommRefreshHosList];
-//    [nstdcomm stdcommRefreshPatList];
     
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSArray *tempArray=[PatientInfo getAllModel];
+        if (tempArray) {
+            for (PatientInfo *tempinfo in tempArray) {
+                BOOL isexist=NO;
+                for (PatientInfo *sourceInfo in infoArray) {
+                    if ([tempinfo.patientNo isEqual:sourceInfo.patientNo]) {
+                        sourceInfo.isShown=tempinfo.isShown;
+                        sourceInfo.personSetting=tempinfo.personSetting;
+                        isexist=true;
+                        break;
+                    }
+                }
+                if (!isexist) {
+                    [infoArray addObject:tempinfo];
+                }
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_contentTablvView reloadData];
+
+            });
+        }
+    });
+    
+    [nstdcomm stdcommRefreshHosList];
+    [nstdcomm stdcommRefreshPatList];
     //开启刷新时间
     if (refashTimer==nil) {
         refashTimer=[NSTimer scheduledTimerWithTimeInterval:refashValue target:self selector:@selector(refashTimerClick:) userInfo:nil repeats:YES];
@@ -96,14 +136,13 @@
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
-//    [nstdcomm stdRegMessageBox:nil andSelect:@selector(stdMessageBox:andMsg:)];
     //停止时间
     [refashTimer setFireDate:[NSDate distantFuture]];
     refashTimer=nil;
     
 }
 -(void)makeView{
-    UIBarButtonItem *leftBar=[[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
+     leftBar=[[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
      [leftBar setTintColor:[UIColor whiteColor]];
     UIBarButtonItem *rightBar2=[[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting:)];
      [rightBar2 setTintColor:[UIColor whiteColor]];
@@ -128,6 +167,7 @@
     detailTextLabel.text=@"在线";
     [self.navigationItem.titleView addSubview:detailTextLabel];
     appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    appDelegate.appMessageDelegate=self;
     
     //xib注册
     UINib *xib=[UINib nibWithNibName:@"MainTableViewCell" bundle:nil];
@@ -135,10 +175,6 @@
     _contentTablvView.delegate=self;
     _contentTablvView.dataSource=self;
     
-    if (appDelegate.loginUserInfo) {
-        loginNameLabel.text=appDelegate.loginUserInfo.userName;
-        reconnectBtn.hidden=YES;
-    }
 }
 -(void)logout:(id)sender{
     appDelegate.loginUserInfo.isLoginOut=YES;
@@ -147,24 +183,7 @@
     NSDictionary *userInfoDic=[LoginUserInfo getDicWithModel:appDelegate.loginUserInfo];
     [defaults setObject:userInfoDic forKey:user_loginUserInfo];
     [defaults synchronize];
-//    [nstdcomm stdcommClose];
-    LoginViewController *loginVC=[appDelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-    [loginVC loginSucess:^(LoginUserInfo *tempUserInfo) {
-        [loginVC dismissViewControllerAnimated:YES completion:nil];
-        if (![appDelegate.loginUserInfo.userName isEqualToString:tempUserInfo.userName]) {
-            appDelegate.loginUserInfo.userName=tempUserInfo.userName;
-        }
-        if (![appDelegate.loginUserInfo.pwd isEqualToString:tempUserInfo.pwd]) {
-            appDelegate.loginUserInfo.pwd=tempUserInfo.pwd;
-        }
-        if (appDelegate.loginUserInfo.isRemeberPwd!=tempUserInfo.isRemeberPwd) {
-            appDelegate.loginUserInfo.isRemeberPwd=tempUserInfo.isRemeberPwd;
-        }
-        if (appDelegate.loginUserInfo.isLoginOut!=tempUserInfo.isLoginOut) {
-            appDelegate.loginUserInfo.isLoginOut=tempUserInfo.isLoginOut;
-        }
-    }];
-    [self presentViewController:loginVC animated:YES completion:nil];
+    [self goLoginVC];
 }
 
 -(void)setting:(id)sender{
@@ -320,20 +339,24 @@
 }
 - (IBAction)reConnect:(id)sender {
     
-//    if (appDelegate.systemSetting) {
-//        [nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:appDelegate.systemSetting.port andWebPort:appDelegate.systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-//    }
-//    //只有登陆才能收到数据
-//    [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
+    [nstdcomm stdcommClose];
+    [nstdcomm stdcommEnd];
+    [nstdcomm stdcommStart];
+    [appDelegate reciveData];
     
-
-    PersonSettingViewController *p=[appDelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"PersonSettingViewController"];
-//    p.patient=patient;
-    [self.navigationController pushViewController:p animated:YES];
+    if (appDelegate.systemSetting) {
+        [nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:appDelegate.systemSetting.port andWebPort:appDelegate.systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+    }
+    //只有登陆才能收到数据
+    [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
 }
 
 #pragma mark-回调函数
--(void)stdMessageBox:(NSString*)cmd andMsg:(NSString*)msg{
+
+//-(void)stdMessageBox:(NSString*)cmd andMsg:(NSString*)msg{
+#pragma mark-appMessageDelegate
+
+-(void) patientMessage:(NSString *)cmd andMsg:(NSString *)msg{
     //登录界面只接受登陆返回的信息
     NSLog(@"msg=%@,cmd=%@",msg,cmd);
     //刷新病人列表
@@ -392,7 +415,8 @@
 -(void)existPatient:(PatientInfo *)patient{
  
     BOOL isExist=NO;
-    for (PatientInfo *info in infoArray) {
+    NSArray *tempArray=[infoArray copy];
+    for (PatientInfo *info in tempArray) {
         if ([info.patientNo isEqualToString:patient.patientNo]) {
             //修改
             if (info.status==nil) {
@@ -538,5 +562,31 @@
 #pragma mark-appMessgeDelegate
 -(void)patientMessage:(NSString *)mes{
     
+}
+
+-(void)logingMessage:(NSString *)mes{
+    
+}
+
+-(void)networkMessage:(NSString *)mes{
+    reconnectBtn.hidden=NO;
+}
+
+#pragma mark-UIAlertViewDelegate
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    //进入登录界面
+    
+    [self goLoginVC];
+}
+
+-(void)goLoginVC{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        LoginViewController *loginVC=[appDelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [loginVC loginSucess:^(LoginUserInfo *tempUserInfo) {
+            [loginVC dismissViewControllerAnimated:YES completion:nil];
+            
+        }];
+        [self presentViewController:loginVC animated:YES completion:nil];
+    });
 }
 @end

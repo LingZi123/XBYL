@@ -10,17 +10,10 @@
 #import <CoreData/CoreData.h>
 #import "LoginViewController.h"
 #import "LoginUserInfo.h"
+#import "AppMessgeDelegate.h"
 
-@protocol appMessgeDelegate <NSObject>
 
--(void)logingMessage:(NSString *)mes;
--(void)patientMessage:(NSString*)cmd andMsg:(NSString*)msg;
--(void)hosMessage:(NSString *)mes;
--(void)networkMessage:(NSString *)mes;
-
-@end
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate,LoginViewControllerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -32,11 +25,12 @@
 @property(nonatomic,retain)SystemSettingModel *systemSetting;//系统设置
 @property(nonatomic,retain)UINavigationController *mainnav;
 
-@property(nonatomic,assign)id<appMessgeDelegate> appMessageDelegate;
+@property(nonatomic,assign)id<AppMessgeDelegate> appMessageDelegate;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
+-(void)reciveData;
 
 @end
 

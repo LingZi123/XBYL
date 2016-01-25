@@ -9,18 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "SystemSettingModel.h"
 #import "LoginUserInfo.h"
-
-
-@protocol LoginViewControllerDelegate <NSObject>
-
--(void)loginSuccess:(LoginUserInfo *)tempUserInfo;
-
-@end
+#import "AppDelegate.h"
+#import "AppMessgeDelegate.h"
 
 typedef void (^loginSuccessBlock)(LoginUserInfo *tempUserinfo);
 
 
-@interface LoginViewController : UIViewController<UIAlertViewDelegate,UITextFieldDelegate>{
+@interface LoginViewController : UIViewController<UIAlertViewDelegate,UITextFieldDelegate,AppMessgeDelegate>{
 
     __weak IBOutlet UITextField *userNameTextField;
     __weak IBOutlet UITextField *pwdTextField;
@@ -37,7 +32,6 @@ typedef void (^loginSuccessBlock)(LoginUserInfo *tempUserinfo);
 - (IBAction)login:(id)sender;
 - (IBAction)remeberPwd:(id)sender;
 
-@property(nonatomic,assign) id<LoginViewControllerDelegate> delegate;
 @property(nonatomic,copy)loginSuccessBlock block;
 -(void)loginSucess:(loginSuccessBlock)block;
 @end

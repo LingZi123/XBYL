@@ -183,7 +183,7 @@
                 info.shuzhangyadownvalue=[dic objectForKey:@"shuzhangDownValue"];
                 
                 [self updateModelWithModel:info];
-                break;
+//                break;
             }
             return model;
         }

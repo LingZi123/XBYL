@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "ViewController.h"
-//#import "nstdcomm.h"
+#import "nstdcomm.h"
 #import "LoginUserInfo.h"
 #import "SystemSettingModel.h"
 #import "PatientInfo.h"
@@ -33,7 +33,18 @@
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     
     //通信IO反应堆初始化(应用启动时调用,建议在APP启动后调用,只调用一次)
-//    [nstdcomm stdcommStart];
+    [nstdcomm stdcommStart];
+    dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_CONCURRENT);
+    NSLog(@"1");
+    dispatch_async(concurrentQueue, ^(){
+        NSLog(@"2");
+        [NSThread sleepForTimeInterval:5];
+        NSLog(@"3");
+    });
+    NSLog(@"4");
+    
+    [self reciveData];
+   
     NSDictionary *systemSettingDic=[defaults objectForKey:user_systemsetting];
     _systemSetting=[SystemSettingModel getModelWithDic:systemSettingDic];
     
@@ -42,33 +53,11 @@
     
     self.mainStoryBoard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    if (_loginUserInfo==nil||_loginUserInfo.isLoginOut) {
-        
-        LoginViewController *loginVc=[self.mainStoryBoard  instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [loginVc loginSucess:^(LoginUserInfo *tempUserinfo) {
-//            _loginUserInfo.userName=tempUserinfo.userName;
-//            _loginUserInfo.pwd=tempUserinfo.pwd;
-//            _loginUserInfo.isLoginOut=tempUserinfo.isLoginOut;
-//            _loginUserInfo.isRemeberPwd=tempUserinfo.isRemeberPwd;
-//            
-            ViewController *mainVc=[self.mainStoryBoard instantiateViewControllerWithIdentifier:@"ViewController"];
-             _mainnav=[[UINavigationController alloc]initWithRootViewController:mainVc];
-            self.window.rootViewController=_mainnav;
-            
-        }];
-        self.window.rootViewController=loginVc;
-    }
-    else{
-        
-//        if (_systemSetting) {
-//            [nstdcomm stdcommConnect:_systemSetting.ip andPort:_systemSetting.port andWebPort:_systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-//        }
-//        //只有登陆才能收到数据
-//        [nstdcomm stdcommLogin:_loginUserInfo.userName andPwd:_loginUserInfo.pwd];
+        //只有登陆才能收到数据
+        [nstdcomm stdcommLogin:_loginUserInfo.userName andPwd:_loginUserInfo.pwd];
         ViewController *mainVc=[self.mainStoryBoard instantiateViewControllerWithIdentifier:@"ViewController"];
         _mainnav=[[UINavigationController alloc]initWithRootViewController:mainVc];
         self.window.rootViewController=_mainnav;
-    }
 
     [self.window makeKeyAndVisible];
     
@@ -84,8 +73,6 @@
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
-    //应该端开链接
-    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -95,27 +82,19 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
-//再重新连接
-//    [nstdcomm stdcommClose];
-//    if (_systemSetting) {
-//        [nstdcomm stdcommConnect:_systemSetting.ip andPort:_systemSetting.port andWebPort:_systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-//        if (_loginUserInfo) {
-//               [nstdcomm stdcommLogin:_loginUserInfo.userName andPwd:_loginUserInfo.pwd];
-//        }
-//    }
-//    //检查数据库是否过期
-//    NSDate *today=[NSDate date];
-//    //获取所有病人信息
-//    NSMutableArray *patients=[PatientInfo getAllModel];
-//    if (patients&&patients.count>0) {
-//        //比较日期
-//        for (PatientInfo *patient in patients) {
-//            NSTimeInterval interval = [patient.addDate timeIntervalSinceDate:today];
-//            if (interval>=60*60*24*30) {
-//                [PatientInfo deleteModelWithPatientNo:patient.patientNo];
-//            }
-//        }
-//    }
+    //检查数据库是否过期
+    NSDate *today=[NSDate date];
+    //获取所有病人信息
+    NSMutableArray *patients=[PatientInfo getAllModel];
+    if (patients&&patients.count>0) {
+        //比较日期
+        for (PatientInfo *patient in patients) {
+            NSTimeInterval interval = [patient.addDate timeIntervalSinceDate:today];
+            if (interval>=60*60*24*30) {
+                [PatientInfo deleteModelWithPatientNo:patient.patientNo];
+            }
+        }
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -205,52 +184,44 @@
     }
 }
 
-#pragma mark-LoginViewControllerDelegate
-//-(void)loginSuccess:(LoginUserInfo *)tempUserInfo{
-//    _loginUserInfo.userName=tempUserInfo.userName;
-//    _loginUserInfo.pwd=tempUserInfo.pwd;
-//    _loginUserInfo.isLoginOut=tempUserInfo.isLoginOut;
-//    _loginUserInfo.isRemeberPwd=tempUserInfo.isRemeberPwd;
-//    if (_mainnav==nil) {
-//        ViewController *mainVc=[self.mainStoryBoard instantiateViewControllerWithIdentifier:@"ViewController"];
-//        _mainnav=[[UINavigationController alloc]initWithRootViewController:mainVc];
-//        self.window.rootViewController=nil;
-//    }
-//    if (self.window.rootViewController.view.superview==nil) {
-//        [self.window.rootViewController.view removeFromSuperview];
-//    }
-//    self.window.rootViewController=_mainnav;
-//}
-
+#pragma mark-数据接收
 -(void)stdMessageBox:(NSString*)cmd andMsg:(NSString*)msg{
-    
-    //登录界面只接受登陆返回的信息
-    NSLog(@"msg=%@,cmd=%@",msg,cmd);
-    if ([cmd isEqualToString:@"loginACK"]) {
-        [self.appMessageDelegate logingMessage:msg];
-    }
-    //登录界面只接受登陆返回的信息
-    NSLog(@"msg=%@,cmd=%@",msg,cmd);
-    //刷新病人列表
-    if ([cmd isEqualToString:@"patientinfoACK"]||
-        [cmd isEqualToString:@"bpmdataACK"]||
-        [cmd isEqualToString:@"updateinfoACK"]||
-        [cmd isEqualToString:@"updateonlinestatusACK"]||
-        [cmd isEqualToString:@"bodataACK"]) {
-        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
-    }
-    else if ([cmd isEqualToString:@"hoslistACK"]){
-        //刷新病人列表
-        if (![msg isEqualToString:@"fail"]) {
-            //一次性返回的数据解析
-            [HospitalInfo getHosWithMsg:msg];
-        }
-    }
-    else if ([cmd isEqualToString:@"onClose"]){
-        //网络断开就要重连
-        [SVProgressHUD showErrorWithStatus:@"网络断开"];
-        [self.appMessageDelegate networkMessage:msg];
-    }
+          //登录界面只接受登陆返回的信息
+          NSLog(@"msg=%@,cmd=%@",msg,cmd);
+          if ([cmd isEqualToString:@"loginACK"]) {
+              [self.appMessageDelegate logingMessage:msg];
+          }
+          //登录界面只接受登陆返回的信息
+          NSLog(@"msg=%@,cmd=%@",msg,cmd);
+          //刷新病人列表
+          if ([cmd isEqualToString:@"patientinfoACK"]||
+              [cmd isEqualToString:@"bpmdataACK"]||
+              [cmd isEqualToString:@"updateinfoACK"]||
+              [cmd isEqualToString:@"updateonlinestatusACK"]||
+              [cmd isEqualToString:@"bodataACK"]) {
+              [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+          }
+          else if ([cmd isEqualToString:@"hoslistACK"]){
+              //刷新病人列表
+              if (![msg isEqualToString:@"fail"]) {
+                  //一次性返回的数据解析
+                  [HospitalInfo getHosWithMsg:msg];
+              }
+          }
+          else if ([cmd isEqualToString:@"onClose"]){
+              //网络断开就要重连
+              [SVProgressHUD showErrorWithStatus:@"网络断开"];
+              [self.appMessageDelegate networkMessage:msg];
+          }
+    //休息
+          for (int i=0; i<2; i++) {
+              NSDate *date=[NSDate dateWithTimeIntervalSinceNow:5.0];
+              [NSThread sleepUntilDate:date];
+          }
+   
 }
 
+-(void)reciveData{
+    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
+}
 @end
