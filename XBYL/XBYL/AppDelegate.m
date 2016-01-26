@@ -108,9 +108,19 @@
                 if ([cmd isEqualToString:@"patientinfoACK"]||
                     [cmd isEqualToString:@"bpmdataACK"]||
                     [cmd isEqualToString:@"updateinfoACK"]||
-                    [cmd isEqualToString:@"updateonlinestatusACK"]||
-                    [cmd isEqualToString:@"bodataACK"]) {
+                    [cmd isEqualToString:@"updateonlinestatusACK"]
+                    ) {
                     [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                }
+                else if ([cmd isEqualToString:@"bodataACK"]){
+                    //只抛偶数次
+                    if (i%2==0) {
+                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                    }
+                    else{
+                        continue;
+                    }
+                
                 }
                 else if ([cmd isEqualToString:@"hoslistACK"]){
                     //刷新病人列表
@@ -121,7 +131,7 @@
                 }
                 
                 
-                [NSThread sleepForTimeInterval:1.5];
+                [NSThread sleepForTimeInterval:1];
             }
         }
     });

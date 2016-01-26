@@ -371,14 +371,6 @@
         [_contentTablvView reloadData];
         
     }
-    else if ([cmd isEqualToString:@"hoslistACK"]){
-        //刷新病人列表
-        if (![msg isEqualToString:@"fail"]) {
-            //一次性返回的数据解析
-            [HospitalInfo getHosWithMsg:msg];
-        }
-        
-    }
     else if ([cmd isEqualToString:@"bpmdataACK"]){
         //改变血压通知
         XueyaModel *model=[XueyaModel getModelWithString:msg];
@@ -405,12 +397,6 @@
         [self updateMulData:model];
         
     }
-    else if ([cmd isEqualToString:@"onClose"]){
-        //网络断开就要重连
-        [SVProgressHUD showErrorWithStatus:@"网络断开"];
-        reconnectBtn.hidden=NO;
-    }
-
 }
 
 -(void)existPatient:(PatientInfo *)patient{
