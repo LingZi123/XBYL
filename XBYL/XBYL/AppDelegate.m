@@ -29,20 +29,11 @@
     //否则直接进入主界面
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    
+
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     
     //通信IO反应堆初始化(应用启动时调用,建议在APP启动后调用,只调用一次)
     [nstdcomm stdcommStart];
-    dispatch_queue_t concurrentQueue = dispatch_queue_create("my.concurrent.queue", DISPATCH_QUEUE_CONCURRENT);
-    NSLog(@"1");
-    dispatch_async(concurrentQueue, ^(){
-        NSLog(@"2");
-        [NSThread sleepForTimeInterval:5];
-        NSLog(@"3");
-    });
-    NSLog(@"4");
-    
     [self reciveData];
    
     NSDictionary *systemSettingDic=[defaults objectForKey:user_systemsetting];
@@ -50,6 +41,18 @@
     
     NSDictionary *userInfoDic=[defaults objectForKey:user_loginUserInfo];
     _loginUserInfo=[LoginUserInfo getModelWithDic:userInfoDic];
+    
+    //读取本地的刷新凭率
+    id tempvalue=[defaults objectForKey:user_refashTime];
+    if (tempvalue==0) {
+        _refashValue=5;
+        //保存一个默认值5
+        [defaults setInteger:5 forKey:user_refashTime];
+        [defaults synchronize];
+    }
+    else{
+        _refashValue=[tempvalue integerValue];
+    }
     
     self.mainStoryBoard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
@@ -70,6 +73,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    isactive=NO;
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
@@ -81,6 +85,46 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    isactive=YES;
+    
+    dispatch_queue_t donelistQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_async(donelistQueue, ^(){
+        int count=0;
+        while (isactive) {
+            NSMutableArray *temparray=[listArray copy];
+            for (int i=0; i<temparray.count; i++) {
+                NSDictionary *dic=[temparray objectAtIndex:i];
+                NSString *cmd=[dic objectForKey:@"cmd"];
+                NSString *msg=[dic objectForKey:@"msg"];
+                
+                //登录界面只接受登陆返回的信息
+                NSLog(@"msg=%@,cmd=%@",msg,cmd);
+                
+                //登录界面只接受登陆返回的信息
+                NSLog(@"msg=%@,cmd=%@",msg,cmd);
+                //刷新病人列表
+                if ([cmd isEqualToString:@"patientinfoACK"]||
+                    [cmd isEqualToString:@"bpmdataACK"]||
+                    [cmd isEqualToString:@"updateinfoACK"]||
+                    [cmd isEqualToString:@"updateonlinestatusACK"]||
+                    [cmd isEqualToString:@"bodataACK"]) {
+                    [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                }
+                else if ([cmd isEqualToString:@"hoslistACK"]){
+                    //刷新病人列表
+                    if (![msg isEqualToString:@"fail"]) {
+                        //一次性返回的数据解析
+                        [HospitalInfo getHosWithMsg:msg];
+                    }
+                }
+                
+                
+                [NSThread sleepForTimeInterval:1.5];
+            }
+        }
+    });
     
     //检查数据库是否过期
     NSDate *today=[NSDate date];
@@ -186,39 +230,26 @@
 
 #pragma mark-数据接收
 -(void)stdMessageBox:(NSString*)cmd andMsg:(NSString*)msg{
-          //登录界面只接受登陆返回的信息
-          NSLog(@"msg=%@,cmd=%@",msg,cmd);
-          if ([cmd isEqualToString:@"loginACK"]) {
-              [self.appMessageDelegate logingMessage:msg];
-          }
-          //登录界面只接受登陆返回的信息
-          NSLog(@"msg=%@,cmd=%@",msg,cmd);
-          //刷新病人列表
-          if ([cmd isEqualToString:@"patientinfoACK"]||
-              [cmd isEqualToString:@"bpmdataACK"]||
-              [cmd isEqualToString:@"updateinfoACK"]||
-              [cmd isEqualToString:@"updateonlinestatusACK"]||
-              [cmd isEqualToString:@"bodataACK"]) {
-              [self.appMessageDelegate patientMessage:cmd andMsg:msg];
-          }
-          else if ([cmd isEqualToString:@"hoslistACK"]){
-              //刷新病人列表
-              if (![msg isEqualToString:@"fail"]) {
-                  //一次性返回的数据解析
-                  [HospitalInfo getHosWithMsg:msg];
-              }
-          }
-          else if ([cmd isEqualToString:@"onClose"]){
-              //网络断开就要重连
-              [SVProgressHUD showErrorWithStatus:@"网络断开"];
-              [self.appMessageDelegate networkMessage:msg];
-          }
-    //休息
-          for (int i=0; i<2; i++) {
-              NSDate *date=[NSDate dateWithTimeIntervalSinceNow:5.0];
-              [NSThread sleepUntilDate:date];
-          }
-   
+    if (listArray==nil) {
+        listArray=[[NSMutableArray alloc]init];
+    }
+    if ([cmd isEqualToString:@"loginACK"]) {
+        [self.appMessageDelegate logingMessage:msg];
+    }
+    else if ([cmd isEqualToString:@"onClose"]){
+        //网络断开就要重连
+        [SVProgressHUD showErrorWithStatus:@"网络断开"];
+        [self.appMessageDelegate networkMessage:msg];
+    }
+    else{
+        
+        //满了1024条就重新来过
+        if (listArray&&listArray.count>1024) {
+            [listArray removeAllObjects];
+        }
+        NSDictionary *dic=[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",listArray.count],@"index",cmd,@"cmd",msg,@"msg", nil];
+        [listArray addObject:dic];
+    }
 }
 
 -(void)reciveData{

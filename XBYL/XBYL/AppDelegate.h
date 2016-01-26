@@ -13,7 +13,10 @@
 #import "AppMessgeDelegate.h"
 
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+    BOOL isactive;
+    NSMutableArray *listArray;//接收数据
+}
 
 @property (strong, nonatomic) UIWindow *window;
 
@@ -23,6 +26,7 @@
 @property(nonatomic,retain)UIStoryboard *mainStoryBoard;//公用的变量
 @property(nonatomic,retain)LoginUserInfo *loginUserInfo;//登录的用户信息
 @property(nonatomic,retain)SystemSettingModel *systemSetting;//系统设置
+@property(nonatomic,assign)NSInteger refashValue;//刷新时间值
 @property(nonatomic,retain)UINavigationController *mainnav;
 
 @property(nonatomic,assign)id<AppMessgeDelegate> appMessageDelegate;

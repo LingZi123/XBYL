@@ -55,16 +55,20 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"header"] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    
     //从本地数据库读取数据
     [self setExtraCellLineHidden:settingTableView];
-    [self setExtraCellLineHidden:armTableView];
-    
-    //开启接收数据
-//    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
-//    [nstdcomm stdcommRefreshHosList];
+    alarmSettingView.delegate=self;
+    segmentSelected.selectedSegmentIndex=0;
+    [self switchSelected:segmentSelected];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
+    alarmSettingView.delegate=nil;
 //    [nstdcomm stdRegMessageBox:nil andSelect:@selector(stdMessageBox:andMsg:)];
 }
 
@@ -95,88 +99,42 @@
     }
     
     tempFrame= selectDataTopView.frame;
-    refashSheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"3秒",@"5秒",@"10秒",@"15秒", nil];
+    refashSheet=[[UIActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"5秒",@"10秒",@"15秒",@"20秒", nil];
     refashSheet.hidden=YES;
     [refashButton setTitle:[NSString stringWithFormat:@"%ld秒刷新",_refashValue] forState:UIControlStateNormal];
     
     //填充报警参数值
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    if (alarmDic==nil) {
-        alarmDic=[[NSMutableDictionary alloc]initWithDictionary:[defaults objectForKey:user_defaultAlarmSetting]];
+    NSData *data=[defaults objectForKey:user_defaultAlarmSetting];
+    if (data) {
+        alarmInfo=(PersonSettingInfo *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
     }
-    if (alarmDic) {
-        shousuoUpValue=[[alarmDic objectForKey:def_shousuoUpValue]integerValue];
-        shuzhangUpValue=[[alarmDic objectForKey:def_shuzhangUpValue]integerValue];
-        xueyangUpValue=[[alarmDic objectForKey:def_xueyangUpValue]integerValue];
-        xinlvUpValue=[[alarmDic objectForKey:def_xinlvUpValue]integerValue];
-        mailvUpValue=[[alarmDic objectForKey:def_mailvUpValue]integerValue];
-        huxiUpValue=[[alarmDic objectForKey:def_huxiUpValue]integerValue];
-        xinlvDownValue=[[alarmDic objectForKey:def_xinlvDownValue]integerValue];
-        mailvDownValue=[[alarmDic objectForKey:def_mailvDownValue]integerValue];
-        huxiDownValue=[[alarmDic objectForKey:def_huxiDownValue]integerValue];
-        xueyangDownValue=[[alarmDic objectForKey:def_xueyangDownValue]integerValue];
-        shousuoDownValue=[[alarmDic objectForKey:def_shousuoDownValue]integerValue];
-        shuzhangDownValue=[[alarmDic objectForKey:def_shuzhangDownValue]integerValue];
+    if (alarmInfo==nil) {
+         [self defuaultAlarmDic];
     }
-    else{
-        [self defuaultAlarmDic];
-    }
-    
-    [self fullAlarmArray];
+    alarmSettingView=[[AlarmSettingView alloc]initWithFrame:dateSelectedView.frame info:alarmInfo];
+    [self.view addSubview:alarmSettingView];
     
 }
 
 -(void)defuaultAlarmDic{
-    shousuoUpValue=Default_Shousuoya_Up;
-    shuzhangUpValue=Default_Shuzhangye_Up;
-    xueyangUpValue=Default_Xueyang_Up;
-    xinlvUpValue=Default_Xinlv_Up;
-    mailvUpValue=Default_Mailv_Up;
-    huxiUpValue=Default_Huxi_Up;
-    xinlvDownValue=Default_Xinlv_Down;
-    mailvDownValue=Default_Mailv_Down;
-    huxiDownValue=Default_Huxi_Down;
-    xueyangDownValue=Default_Xueyang_Down;
-    shousuoDownValue=Default_Shousuoya_Down;
-    shuzhangDownValue=Default_Shuzhangye_Down;
-    alarmDic=[[NSMutableDictionary alloc]init];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shousuoUpValue] forKey:def_shousuoUpValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shuzhangUpValue] forKey:def_shuzhangUpValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xueyangUpValue] forKey:def_xueyangUpValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xinlvUpValue] forKey:def_xinlvUpValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",mailvUpValue] forKey:def_mailvUpValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",huxiUpValue] forKey:def_huxiUpValue];
+    alarmInfo=[[PersonSettingInfo alloc]init];
+    alarmInfo.patientNo=Default_People ;
     
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xinlvDownValue] forKey:def_xinlvDownValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",mailvDownValue] forKey:def_mailvDownValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",huxiDownValue] forKey:def_huxiDownValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",xueyangDownValue] forKey:def_xueyangDownValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shousuoDownValue] forKey:def_shousuoDownValue];
-    [alarmDic setObject:[NSString stringWithFormat:@"%ld",shuzhangDownValue] forKey:def_shuzhangDownValue];
-
+    alarmInfo.shousuoyaupvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Up];
+    alarmInfo.shuzhangyaupvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Up];
+    alarmInfo.xueyangupvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Up];
+    alarmInfo.xinlvupvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Up];
+    alarmInfo.mailvupvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Up];
+    alarmInfo.huxiupvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Up];
+    alarmInfo.xinlvdownvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Down];
+    alarmInfo.mailvdownvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Down];
+    alarmInfo.huxidownvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Down];
+    alarmInfo.xueyangdownvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Down];
+    alarmInfo.shousuoyadownvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Down];
+    alarmInfo.shuzhangyadownvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Down];
 }
 
--(void)fullAlarmArray{
-    if (alarmArray) {
-        [alarmArray removeAllObjects];
-    }
-    else{
-        alarmArray=[[NSMutableArray alloc]init];
-    }
-    NSMutableDictionary *dic1=[[NSMutableDictionary alloc]initWithObjectsAndKeys:@"收缩压",@"title",[NSString stringWithFormat:@"%ld",shousuoDownValue],@"downValue",[NSString stringWithFormat:@"%ld",shousuoUpValue],@"upValue", nil];
-    NSMutableDictionary *dic2=[[NSMutableDictionary alloc]initWithObjectsAndKeys:@"舒张压",@"title",[NSString stringWithFormat:@"%ld",shuzhangDownValue],@"downValue",[NSString stringWithFormat:@"%ld",shuzhangUpValue],@"upValue", nil];
-    NSMutableDictionary *dic3=[[NSMutableDictionary alloc]initWithObjectsAndKeys:@"血氧",@"title",[NSString stringWithFormat:@"%ld",xueyangDownValue],@"downValue",[NSString stringWithFormat:@"%ld",xueyangUpValue],@"upValue", nil];
-    NSMutableDictionary *dic4=[[NSMutableDictionary alloc]initWithObjectsAndKeys:@"心率",@"title",[NSString stringWithFormat:@"%ld",xinlvDownValue],@"downValue",[NSString stringWithFormat:@"%ld",xinlvUpValue],@"upValue", nil];
-    NSMutableDictionary *dic5=[[NSMutableDictionary alloc]initWithObjectsAndKeys:@"脉率",@"title",[NSString stringWithFormat:@"%ld",mailvDownValue],@"downValue",[NSString stringWithFormat:@"%ld",mailvUpValue],@"upValue", nil];
-    NSMutableDictionary *dic6=[[NSMutableDictionary alloc]initWithObjectsAndKeys:@"呼吸",@"title",[NSString stringWithFormat:@"%ld",huxiDownValue],@"downValue",[NSString stringWithFormat:@"%ld",huxiUpValue],@"upValue", nil];
-    
-    [alarmArray addObject:dic1];
-    [alarmArray addObject:dic2];
-    [alarmArray addObject:dic3];
-    [alarmArray addObject:dic4];
-    [alarmArray addObject:dic5];
-    [alarmArray addObject:dic6];
-}
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self dismissKeyBoard];
 }
@@ -194,8 +152,7 @@
     }
     else{
         [self defuaultAlarmDic];
-        [self fullAlarmArray];
-        [armTableView reloadData];
+        [alarmSettingView recoveDefault:alarmInfo];
     }
 }
 -(void)back:(id)sender{
@@ -211,19 +168,7 @@
     else{
         alarmSettingView.hidden=NO;
         dateSelectedView.hidden=YES;
-        [armTableView reloadData];
     }
-}
-
-- (IBAction)saveAlarmSetting:(id)sender {
-    //保存数据
-    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    [defaults setObject:alarmDic forKey:user_defaultAlarmSetting];
-    [defaults synchronize];
-    
-    //修改所有病人的设置
-    [PersonSettingInfo updateAllModelWithDic:alarmDic];
-    [SVProgressHUD showErrorWithStatus:@"修改成功"];
 }
 
 - (IBAction)refashRateClick:(id)sender {
@@ -271,120 +216,63 @@
 
 #pragma mark-UITableViewDelegate
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if (tableView==settingTableView) {
-        return dataArray.count;
-    }
-    else{
-        return 1;
-    }
-    
+    return dataArray.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (tableView==settingTableView) {
-        NSString *identif=@"SettingViewTableViewCell";
-        SettingViewTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:identif];
-        if (cell==nil) {
-            cell=[[SettingViewTableViewCell alloc]init];
-        }
-        
-        HospitalInfo *hospitalGroup = dataArray[indexPath.section];
-        NSArray *patientArray=hospitalGroup.patients;
-        PatientInfo *person = patientArray[indexPath.row];
-        
-        cell.nameLabel.text=person.patientName;
-        cell.ageLabel.text=person.patientAge;
-        cell.sexLabel.text=person.patientSex;
-        if (person.isShown) {
-            cell.accessoryType=UITableViewCellAccessoryCheckmark;
+    NSString *identif=@"SettingViewTableViewCell";
+    SettingViewTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:identif];
+    if (cell==nil) {
+        cell=[[SettingViewTableViewCell alloc]init];
+    }
+    
+    HospitalInfo *hospitalGroup = dataArray[indexPath.section];
+    NSArray *patientArray=hospitalGroup.patients;
+    PatientInfo *person = patientArray[indexPath.row];
+    
+    cell.nameLabel.text=person.patientName;
+    cell.ageLabel.text=person.patientAge;
+    cell.sexLabel.text=person.patientSex;
+    if (person.isShown) {
+        cell.accessoryType=UITableViewCellAccessoryCheckmark;
 
-        }
-        else{
-            cell.accessoryType=UITableViewCellAccessoryNone;
-
-        }
-       return cell;
     }
     else{
-        NSString *identif=@"alarmTableViewCell";
-        UITableViewCell  *cell=[tableView dequeueReusableCellWithIdentifier:identif];
-        if (cell==nil) {
-            cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identif];
-        }
-        NSDictionary *dic=[alarmArray objectAtIndex:indexPath.row];
-        cell.textLabel.text=[dic objectForKey:@"title"];
-        cell.detailTextLabel.text=[NSString stringWithFormat:@"%ld~%ld",[[dic objectForKey:@"downValue"]integerValue],[[dic objectForKey:@"upValue"]integerValue]] ;
-//        cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
-        
-        return cell;
+        cell.accessoryType=UITableViewCellAccessoryNone;
+
     }
+   return cell;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (tableView==settingTableView) {
-        HospitalInfo *hospitalGroup =dataArray[section];
-        NSArray *people=hospitalGroup.patients;
-        
-        NSInteger count = hospitalGroup.isOpened ?people.count : 0;
-        if (count==0) {
-            tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
-        }
-        else{
-            tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
-        }
-        return count;
+    HospitalInfo *hospitalGroup =dataArray[section];
+    NSArray *people=hospitalGroup.patients;
+    
+    NSInteger count = hospitalGroup.isOpened ?people.count : 0;
+    if (count==0) {
+        tableView.separatorStyle=UITableViewCellSeparatorStyleNone;
     }
     else{
-        return alarmArray.count;
+        tableView.separatorStyle=UITableViewCellSeparatorStyleSingleLine;
     }
+    return count;
     
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (tableView==settingTableView) {
-        HospitalInfo *hospital=[dataArray objectAtIndex:indexPath.section];
-        if (hospital&&hospital.patients) {
-            PatientInfo *patient=[hospital.patients objectAtIndex:indexPath.row];
-            
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (cell.accessoryType==UITableViewCellAccessoryCheckmark) {
-                cell.accessoryType=UITableViewCellAccessoryNone;
-                patient.isShown=NO;
-            }
-            else{
-                cell.accessoryType=UITableViewCellAccessoryCheckmark  ;
-                patient.isShown=YES;
-            }
-
-        }
-    }
-    else{
+    HospitalInfo *hospital=[dataArray objectAtIndex:indexPath.section];
+    if (hospital&&hospital.patients) {
+        PatientInfo *patient=[hospital.patients objectAtIndex:indexPath.row];
         
-        AlarmPickView *alarmpickview=[AlarmPickView defaultPopupView];
-        alarmpickview.parentVC = self;
-        alarmpickview.delegate=self;
-//        AppDelegate *appdelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
-//        PickViewController *vc=[appdelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"PickViewController"];
-        alarmpickview.selectRow=indexPath;
-        NSMutableArray *upArray=[[NSMutableArray alloc]init];
-        NSMutableArray *downArray=[[NSMutableArray alloc]init];
-        for (int i=1; i<300; i++) {
-            NSString *a=[NSString stringWithFormat:@"%d",i];
-            [upArray addObject:a];
-            [downArray addObject:a];
-            
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        if (cell.accessoryType==UITableViewCellAccessoryCheckmark) {
+            cell.accessoryType=UITableViewCellAccessoryNone;
+            patient.isShown=NO;
         }
-        NSMutableDictionary *data=[alarmArray objectAtIndex:indexPath.row];
-        alarmpickview.titleValue=[data objectForKey:@"title"];
-        alarmpickview.updataArray=upArray;
-        alarmpickview.downDataArray=downArray;
-        alarmpickview.upValue=[data objectForKey:@"upValue"];
-        alarmpickview.downValue=[data objectForKey:@"downValue"];
-        [alarmpickview makeView];
-        [self lew_presentPopupView:alarmpickview animation:[LewPopupViewAnimationSpring new] dismissed:^{
-            NSLog(@"动画结束");
-        }];
-//        [self.navigationController pushViewController:vc animated:YES];
+        else{
+            cell.accessoryType=UITableViewCellAccessoryCheckmark  ;
+            patient.isShown=YES;
+        }
+
     }
-    
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
@@ -449,52 +337,41 @@
 
 #pragma mark-PickViewControllerDelegate
 -(void)complateInRow:(NSIndexPath *)row upValue:(NSString *)upvalue downValue:(NSString *)downValue{
-    NSMutableDictionary *dic=[alarmArray objectAtIndex:row.row];
-    [dic setObject:upvalue forKey:@"upValue"];
-    [dic setObject:downValue forKey:@"downValue"];
-
-    if (alarmDic==nil) {
-        alarmDic=[[NSMutableDictionary alloc]init];
-    }
-    if (row.row==0) {
-        shousuoDownValue=[downValue integerValue];
-        shousuoUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:def_shousuoDownValue];
-        [alarmDic setObject:upvalue forKey:def_shousuoUpValue];
-    }
-    else if (row.row==1){
-        shuzhangDownValue=[downValue integerValue];
-        shuzhangUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:def_shuzhangDownValue];
-        [alarmDic setObject:upvalue forKey:def_shuzhangUpValue];
-    }
-    else if (row.row==2){
-        xueyangDownValue=[downValue integerValue];
-        xueyangUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:def_xueyangDownValue];
-        [alarmDic setObject:upvalue forKey:def_xueyangUpValue];
-    }
-    else if (row.row==3){
-        xinlvDownValue=[downValue integerValue];
-        xinlvUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:def_xinlvDownValue];
-        [alarmDic setObject:upvalue forKey:def_xinlvUpValue];
-    }
-    else if (row.row==4){
-        mailvDownValue=[downValue integerValue];
-        mailvUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:def_mailvDownValue];
-        [alarmDic setObject:upvalue forKey:def_mailvUpValue];
-    }
-    else if (row.row==5){
-        huxiDownValue=[downValue integerValue];
-        huxiUpValue=[upvalue integerValue];
-        [alarmDic setObject:downValue forKey:def_huxiDownValue];
-        [alarmDic setObject:upvalue forKey:def_huxiUpValue];
-    }
-    //刷新
-    [armTableView reloadRowsAtIndexPaths:[[NSArray alloc]initWithObjects:row, nil] withRowAnimation:UITableViewRowAnimationNone];
+    [alarmSettingView refashInRow:row upValue:upvalue downValue:downValue];
 }
 
+#pragma mark-AlarmSettingViewDelegate
+
+-(void)popAlarmPickView:(NSArray *)upArray downArray:(NSArray *)downArray data:(NSMutableDictionary *)data selectRow:(NSIndexPath *)selectRow{
+    
+    AlarmPickView *alarmpickview=[AlarmPickView defaultPopupView];
+    alarmpickview.parentVC = self;
+    alarmpickview.delegate=self;
+    alarmpickview.selectRow=selectRow;
+    alarmpickview.titleValue=[data objectForKey:@"title"];
+    alarmpickview.updataArray=upArray;
+    alarmpickview.downDataArray=downArray;
+    alarmpickview.upValue=[data objectForKey:@"upValue"];
+    alarmpickview.downValue=[data objectForKey:@"downValue"];
+    [alarmpickview makeView];
+    [self lew_presentPopupView:alarmpickview animation:[LewPopupViewAnimationSpring new] dismissed:^{
+        NSLog(@"动画结束");
+    }];
+
+}
+
+-(void)savedata:(PersonSettingInfo *)info{
+    //保存数据
+    alarmInfo=info;
+    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+    NSData *data=[NSKeyedArchiver archivedDataWithRootObject:info];
+    [defaults setObject:data forKey:user_defaultAlarmSetting];
+    [defaults synchronize];
+    
+    //修改所有病人的设置
+    [PersonSettingInfo updateAllModelWithDic:info];
+    [SVProgressHUD showErrorWithStatus:@"修改成功"];
+
+}
 
 @end

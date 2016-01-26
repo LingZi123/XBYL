@@ -175,6 +175,7 @@
     _contentTablvView.delegate=self;
     _contentTablvView.dataSource=self;
     
+    [self setExtraCellLineHidden:_contentTablvView];
 }
 -(void)logout:(id)sender{
     appDelegate.loginUserInfo.isLoginOut=YES;
@@ -333,7 +334,7 @@
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
     
     PatientInfo *patient=[infoArray objectAtIndex:indexPath.row];
-    PersonSettingViewController *p=[appDelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"PersonSettingViewController"];
+    PersonSettingViewController *p=[[PersonSettingViewController alloc]init];
     p.patient=patient;
     [self.navigationController pushViewController:p animated:YES];
 }
@@ -572,6 +573,7 @@
     reconnectBtn.hidden=NO;
 }
 
+
 #pragma mark-UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     //进入登录界面
@@ -580,13 +582,21 @@
 }
 
 -(void)goLoginVC{
-    dispatch_async(dispatch_get_main_queue(), ^{
+//    dispatch_async(dispatch_get_main_queue(), ^{
         LoginViewController *loginVC=[appDelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [loginVC loginSucess:^(LoginUserInfo *tempUserInfo) {
-            [loginVC dismissViewControllerAnimated:YES completion:nil];
-            
-        }];
+//        [loginVC loginSucess:^(LoginUserInfo *tempUserInfo) {
+//            [loginVC dismissViewControllerAnimated:YES completion:nil];
+//            
+//        }];
         [self presentViewController:loginVC animated:YES completion:nil];
-    });
+//    });
+}
+
+#pragma mark-隐藏分割线
+- (void)setExtraCellLineHidden: (UITableView *)tableView{
+    UIView *view =[ [UIView alloc]init];
+    view.backgroundColor = [UIColor clearColor];
+    [tableView setTableFooterView:view];
+    [tableView setTableHeaderView:view];
 }
 @end

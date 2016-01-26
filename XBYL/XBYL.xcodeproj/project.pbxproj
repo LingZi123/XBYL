@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		366714B11C571E63000CCF9C /* AlarmSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 366714B01C571E63000CCF9C /* AlarmSettingView.m */; };
 		36BB35221B887FA200B2167A /* SystemSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35211B887FA200B2167A /* SystemSettingModel.m */; };
 		36BB352B1B89779200B2167A /* LoginUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB352A1B89779200B2167A /* LoginUserInfo.m */; };
 		36BB352E1B89B65300B2167A /* PatientInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB352D1B89B65300B2167A /* PatientInfo.m */; };
@@ -93,6 +94,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		366714AF1C571E63000CCF9C /* AlarmSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmSettingView.h; sourceTree = "<group>"; };
+		366714B01C571E63000CCF9C /* AlarmSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmSettingView.m; sourceTree = "<group>"; };
 		36BB35131B88789E00B2167A /* xybl_Header.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xybl_Header.pch; sourceTree = "<group>"; };
 		36BB35201B887FA200B2167A /* SystemSettingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SystemSettingModel.h; path = Model/SystemSettingModel.h; sourceTree = "<group>"; };
 		36BB35211B887FA200B2167A /* SystemSettingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SystemSettingModel.m; path = Model/SystemSettingModel.m; sourceTree = "<group>"; };
@@ -329,6 +332,8 @@
 				A6568B8C1C059B3000D78DD1 /* AlarmPickView.h */,
 				A6568B8D1C059B3000D78DD1 /* AlarmPickView.m */,
 				A6568B8F1C059B4000D78DD1 /* AlarmPickView.xib */,
+				366714AF1C571E63000CCF9C /* AlarmSettingView.h */,
+				366714B01C571E63000CCF9C /* AlarmSettingView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -579,6 +584,7 @@
 				36F6A8541B62FE160024E783 /* SettingViewController.m in Sources */,
 				A6568B9F1C059D4500D78DD1 /* LewPopupBackgroundView.m in Sources */,
 				36BB355E1BA6316E00B2167A /* AFHTTPSessionManager.m in Sources */,
+				366714B11C571E63000CCF9C /* AlarmSettingView.m in Sources */,
 				36BB355C1BA6315F00B2167A /* AFHTTPRequestOperation.m in Sources */,
 				36BB35311B89FCF900B2167A /* MulDataModel.m in Sources */,
 				36BB35601BA6318300B2167A /* AFNetworkReachabilityManager.m in Sources */,

@@ -152,7 +152,7 @@
 }
 
 //获取所有数据都修改
-+(BOOL)updateAllModelWithDic:(NSMutableDictionary *)dic{
++(BOOL)updateAllModelWithDic:(PersonSettingInfo *)dic{
     
     AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context=appDelegate.managedObjectContext;
@@ -168,19 +168,19 @@
             for (PersonSettingModel *item in tempArray) {
                 PersonSettingInfo *info=[[PersonSettingInfo alloc]init];
                 info.patientNo=item.patientNo;
-                info.shousuoyaupvalue=[dic objectForKey:@"shousuoUpValue"];
-                info.shuzhangyaupvalue=[dic objectForKey:@"shuzhangUpValue"];
-                info.xueyangupvalue=[dic objectForKey:@"xueyangUpValue"];
-                info.xinlvupvalue=[dic objectForKey:@"xinlvUpValue"];
-                info.mailvupvalue=[dic objectForKey:@"mailvUpValue"];
-                info.huxiupvalue=[dic objectForKey:@"huxiUpValue"];
+                info.shousuoyaupvalue=dic.shousuoyaupvalue;
+                info.shuzhangyaupvalue=dic.shuzhangyaupvalue;
+                info.xueyangupvalue=dic.xueyangupvalue;
+                info.xinlvupvalue=dic.xinlvupvalue;
+                info.mailvupvalue=dic.mailvupvalue;
+                info.huxiupvalue=dic.huxiupvalue;
                 
-                info.xinlvdownvalue=[dic objectForKey:@"xinlvDownValue"];
-                info.mailvdownvalue=[dic objectForKey:@"mailvDownValue"];
-                info.huxidownvalue=[dic objectForKey:@"huxiDownValue"];
-                info.xueyangdownvalue=[dic objectForKey:@"xueyangDownValue"];
-                info.shousuoyadownvalue=[dic objectForKey:@"shousuoDownValue"];
-                info.shuzhangyadownvalue=[dic objectForKey:@"shuzhangDownValue"];
+                info.xinlvdownvalue=dic.xinlvdownvalue;
+                info.mailvdownvalue=dic.mailvdownvalue;
+                info.huxidownvalue=dic.huxidownvalue;
+                info.xueyangdownvalue=dic.xueyangdownvalue;
+                info.shousuoyadownvalue=dic.shousuoyadownvalue;
+                info.shuzhangyadownvalue=dic.shuzhangyadownvalue;
                 
                 [self updateModelWithModel:info];
 //                break;
@@ -194,4 +194,44 @@
  
 }
 
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.patientNo forKey:@"patientNo"];
+    [aCoder encodeObject:self.shuzhangyaupvalue forKey:@"shuzhangyaupvalue"];
+    [aCoder encodeObject:self.huxidownvalue forKey:@"huxidownvalue"];
+    [aCoder encodeObject:self.xueyangdownvalue forKey:@"xueyangdownvalue"];
+    [aCoder encodeObject:self.xueyangupvalue forKey:@"xueyangupvalue"];
+    [aCoder encodeObject:self.shousuoyadownvalue forKey:@"shousuoyadownvalue"];
+    [aCoder encodeObject:self.shuzhangyadownvalue forKey:@"shuzhangyadownvalue"];
+    [aCoder encodeObject:self.shousuoyaupvalue forKey:@"shousuoyaupvalue"];
+    [aCoder encodeObject:self.huxiupvalue forKey:@"huxiupvalue"];
+    [aCoder encodeObject:self.xinlvdownvalue forKey:@"xinlvdownvalue"];
+    [aCoder encodeObject:self.xinlvupvalue forKey:@"xinlvupvalue"];
+    [aCoder encodeObject:self.mailvdownvalue forKey:@"mailvdownvalue"];
+    [aCoder encodeObject:self.mailvupvalue forKey:@"mailvupvalue"];
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self=[super init];
+    if (self) {
+        self.patientNo=[aDecoder decodeObjectForKey:@"patientNo"];
+        self.shuzhangyaupvalue=[aDecoder decodeObjectForKey:@"shuzhangyaupvalue"];
+        self.shuzhangyadownvalue=[aDecoder decodeObjectForKey:@"shuzhangyadownvalue"];
+        
+        self.huxidownvalue=[aDecoder decodeObjectForKey:@"huxidownvalue"];
+        self.huxiupvalue=[aDecoder decodeObjectForKey:@"huxiupvalue"];
+        
+        self.xueyangdownvalue=[aDecoder decodeObjectForKey:@"xueyangdownvalue"];
+        self.xueyangupvalue=[aDecoder decodeObjectForKey:@"xueyangupvalue"];
+        
+        self.shousuoyadownvalue=[aDecoder decodeObjectForKey:@"shousuoyadownvalue"];
+        self.shousuoyaupvalue=[aDecoder decodeObjectForKey:@"shousuoyaupvalue"];
+        
+        self.xinlvdownvalue=[aDecoder decodeObjectForKey:@"xinlvdownvalue"];
+        self.xinlvupvalue=[aDecoder decodeObjectForKey:@"xinlvupvalue"];
+        
+        self.mailvdownvalue=[aDecoder decodeObjectForKey:@"mailvdownvalue"];
+        self.mailvupvalue=[aDecoder decodeObjectForKey:@"mailvupvalue"];
+    }
+    return self;
+}
 @end

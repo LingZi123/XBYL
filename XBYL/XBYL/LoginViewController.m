@@ -145,10 +145,14 @@
         NSDictionary *userInfoDic=[LoginUserInfo getDicWithModel:[self appDelegate].loginUserInfo];
         [defaults setObject:userInfoDic forKey:user_loginUserInfo];
         [defaults synchronize];
-        if (self.block!=nil) {
+        
+        [self dismissViewControllerAnimated:YES completion:^{
             
-            self.block([self appDelegate].loginUserInfo);
-        }
+        }];
+//        if (self.block!=nil) {
+//            
+//            self.block([self appDelegate].loginUserInfo);
+//        }
         
     }
     else{

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PersonSettingInfo : NSObject
+@interface PersonSettingInfo : NSObject<NSCoding>
 
 @property (nonatomic, copy) NSString * shuzhangyaupvalue;
 @property (nonatomic, copy) NSString * huxidownvalue;
@@ -28,6 +28,6 @@
 +(BOOL)updateModelWithModel:(PersonSettingInfo *)info;//修改数据
 +(BOOL)InsertModelWithModel:(PersonSettingInfo *)info;//添加数据
 +(BOOL)deleteModelWithPatientNo:(NSString *)patientNo;//删除数据
-+(BOOL)updateAllModelWithDic:(NSMutableDictionary *)dic;//获取所有数据都修改
++(BOOL)updateAllModelWithDic:(PersonSettingInfo *)dic;//获取所有数据都修改
 
 @end

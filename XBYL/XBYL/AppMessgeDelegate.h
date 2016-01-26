@@ -13,5 +13,5 @@
 -(void)patientMessage:(NSString*)cmd andMsg:(NSString*)msg;
 -(void)hosMessage:(NSString *)mes;
 -(void)networkMessage:(NSString *)mes;
-
+//-(void)refashMainvc;//刷新主界面
 @end
