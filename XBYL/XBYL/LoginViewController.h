@@ -19,10 +19,8 @@ typedef void (^loginSuccessBlock)(LoginUserInfo *tempUserinfo);
 
     __weak IBOutlet UITextField *userNameTextField;
     __weak IBOutlet UITextField *pwdTextField;
-    SystemSettingModel *systemSetting;
     BOOL connectResult;//连接服务器结果
     BOOL isremeberPwd;
-    
     UIAlertView *tipView;
     
     __weak IBOutlet UIButton *isremeberBtn;

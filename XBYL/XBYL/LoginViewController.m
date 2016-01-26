@@ -36,20 +36,11 @@
     [self appDelegate].appMessageDelegate=self;
     
     //读取本地系统设置参数
-    
-    NSUserDefaults *defausts=[NSUserDefaults standardUserDefaults];
-    NSDictionary *dic=[defausts objectForKey:user_systemsetting];
-    systemSetting=[SystemSettingModel getModelWithDic:dic];
-    if (systemSetting) {
-//        //开始链接
-//        [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-    }
-    else{
+    if ([self appDelegate].systemSetting==nil) {
         //弹出提示框
         UIAlertView *alter=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还没有进行系统设置，是否前往设置"delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去设置", nil];
         [alter show];
     }
-    
     //填充界面
     [self makeView];
     
@@ -63,21 +54,19 @@
     
     if ([self appDelegate].loginUserInfo) {
         userNameTextField.text=[self appDelegate].loginUserInfo.userName;
-        pwdTextField.text=[self appDelegate].loginUserInfo.pwd;
         if ([self appDelegate].loginUserInfo.isRemeberPwd) {
             isremeberBtn.selected=NO;
+             pwdTextField.text=[self appDelegate].loginUserInfo.pwd;
         }
         else{
             isremeberBtn.selected=YES;
+            
         }
          [self remeberPwd:isremeberBtn];
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [self appDelegate].appMessageDelegate=nil;
-
-    //注销回调
-//     [nstdcomm stdRegMessageBox:nil andSelect:@selector(stdMessageBox:andMsg:)];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -94,8 +83,7 @@
     [self goSystemSetting];
 }
 -(void)goSystemSetting{
-    AppDelegate *appdelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
-    SystemSettingViewController *systemSettingVC=[appdelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"SystemSettingViewController"];
+    SystemSettingViewController *systemSettingVC=[[self appDelegate].mainStoryBoard instantiateViewControllerWithIdentifier:@"SystemSettingViewController"];
     [self presentViewController:systemSettingVC animated:YES completion:nil];
     
 }
@@ -106,7 +94,7 @@
         tipView.message=@"用户名、密码不能为空";
         [tipView show];
     }
-    [nstdcomm stdcommConnect:systemSetting.ip andPort:systemSetting.port  andWebPort:systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+    [nstdcomm stdcommConnect:[self appDelegate].systemSetting.ip andPort:[self appDelegate].systemSetting.port  andWebPort:[self appDelegate].systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
     
     //登录操作
     [nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text];
@@ -149,10 +137,6 @@
         [self dismissViewControllerAnimated:YES completion:^{
             
         }];
-//        if (self.block!=nil) {
-//            
-//            self.block([self appDelegate].loginUserInfo);
-//        }
         
     }
     else{
