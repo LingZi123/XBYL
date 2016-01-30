@@ -28,6 +28,8 @@
 @property(nonatomic,retain)SystemSettingModel *systemSetting;//系统设置
 @property(nonatomic,assign)NSInteger refashValue;//刷新时间值
 @property(nonatomic,retain)UINavigationController *mainnav;
+@property(nonatomic,assign)BOOL connected;//是否已经连接
+@property(nonatomic,assign)BOOL logined;//是否已经登录
 
 @property(nonatomic,assign)id<AppMessgeDelegate> appMessageDelegate;
 

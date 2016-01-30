@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 
 //登录的用户信息
-@interface LoginUserInfo : NSObject
+@interface LoginUserInfo : NSObject<NSCoding>
 
 @property(nonatomic,copy)NSString *userName;
 @property(nonatomic,copy)NSString *pwd;
 @property(nonatomic,assign)BOOL isLoginOut;
 @property(nonatomic,assign)BOOL isRemeberPwd;
 
-+(LoginUserInfo *)getModelWithDic:(NSDictionary *)dic;
-+(NSDictionary *)getDicWithModel:(LoginUserInfo *)model;
+//+(LoginUserInfo *)getModelWithDic:(NSDictionary *)dic;
+//+(NSDictionary *)getDicWithModel:(LoginUserInfo *)model;
 @end

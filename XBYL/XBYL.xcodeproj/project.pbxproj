@@ -16,9 +16,6 @@
 		36BB35371B8A12FB00B2167A /* PatientStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35361B8A12FB00B2167A /* PatientStatus.m */; };
 		36BB353C1B8DE9A300B2167A /* HospitalInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB353B1B8DE9A300B2167A /* HospitalInfo.m */; };
 		36BB353F1B8F49A900B2167A /* PersonSettingInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB353E1B8F49A900B2167A /* PersonSettingInfo.m */; };
-		36BB35471B93150600B2167A /* PatientInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35421B93150600B2167A /* PatientInfoModel.m */; };
-		36BB35481B93150600B2167A /* HospitalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35441B93150600B2167A /* HospitalModel.m */; };
-		36BB35491B93150600B2167A /* PersonSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35461B93150600B2167A /* PersonSettingModel.m */; };
 		36BB354E1B951D4100B2167A /* AFNetworking in Resources */ = {isa = PBXBuildFile; fileRef = 36BB354D1B951D4100B2167A /* AFNetworking */; };
 		36BB35501B951EF200B2167A /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36BB354F1B951EF200B2167A /* CFNetwork.framework */; };
 		36BB35541BA5725E00B2167A /* SVProgressHUD in Resources */ = {isa = PBXBuildFile; fileRef = 36BB35531BA5725D00B2167A /* SVProgressHUD */; };
@@ -54,6 +51,10 @@
 		36F6A8711B75D9840024E783 /* RefashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A8701B75D9840024E783 /* RefashView.m */; };
 		36F6A8731B75D99C0024E783 /* RefashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F6A8721B75D99C0024E783 /* RefashView.xib */; };
 		36F6A8761B75F3320024E783 /* HeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A8751B75F3320024E783 /* HeadView.m */; };
+		36FBCEF91C5A08AB00F8561A /* PatientInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FBCEF81C5A08AB00F8561A /* PatientInfoModel.m */; };
+		36FBCEFC1C5A08AB00F8561A /* PersonSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FBCEFB1C5A08AB00F8561A /* PersonSettingModel.m */; };
+		36FBCEFF1C5A08AB00F8561A /* HospitalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FBCEFE1C5A08AB00F8561A /* HospitalModel.m */; };
+		36FBCF021C5A08AC00F8561A /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FBCF011C5A08AC00F8561A /* UserInfoModel.m */; };
 		A64B22C61C4DE971001FB46F /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04421BFDD14F00D7BB71 /* Realm.framework */; };
 		A6568B8E1C059B3000D78DD1 /* AlarmPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B8D1C059B3000D78DD1 /* AlarmPickView.m */; };
 		A6568B901C059B4000D78DD1 /* AlarmPickView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6568B8F1C059B4000D78DD1 /* AlarmPickView.xib */; };
@@ -113,12 +114,6 @@
 		36BB353B1B8DE9A300B2167A /* HospitalInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HospitalInfo.m; path = Model/HospitalInfo.m; sourceTree = "<group>"; };
 		36BB353D1B8F49A900B2167A /* PersonSettingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonSettingInfo.h; path = Model/PersonSettingInfo.h; sourceTree = "<group>"; };
 		36BB353E1B8F49A900B2167A /* PersonSettingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonSettingInfo.m; path = Model/PersonSettingInfo.m; sourceTree = "<group>"; };
-		36BB35411B93150600B2167A /* PatientInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatientInfoModel.h; path = Model/PatientInfoModel.h; sourceTree = "<group>"; };
-		36BB35421B93150600B2167A /* PatientInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatientInfoModel.m; path = Model/PatientInfoModel.m; sourceTree = "<group>"; };
-		36BB35431B93150600B2167A /* HospitalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HospitalModel.h; path = Model/HospitalModel.h; sourceTree = "<group>"; };
-		36BB35441B93150600B2167A /* HospitalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HospitalModel.m; path = Model/HospitalModel.m; sourceTree = "<group>"; };
-		36BB35451B93150600B2167A /* PersonSettingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonSettingModel.h; path = Model/PersonSettingModel.h; sourceTree = "<group>"; };
-		36BB35461B93150600B2167A /* PersonSettingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonSettingModel.m; path = Model/PersonSettingModel.m; sourceTree = "<group>"; };
 		36BB354D1B951D4100B2167A /* AFNetworking */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AFNetworking; sourceTree = "<group>"; };
 		36BB354F1B951EF200B2167A /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		36BB35531BA5725D00B2167A /* SVProgressHUD */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SVProgressHUD; sourceTree = "<group>"; };
@@ -168,6 +163,14 @@
 		36F6A8721B75D99C0024E783 /* RefashView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefashView.xib; sourceTree = "<group>"; };
 		36F6A8741B75F3320024E783 /* HeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeadView.h; sourceTree = "<group>"; };
 		36F6A8751B75F3320024E783 /* HeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeadView.m; sourceTree = "<group>"; };
+		36FBCEF71C5A08AB00F8561A /* PatientInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PatientInfoModel.h; path = Model/PatientInfoModel.h; sourceTree = "<group>"; };
+		36FBCEF81C5A08AB00F8561A /* PatientInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PatientInfoModel.m; path = Model/PatientInfoModel.m; sourceTree = "<group>"; };
+		36FBCEFA1C5A08AB00F8561A /* PersonSettingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersonSettingModel.h; path = Model/PersonSettingModel.h; sourceTree = "<group>"; };
+		36FBCEFB1C5A08AB00F8561A /* PersonSettingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersonSettingModel.m; path = Model/PersonSettingModel.m; sourceTree = "<group>"; };
+		36FBCEFD1C5A08AB00F8561A /* HospitalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HospitalModel.h; path = Model/HospitalModel.h; sourceTree = "<group>"; };
+		36FBCEFE1C5A08AB00F8561A /* HospitalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HospitalModel.m; path = Model/HospitalModel.m; sourceTree = "<group>"; };
+		36FBCF001C5A08AC00F8561A /* UserInfoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserInfoModel.h; path = Model/UserInfoModel.h; sourceTree = "<group>"; };
+		36FBCF011C5A08AC00F8561A /* UserInfoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserInfoModel.m; path = Model/UserInfoModel.m; sourceTree = "<group>"; };
 		A62F97D41C4E363F001A8C1E /* AppMessgeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppMessgeDelegate.h; sourceTree = "<group>"; };
 		A6568B8C1C059B3000D78DD1 /* AlarmPickView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmPickView.h; sourceTree = "<group>"; };
 		A6568B8D1C059B3000D78DD1 /* AlarmPickView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmPickView.m; sourceTree = "<group>"; };
@@ -240,12 +243,14 @@
 		36BB35401B9314F700B2167A /* DB */ = {
 			isa = PBXGroup;
 			children = (
-				36BB35411B93150600B2167A /* PatientInfoModel.h */,
-				36BB35421B93150600B2167A /* PatientInfoModel.m */,
-				36BB35431B93150600B2167A /* HospitalModel.h */,
-				36BB35441B93150600B2167A /* HospitalModel.m */,
-				36BB35451B93150600B2167A /* PersonSettingModel.h */,
-				36BB35461B93150600B2167A /* PersonSettingModel.m */,
+				36FBCF001C5A08AC00F8561A /* UserInfoModel.h */,
+				36FBCF011C5A08AC00F8561A /* UserInfoModel.m */,
+				36FBCEFD1C5A08AB00F8561A /* HospitalModel.h */,
+				36FBCEFE1C5A08AB00F8561A /* HospitalModel.m */,
+				36FBCEFA1C5A08AB00F8561A /* PersonSettingModel.h */,
+				36FBCEFB1C5A08AB00F8561A /* PersonSettingModel.m */,
+				36FBCEF71C5A08AB00F8561A /* PatientInfoModel.h */,
+				36FBCEF81C5A08AB00F8561A /* PatientInfoModel.m */,
 			);
 			name = DB;
 			sourceTree = "<group>";
@@ -560,14 +565,15 @@
 				36F6A82C1B62FC5F0024E783 /* AppDelegate.m in Sources */,
 				36BB35221B887FA200B2167A /* SystemSettingModel.m in Sources */,
 				36F6A8761B75F3320024E783 /* HeadView.m in Sources */,
+				36FBCEFC1C5A08AB00F8561A /* PersonSettingModel.m in Sources */,
 				36BB353F1B8F49A900B2167A /* PersonSettingInfo.m in Sources */,
 				36BB352E1B89B65300B2167A /* PatientInfo.m in Sources */,
-				36BB35471B93150600B2167A /* PatientInfoModel.m in Sources */,
+				36FBCF021C5A08AC00F8561A /* UserInfoModel.m in Sources */,
 				A6568BA11C059D4500D78DD1 /* LewPopupViewAnimationFade.m in Sources */,
 				36F6A85E1B6368710024E783 /* SystemSettingViewController.m in Sources */,
 				36F6A8711B75D9840024E783 /* RefashView.m in Sources */,
 				36BB35341B89FD2F00B2167A /* XueyaModel.m in Sources */,
-				36BB35481B93150600B2167A /* HospitalModel.m in Sources */,
+				36FBCEFF1C5A08AB00F8561A /* HospitalModel.m in Sources */,
 				36F6A85A1B62FE840024E783 /* MainTableViewCell.m in Sources */,
 				36F6A8321B62FC5F0024E783 /* ViewController.m in Sources */,
 				A6568BA01C059D4500D78DD1 /* LewPopupViewAnimationDrop.m in Sources */,
@@ -578,9 +584,9 @@
 				36F6A8291B62FC5F0024E783 /* main.m in Sources */,
 				A6568B8E1C059B3000D78DD1 /* AlarmPickView.m in Sources */,
 				36F6A86B1B6EE5540024E783 /* SettingViewTableViewCell.m in Sources */,
+				36FBCEF91C5A08AB00F8561A /* PatientInfoModel.m in Sources */,
 				36BB352B1B89779200B2167A /* LoginUserInfo.m in Sources */,
 				36F6A8511B62FD5E0024E783 /* LoginViewController.m in Sources */,
-				36BB35491B93150600B2167A /* PersonSettingModel.m in Sources */,
 				36F6A8541B62FE160024E783 /* SettingViewController.m in Sources */,
 				A6568B9F1C059D4500D78DD1 /* LewPopupBackgroundView.m in Sources */,
 				36BB355E1BA6316E00B2167A /* AFHTTPSessionManager.m in Sources */,

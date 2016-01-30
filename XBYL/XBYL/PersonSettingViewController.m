@@ -50,7 +50,7 @@
 }
 
 -(void)makeView{
-    
+    self.view.backgroundColor=[UIColor whiteColor];
     UIBarButtonItem *rightBar=[[UIBarButtonItem alloc]initWithTitle:@"默认" style:UIBarButtonItemStylePlain target:self action:@selector(recoveDefault:)];
      [rightBar setTintColor:[UIColor whiteColor]];
     UIBarButtonItem *leftBar=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];

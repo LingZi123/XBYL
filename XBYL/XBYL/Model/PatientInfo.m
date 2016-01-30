@@ -197,7 +197,9 @@
     // 当天
     [newItem setAddDate:[NSDate date]];
     NSError *error=nil;
-    return [context save:&error];
+    BOOL a=[context save:&error];
+    NSLog(@"%@",error);
+    return a;
 }
 //删除数据
 +(BOOL)deleteModelWithPatientNo:(NSString *)patientNo{
@@ -277,4 +279,18 @@
     }
 }
 
++(void)clearModels{
+    
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *context=appDelegate.managedObjectContext;
+    NSFetchRequest *request=[[NSFetchRequest alloc]initWithEntityName:@"PatientInfoModel"];
+    
+    NSError *error=nil;
+    NSArray *tempArray=[context executeFetchRequest:request error:&error];
+    
+    for (PatientInfoModel *model in tempArray) {
+        [context deleteObject:model];
+    }
+    [context save:&error];
+}
 @end

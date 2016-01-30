@@ -1,9 +1,9 @@
 //
 //  PersonSettingModel.m
-//  
+//  XBYL
 //
-//  Created by 罗娇 on 15/9/13.
-//
+//  Created by 罗娇 on 16/1/29.
+//  Copyright (c) 2016年 罗娇. All rights reserved.
 //
 
 #import "PersonSettingModel.h"
@@ -11,18 +11,18 @@
 
 @implementation PersonSettingModel
 
-@dynamic shuzhangyaupvalue;
 @dynamic huxidownvalue;
-@dynamic xueyangdownvalue;
-@dynamic xueyangupvalue;
-@dynamic shousuoyadownvalue;
-@dynamic shuzhangyadownvalue;
-@dynamic shousuoyaupvalue;
 @dynamic huxiupvalue;
-@dynamic xinlvdownvalue;
-@dynamic xinlvupvalue;
 @dynamic mailvdownvalue;
 @dynamic mailvupvalue;
 @dynamic patientNo;
+@dynamic shousuoyadownvalue;
+@dynamic shousuoyaupvalue;
+@dynamic shuzhangyadownvalue;
+@dynamic shuzhangyaupvalue;
+@dynamic xinlvdownvalue;
+@dynamic xinlvupvalue;
+@dynamic xueyangdownvalue;
+@dynamic xueyangupvalue;
 
 @end

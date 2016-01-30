@@ -12,6 +12,9 @@
 #import "nstdcomm.h"
 #import "SVProgressHUD/SVProgressHUD.h"
 #import "ViewController.h"
+#import "PatientInfo.h"
+#import "PersonSettingInfo.h"
+#import "HospitalInfo.h"
 
 @interface LoginViewController ()
 
@@ -23,7 +26,6 @@
     [super viewDidLoad];
     tipView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
     tipView.hidden=YES;
-    [self appDelegate].appMessageDelegate=self;
     
 }
 
@@ -90,14 +92,27 @@
 - (IBAction)login:(id)sender {
     [self dismissKeyBoard];
     if (userNameTextField.text.length<=0||pwdTextField.text.length<=0) {
-        //提示
-        tipView.message=@"用户名、密码不能为空";
-        [tipView show];
+        
+        [SVProgressHUD showErrorWithStatus:@"用户名、密码不能为空"];
+//        //提示
+//        tipView.message=@"用户名、密码不能为空";
+//        [tipView show];
+        return;
     }
-    [nstdcomm stdcommConnect:[self appDelegate].systemSetting.ip andPort:[self appDelegate].systemSetting.port  andWebPort:[self appDelegate].systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-    
-    //登录操作
-    [nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text];
+    if (![self appDelegate].connected) {
+        int connectResult=0;
+        connectResult=[nstdcomm stdcommConnect:[self appDelegate].systemSetting.ip andPort:[[self appDelegate].systemSetting.port intValue]  andWebPort:WebPort_Default  andTermPort:TermPort_Default andLoginType:LoginType_Default];
+        
+        [self appDelegate].connected=connectResult==1;
+        if (![self appDelegate].connected) {
+            [SVProgressHUD showErrorWithStatus:@"连接失败"];
+            return;
+        }
+    }
+    if ([self appDelegate].connected) {
+        //登录操作
+        [self appDelegate].logined=[nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text]==1;
+    }
 }
 
 - (IBAction)remeberPwd:(id)sender {
@@ -121,30 +136,57 @@
     
     if ([mes isEqualToString:@"success"]) {
         //写入本地
+        [self appDelegate].logined=YES;
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         if ([self appDelegate].loginUserInfo==nil) {
             [self appDelegate].loginUserInfo=[[LoginUserInfo alloc]init];
         }
         
+    
         [self appDelegate].loginUserInfo.userName=userNameTextField.text;
         [self appDelegate].loginUserInfo.pwd=pwdTextField.text;
         [self appDelegate].loginUserInfo.isLoginOut=NO;
         [self appDelegate].loginUserInfo.isRemeberPwd=isremeberPwd;
-        NSDictionary *userInfoDic=[LoginUserInfo getDicWithModel:[self appDelegate].loginUserInfo];
-        [defaults setObject:userInfoDic forKey:user_loginUserInfo];
+        
+        NSData *userInfoData=[NSKeyedArchiver archivedDataWithRootObject:[self appDelegate].loginUserInfo];
+        [defaults setObject:userInfoData forKey:user_loginUserInfo];
+        
+        NSData *olddata=[defaults objectForKey:user_old_loginUserInfo];
+        if (olddata) {
+            LoginUserInfo *olduser=[NSKeyedUnarchiver unarchiveObjectWithData:olddata];
+            if (![olduser.userName isEqual:[self appDelegate].loginUserInfo.userName]) {
+                //清空所有数据库
+                [PersonSettingInfo clearModels];
+                [PatientInfo clearModels];
+                [HospitalInfo clearModels];
+                //不存在把这个给老的
+                [defaults setObject:userInfoData forKey:user_old_loginUserInfo];
+            }
+        }
+        else{
+            //不存在把这个给老的
+            [defaults setObject:userInfoData forKey:user_old_loginUserInfo];
+        }
+        
         [defaults synchronize];
-        
+ 
+        dispatch_sync(dispatch_get_main_queue(), ^{
+        [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeNone];
         [self dismissViewControllerAnimated:YES completion:^{
-            
+            [nstdcomm stdcommRefreshHosList];
+            [nstdcomm stdcommRefreshPatList];
+            [SVProgressHUD dismiss];
         }];
-        
+        });
+    
     }
     else{
         //给出提示
-        [SVProgressHUD showErrorWithStatus:@"登陆失败"];
+        [self appDelegate].logined=NO;
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            [SVProgressHUD showErrorWithStatus:@"登陆失败,用户名或密码不对"];
+        });
     }
-
-
 }
 
 -(void)patientMessage:(NSString*)cmd andMsg:(NSString*)msg{
@@ -154,6 +196,9 @@
     
 }
 -(void)networkMessage:(NSString *)mes{
+    [SVProgressHUD showErrorWithStatus:@"网络连接断开"];
+    [self appDelegate].connected=NO;
+    [self appDelegate].logined=NO;
     
 }
 #pragma mark-回调函数

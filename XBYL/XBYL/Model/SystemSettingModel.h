@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SystemSettingModel : NSObject
+@interface SystemSettingModel : NSObject<NSCoding>
 @property(nonatomic,copy)NSString *ip;
-@property(nonatomic,assign)int port;
-@property(nonatomic,assign)int webPort;
+@property(nonatomic,copy)NSString  *port;
+@property(nonatomic,copy)NSString *webPort;
 
-+(SystemSettingModel *)getModelWithDic:(NSDictionary *)dic;
-+(NSDictionary *)getDicWithModel:(SystemSettingModel *)model;
+//+(SystemSettingModel *)getModelWithDic:(NSDictionary *)dic;
+//+(NSDictionary *)getDicWithModel:(SystemSettingModel *)model;
 @end

@@ -36,4 +36,23 @@
         return nil;
     }
 }
+
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.userName forKey:@"userName"];
+    [aCoder encodeObject:self.pwd forKey:@"pwd"];
+    [aCoder encodeBool:self.isLoginOut forKey:@"isLoginOut"];
+    [aCoder encodeBool:self.isRemeberPwd forKey:@"isRemeberPwd"];
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self=[super init];
+    if (self) {
+        self.userName=[aDecoder decodeObjectForKey:@"userName"];
+        self.pwd=[aDecoder decodeObjectForKey:@"pwd"];
+        self.isLoginOut=[aDecoder decodeBoolForKey:@"isLoginOut"];
+        self.isRemeberPwd=[aDecoder decodeBoolForKey:@"isRemeberPwd"];
+    }
+    return self;
+
+}
 @end

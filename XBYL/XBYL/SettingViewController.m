@@ -74,6 +74,7 @@
 
 
 -(void)makeView{
+    self.view.backgroundColor=[UIColor whiteColor];
     segmentSelected.selectedSegmentIndex=0;
     UIBarButtonItem *rightBar=[[UIBarButtonItem alloc]initWithTitle:@"默认" style:UIBarButtonItemStylePlain target:self action:@selector(recoverDefault:)];
     [rightBar setTintColor:[UIColor whiteColor]];
@@ -306,16 +307,16 @@
     NSLog(@"buttonIndex=%d",(int)buttonIndex);
     NSInteger refashTime=_refashValue;
     if (buttonIndex==0) {
-        refashTime=3;
-    }
-    else if (buttonIndex==1){
         refashTime=5;
     }
-    else if (buttonIndex==2){
+    else if (buttonIndex==1){
         refashTime=10;
     }
-    else if (buttonIndex==3){
+    else if (buttonIndex==2){
         refashTime=15;
+    }
+    else if (buttonIndex==3){
+        refashTime=20;
     }
     if (refashTime!=_refashValue) {
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];

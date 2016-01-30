@@ -62,4 +62,6 @@
 +(BOOL)InsertModelWithModel:(PatientInfo *)info;//添加数据
 +(BOOL)deleteModelWithPatientNo:(NSString *)patientNo;//删除数据
 +(PatientInfo *)getModelWithDBModel:(PatientInfoModel *)item;
++(void)clearModels;
+
 @end

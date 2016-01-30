@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14C2043" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7701" systemVersion="14F27" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="HospitalModel" representedClassName="HospitalModel" syncable="YES">
         <attribute name="hosName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="hosNo" optional="YES" attributeType="String" syncable="YES"/>
@@ -49,9 +49,14 @@
         <attribute name="xueyangdownvalue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="xueyangupvalue" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="UserInfoModel" representedClassName="UserInfoModel" syncable="YES">
+        <attribute name="pwd" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
+        <element name="HospitalModel" positionX="-36" positionY="9" width="128" height="90"/>
         <element name="PatientInfoModel" positionX="-63" positionY="-18" width="128" height="450"/>
         <element name="PersonSettingModel" positionX="-54" positionY="-9" width="128" height="240"/>
-        <element name="HospitalModel" positionX="-36" positionY="9" width="128" height="90"/>
+        <element name="UserInfoModel" positionX="-45" positionY="135" width="128" height="75"/>
     </elements>
 </model>

@@ -234,4 +234,20 @@
     }
     return self;
 }
+
++(void)clearModels{
+    
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *context=appDelegate.managedObjectContext;
+    NSFetchRequest *request=[[NSFetchRequest alloc]initWithEntityName:@"PersonSettingModel"];
+    
+    NSError *error=nil;
+    NSArray *tempArray=[context executeFetchRequest:request error:&error];
+    
+    for (PersonSettingModel *model in tempArray) {
+        [context deleteObject:model];
+    }
+    [context save:&error];
+}
+
 @end

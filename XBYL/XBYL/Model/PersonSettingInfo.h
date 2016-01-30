@@ -29,5 +29,5 @@
 +(BOOL)InsertModelWithModel:(PersonSettingInfo *)info;//添加数据
 +(BOOL)deleteModelWithPatientNo:(NSString *)patientNo;//删除数据
 +(BOOL)updateAllModelWithDic:(PersonSettingInfo *)dic;//获取所有数据都修改
-
++(void)clearModels;
 @end

@@ -1,9 +1,9 @@
 //
 //  PatientInfoModel.m
-//  
+//  XBYL
 //
-//  Created by 罗娇 on 15/9/13.
-//
+//  Created by 罗娇 on 16/1/29.
+//  Copyright (c) 2016年 罗娇. All rights reserved.
 //
 
 #import "PatientInfoModel.h"
@@ -11,32 +11,32 @@
 
 @implementation PatientInfoModel
 
-@dynamic patientNo;
-@dynamic terminNo;
-@dynamic phoneNo;
-@dynamic hosNo;
-@dynamic patientName;
-@dynamic doctorName;
-@dynamic patientSex;
-@dynamic patientAge;
-@dynamic idCard;
-@dynamic address;
-@dynamic youbianNo;
-@dynamic job;
-@dynamic telNo;
-@dynamic jianhuLel;
-@dynamic chubuZZ;
-@dynamic zhuyuanNo;
-@dynamic bingchuangNo;
-@dynamic keshi;
-@dynamic isImportPatient;
 @dynamic addDate;
+@dynamic address;
+@dynamic baseXueyaCheckDate;
+@dynamic bingchuangNo;
+@dynamic chubuZZ;
+@dynamic doctorName;
+@dynamic hosNo;
+@dynamic idCard;
+@dynamic isImportPatient;
+@dynamic isShow;
+@dynamic jianhuLel;
+@dynamic job;
+@dynamic keshi;
+@dynamic menzhenNo;
+@dynamic patientAge;
+@dynamic patientName;
+@dynamic patientNo;
+@dynamic patientSex;
 @dynamic patientTall;
 @dynamic patientWeight;
-@dynamic menzhenNo;
+@dynamic phoneNo;
 @dynamic subTermType;
-@dynamic baseXueyaCheckDate;
+@dynamic telNo;
+@dynamic terminNo;
 @dynamic updateTime;
-@dynamic isShow;
+@dynamic youbianNo;
+@dynamic zhuyuanNo;
 
 @end

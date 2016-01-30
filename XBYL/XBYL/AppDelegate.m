@@ -36,11 +36,11 @@
     [nstdcomm stdcommStart];
     [self reciveData];
    
-    NSDictionary *systemSettingDic=[defaults objectForKey:user_systemsetting];
-    _systemSetting=[SystemSettingModel getModelWithDic:systemSettingDic];
+   NSData *systemdata=[defaults objectForKey:user_systemsetting];
     
-    NSDictionary *userInfoDic=[defaults objectForKey:user_loginUserInfo];
-    _loginUserInfo=[LoginUserInfo getModelWithDic:userInfoDic];
+    _systemSetting=[NSKeyedUnarchiver unarchiveObjectWithData:systemdata];
+    NSData *logindata=[defaults objectForKey:user_loginUserInfo];
+    _loginUserInfo=[NSKeyedUnarchiver unarchiveObjectWithData:logindata];
     
     //读取本地的刷新凭率
     id tempvalue=[defaults objectForKey:user_refashTime];
@@ -55,9 +55,6 @@
     }
     
     self.mainStoryBoard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-        //只有登陆才能收到数据
-        [nstdcomm stdcommLogin:_loginUserInfo.userName andPwd:_loginUserInfo.pwd];
         ViewController *mainVc=[self.mainStoryBoard instantiateViewControllerWithIdentifier:@"ViewController"];
         _mainnav=[[UINavigationController alloc]initWithRootViewController:mainVc];
         self.window.rootViewController=_mainnav;
@@ -93,17 +90,18 @@
     dispatch_async(donelistQueue, ^(){
         int count=0;
         while (isactive) {
+            if (_loginUserInfo.isLoginOut) {
+                [NSThread sleepForTimeInterval:1];
+            }
             NSMutableArray *temparray=[listArray copy];
             for (int i=0; i<temparray.count; i++) {
+                if (_loginUserInfo.isLoginOut||!_connected||!_logined) {
+                    break;
+                }
                 NSDictionary *dic=[temparray objectAtIndex:i];
                 NSString *cmd=[dic objectForKey:@"cmd"];
                 NSString *msg=[dic objectForKey:@"msg"];
                 
-                //登录界面只接受登陆返回的信息
-                NSLog(@"msg=%@,cmd=%@",msg,cmd);
-                
-                //登录界面只接受登陆返回的信息
-                NSLog(@"msg=%@,cmd=%@",msg,cmd);
                 //刷新病人列表
                 if ([cmd isEqualToString:@"patientinfoACK"]||
                     [cmd isEqualToString:@"bpmdataACK"]||
@@ -240,6 +238,9 @@
 
 #pragma mark-数据接收
 -(void)stdMessageBox:(NSString*)cmd andMsg:(NSString*)msg{
+    
+    NSLog(@"msg=%@,cmd=%@",msg,cmd);
+
     if (listArray==nil) {
         listArray=[[NSMutableArray alloc]init];
     }
@@ -248,7 +249,9 @@
     }
     else if ([cmd isEqualToString:@"onClose"]){
         //网络断开就要重连
-        [SVProgressHUD showErrorWithStatus:@"网络断开"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD showErrorWithStatus:@"网络断开"];
+        });
         [self.appMessageDelegate networkMessage:msg];
     }
     else{

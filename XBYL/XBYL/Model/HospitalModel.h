@@ -1,9 +1,9 @@
 //
 //  HospitalModel.h
-//  
+//  XBYL
 //
-//  Created by 罗娇 on 15/8/30.
-//
+//  Created by 罗娇 on 16/1/29.
+//  Copyright (c) 2016年 罗娇. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,8 +12,8 @@
 
 @interface HospitalModel : NSManagedObject
 
+@property (nonatomic, retain) NSString * hosName;
 @property (nonatomic, retain) NSString * hosNo;
 @property (nonatomic, retain) NSString * hosRight;
-@property (nonatomic, retain) NSString * hosName;
 
 @end

@@ -15,17 +15,20 @@
 #endif
 
 #define IP_Default @"gprs.newstd.cn"
-#define Port_Default 9020
+#define Port_Default @"9020"
 #define WebPort_Default 80
 #define TermPort_Default 9019
 #define LoginType_Default 0
 
 #define user_systemsetting @"systemSetting"
 #define user_loginUserInfo @"loginUserInfo"
+#define user_old_loginUserInfo @"oldloginUserInfo"
+
 #define user_refashTime @"refashTime"
 #define user_defaultAlarmSetting @"defaultAlarmSetting"
 
-#define arm_url @"http://gprs.newstd.cn/downfile/interface/bo/sendMsg.jsp?"
+#define web_Interfer @"http://gprs.newstd.cn"
+#define arm_url @"/downfile/interface/bo/sendMsg.jsp?"
 
 #define Regx_Ip @"\\b(?:\\d{1,3}\.){3}\\d{1,3}\\b"
 

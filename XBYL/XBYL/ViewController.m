@@ -34,9 +34,6 @@
     if (infoArray==nil) {
         infoArray=[[NSMutableArray alloc]init];
     }
-//    if (showArray==nil) {
-//        showArray=[[NSMutableArray alloc]init];
-//    }
     //读取本地的刷新凭率
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     id tempvalue=[defaults objectForKey:user_refashTime];
@@ -50,16 +47,6 @@
         refashValue=[tempvalue integerValue];
     }
     
-    if (appDelegate.systemSetting) {
-        int a=[nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:appDelegate.systemSetting.port andWebPort:appDelegate.systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
-        NSLog(@"a=%d",a);
-
-        if (appDelegate.loginUserInfo) {
-             int b=  [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
-            NSLog(@"b=%d",b);
-        }
-    }
-   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -69,30 +56,27 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
     if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
         self.navigationItem.leftBarButtonItem=nil;
        UIAlertView *tipView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有登录" delegate:self cancelButtonTitle:@"去登陆" otherButtonTitles:nil, nil];
         [tipView show];
+        return;
     }
     else{
         self.navigationItem.leftBarButtonItem=leftBar;
         if (appDelegate.loginUserInfo) {
-            loginNameLabel.text=appDelegate.loginUserInfo.userName;
-            reconnectBtn.hidden=YES;
+            self.navigationItem.title=appDelegate.loginUserInfo.userName;
         }
     }
-}
+    appDelegate.appMessageDelegate=self;
 
--(void)viewDidAppear:(BOOL)animated{
-    
-     appDelegate.appMessageDelegate=self;
-    //从本地数据库读取数据
-//    [infoArray removeAllObjects];
-//    [showArray removeAllObjects];
-    
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSArray *tempArray=[PatientInfo getAllModel];
         if (tempArray) {
+            if (tempArray.count<=0) {
+                [infoArray removeAllObjects];
+            }
             for (PatientInfo *tempinfo in tempArray) {
                 BOOL isexist=NO;
                 for (PatientInfo *sourceInfo in infoArray) {
@@ -108,22 +92,32 @@
                 }
             }
             
-            dispatch_async(dispatch_get_main_queue(), ^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
                 [_contentTablvView reloadData];
-
-            });
+                
+//            });
         }
-    });
+        else {
+            [infoArray removeAllObjects];
+        }
+//    });
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
+        return;
+    }
+    [self reConnectTryThree];
     
-    [nstdcomm stdcommRefreshHosList];
-    [nstdcomm stdcommRefreshPatList];
+    if (appDelegate.connected) {
+        
+    }
     //开启刷新时间
     if (refashTimer==nil) {
         refashTimer=[NSTimer scheduledTimerWithTimeInterval:refashValue target:self selector:@selector(refashTimerClick:) userInfo:nil repeats:YES];
     }
     [refashTimer setFireDate:[NSDate distantPast]];
 }
-
 -(void)refashTimerClick:(NSTimer *)timer{
     if (infoArray.count<=0) {
         nodataView.hidden=NO;
@@ -136,6 +130,7 @@
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
+    appDelegate.appMessageDelegate=nil;
     //停止时间
     [refashTimer setFireDate:[NSDate distantFuture]];
     refashTimer=nil;
@@ -144,12 +139,14 @@
 -(void)makeView{
      leftBar=[[UIBarButtonItem alloc]initWithTitle:@"注销" style:UIBarButtonItemStylePlain target:self action:@selector(logout:)];
      [leftBar setTintColor:[UIColor whiteColor]];
-    UIBarButtonItem *rightBar2=[[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting:)];
-     [rightBar2 setTintColor:[UIColor whiteColor]];
-    self.navigationItem.leftBarButtonItem=leftBar;
-    self.navigationItem.rightBarButtonItem=rightBar2;
+     rigthBar=[[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStylePlain target:self action:@selector(setting:)];
+     [rigthBar setTintColor:[UIColor whiteColor]];
     
-    self.navigationItem.title=@"重庆新标医疗设备有限公司";
+    reconnectBtn=[[UIBarButtonItem alloc]initWithTitle:@"重连" style:UIBarButtonItemStylePlain target:self action:@selector(reConnect:)];
+    [reconnectBtn setTintColor:[UIColor whiteColor]];
+    self.navigationItem.leftBarButtonItem=leftBar;
+    self.navigationItem.rightBarButtonItems=@[rigthBar];
+
     //选择自己喜欢的颜色
     UIColor * color = [UIColor whiteColor];
     
@@ -167,7 +164,6 @@
     detailTextLabel.text=@"在线";
     [self.navigationItem.titleView addSubview:detailTextLabel];
     appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
-    appDelegate.appMessageDelegate=self;
     
     //xib注册
     UINib *xib=[UINib nibWithNibName:@"MainTableViewCell" bundle:nil];
@@ -179,9 +175,13 @@
 }
 -(void)logout:(id)sender{
     appDelegate.loginUserInfo.isLoginOut=YES;
+    [nstdcomm stdcommClose];
+    appDelegate.connected=NO;
+    appDelegate.logined=NO;
+    
     //保存到本地
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSDictionary *userInfoDic=[LoginUserInfo getDicWithModel:appDelegate.loginUserInfo];
+    NSData *userInfoDic=[NSKeyedArchiver archivedDataWithRootObject:appDelegate.loginUserInfo];
     [defaults setObject:userInfoDic forKey:user_loginUserInfo];
     [defaults synchronize];
     [self goLoginVC];
@@ -338,18 +338,28 @@
     p.patient=patient;
     [self.navigationController pushViewController:p animated:YES];
 }
-- (IBAction)reConnect:(id)sender {
+- (void)reConnect:(id)sender {
     
+   [SVProgressHUD showWithStatus:@"正在重接" maskType:SVProgressHUDMaskTypeNone];
     [nstdcomm stdcommClose];
+    appDelegate.connected=NO;
     [nstdcomm stdcommEnd];
     [nstdcomm stdcommStart];
     [appDelegate reciveData];
     
-    if (appDelegate.systemSetting) {
-        [nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:appDelegate.systemSetting.port andWebPort:appDelegate.systemSetting.webPort andTermPort:TermPort_Default andLoginType:LoginType_Default];
+    if (!appDelegate.connected&&appDelegate.systemSetting) {
+        appDelegate.connected=[nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:[appDelegate.systemSetting.port intValue]  andWebPort:WebPort_Default andTermPort:TermPort_Default andLoginType:LoginType_Default]==1;
+        if (!appDelegate.connected) {
+            [SVProgressHUD showErrorWithStatus:@"连接失败"];
+        }
     }
-    //只有登陆才能收到数据
-    [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
+    if (appDelegate.connected) {
+       
+        if (appDelegate.loginUserInfo&&!appDelegate.logined) {
+            //只有登陆才能收到数据
+            [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
+        }
+    }
 }
 
 #pragma mark-回调函数
@@ -368,7 +378,7 @@
                 [self existPatient:tempPatient];
             }
         }
-        [_contentTablvView reloadData];
+//        [_contentTablvView reloadData];
         
     }
     else if ([cmd isEqualToString:@"bpmdataACK"]){
@@ -382,7 +392,7 @@
         if (tempPatient) {
             [self existPatient:tempPatient];
         }
-        [_contentTablvView reloadData];
+//        [_contentTablvView reloadData];
 
     }
     else if ([cmd isEqualToString:@"updateonlinestatusACK"]){
@@ -510,7 +520,7 @@
         return;
     }
     AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
-    NSString *url= [NSString stringWithFormat:@"%@account=%@&pwd=%@&termid=%@",arm_url,appDelegate.loginUserInfo.userName,appDelegate.loginUserInfo.pwd,info.terminNo];
+    NSString *url= [NSString stringWithFormat:@"%@%@account=%@&pwd=%@&termid=%@",appDelegate.systemSetting.webPort,arm_url,appDelegate.loginUserInfo.userName,appDelegate.loginUserInfo.pwd,info.terminNo];
     manager.responseSerializer=[AFHTTPResponseSerializer serializer];
     [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //要改的
@@ -552,30 +562,70 @@
 }
 
 -(void)logingMessage:(NSString *)mes{
-    
+    [SVProgressHUD dismiss];
+    if ([mes isEqualToString:@"success"]) {
+        appDelegate.logined=YES;
+        [nstdcomm stdcommRefreshHosList];
+        [nstdcomm stdcommRefreshPatList];
+    }
+    else{
+        appDelegate.logined=NO;
+    }
 }
 
 -(void)networkMessage:(NSString *)mes{
-    reconnectBtn.hidden=NO;
+    [SVProgressHUD showErrorWithStatus:@"网络断开，系统将尝试重连"];
+    appDelegate.connected=NO;
+    appDelegate.logined=NO;
+    //开启自动重连3次
+    //3次链接不上再显示
+    [self reConnectTryThree];
 }
 
+-(void)reConnectTryThree{
+    reconnectCount=0;
+    while (reconnectCount<3) {
+        if (appDelegate.systemSetting&&!appDelegate.connected) {
+            int connectResult=[nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:[appDelegate.systemSetting.port intValue] andWebPort:WebPort_Default  andTermPort:TermPort_Default andLoginType:LoginType_Default];
+            
+            appDelegate.connected=connectResult==1;
+        }
+        if (appDelegate.connected) {
+            if (appDelegate.loginUserInfo&&!appDelegate.logined) {
+                int loginResult=  [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
+                appDelegate.logined=loginResult==1;
+                if (appDelegate.logined) {
+                    break;
+                }
+            }
+            else{
+                break;
+            }
+        }
+
+        [NSThread sleepForTimeInterval:1];
+        reconnectCount+=1;
+        
+    }
+    if (reconnectCount>=3) {
+        self.navigationItem.rightBarButtonItems=@[rigthBar,reconnectBtn];
+        
+    }
+    else{
+         self.navigationItem.rightBarButtonItems=@[rigthBar];
+    }
+    reconnectCount=0;
+}
 
 #pragma mark-UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     //进入登录界面
-    
     [self goLoginVC];
 }
 
 -(void)goLoginVC{
-//    dispatch_async(dispatch_get_main_queue(), ^{
         LoginViewController *loginVC=[appDelegate.mainStoryBoard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-//        [loginVC loginSucess:^(LoginUserInfo *tempUserInfo) {
-//            [loginVC dismissViewControllerAnimated:YES completion:nil];
-//            
-//        }];
         [self presentViewController:loginVC animated:YES completion:nil];
-//    });
 }
 
 #pragma mark-隐藏分割线

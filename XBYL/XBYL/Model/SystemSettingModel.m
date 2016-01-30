@@ -14,8 +14,8 @@
     if (dic) {
         SystemSettingModel *model=[[SystemSettingModel alloc]init];
         model.ip=[dic objectForKey:@"ip"];
-        model.port=[[dic objectForKey:@"port"] intValue];
-        model.webPort=[[dic objectForKey:@"webport"]intValue];
+        model.port=[dic objectForKey:@"port"];
+        model.webPort=[dic objectForKey:@"webport"];
         return model;
     }
     else{
@@ -26,12 +26,28 @@
     if (model) {
         NSMutableDictionary *dic=[[NSMutableDictionary alloc]init];
         [dic setObject:model.ip forKey:@"ip"];
-        [dic setObject:[NSNumber numberWithInt:model.port] forKey:@"port"];
-        [dic setObject:[NSNumber numberWithInt:model.webPort] forKey:@"webport"];
+        [dic setObject:model.port forKey:@"port"];
+        [dic setObject:model.webPort forKey:@"webport"];
         return dic;
     }
     else{
         return nil;
     }
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.ip forKey:@"ip"];
+    [aCoder encodeObject:self.port forKey:@"port"];
+    [aCoder encodeObject:self.webPort forKey:@"webPort"];
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder{
+    self=[super init];
+    if (self) {
+        self.ip=[aDecoder decodeObjectForKey:@"ip"];
+        self.port=[aDecoder decodeObjectForKey:@"port"];
+        self.webPort=[aDecoder decodeObjectForKey:@"webPort"];
+    }
+    return self;
 }
 @end

@@ -31,8 +31,8 @@
 
     if ([self appdelegate].systemSetting) {
         ipField.text=[self appdelegate].systemSetting.ip;
-        portField.text=[NSString stringWithFormat:@"%d",[self appdelegate].systemSetting.port];
-        webField.text=[NSString stringWithFormat:@"%d",[self appdelegate].systemSetting.webPort];
+        portField.text=[self appdelegate].systemSetting.port;
+        webField.text=[self appdelegate].systemSetting.webPort;
     }
 }
 
@@ -56,13 +56,13 @@
 //        [tipView show];
 //        return;
 //    }
-    if (![self isPureInt:portField.text]||![self isPureInt:webField.text]) {
+    if (![self isPureInt:portField.text]) {
         tipView.message=@"端口号为纯数字";
         [tipView show];
         return;
     }
 
-    [self saveToLocalIp:ipField.text andPort:[portField.text intValue] andWebport:[webField.text intValue]];
+    [self saveToLocalIp:ipField.text andPort:portField.text andWebport:webField.text];
     //执行连接
     [self dismissViewControllerAnimated:YES completion:nil];
     
@@ -70,31 +70,14 @@
 
 - (IBAction)saveDefault:(id)sender {
     ipField.text=IP_Default;
-    portField.text=[NSString stringWithFormat:@"%d",Port_Default];
-    webField.text=[NSString stringWithFormat:@"%d",WebPort_Default];
+    portField.text=Port_Default;
+    webField.text=web_Interfer;
     
-    [self saveToLocalIp:IP_Default andPort:Port_Default andWebport:WebPort_Default];
+    [self saveToLocalIp:IP_Default andPort:Port_Default andWebport:arm_url];
     
 }
 
 #pragma mark-UITextFieldDelegate
-//-(void)textFieldSholdEndEditing:(UITextField *)textField{
-//    if (textField==ipField) {
-//        //检验
-//        if (![self isIPAddress:ipField.text]) {
-//           tipView.message=@"ip地址不合法";
-//           [tipView show];
-//        }
-//    }
-//    else{
-//        //只能是数字
-//        if (![self isPureInt:textField.text]) {
-//            tipView.message=@"端口号为纯数字";
-//            [tipView show
-//             ];
-//        }
-//    }
-//}
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
@@ -118,20 +101,20 @@
     return [predicate evaluateWithObject:checkStr];
 }
 
--(void)saveToLocalIp:(NSString *)ip andPort:(int)port andWebport:(int)webport{
+-(void)saveToLocalIp:(NSString *)ip andPort:(NSString *)port andWebport:(NSString *)webport{
     if ([self appdelegate].systemSetting==nil) {
         [self appdelegate].systemSetting=[[SystemSettingModel alloc]init];
         
     }
     //保存
-    
     [self appdelegate].systemSetting.ip=ip;
     [self appdelegate].systemSetting.port=port;
     [self appdelegate].systemSetting.webPort=webport;
-    NSDictionary *dic=[SystemSettingModel getDicWithModel:[self appdelegate].systemSetting];
     
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    [defaults setObject:dic forKey:user_systemsetting];
+    NSData *systemdata=[NSKeyedArchiver archivedDataWithRootObject:[self appdelegate].systemSetting];
+    
+    [defaults setObject:systemdata forKey:user_systemsetting];
     [defaults synchronize];
 
 }

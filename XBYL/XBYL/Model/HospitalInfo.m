@@ -150,4 +150,18 @@
     return hosArray;
 }
 
++(void)clearModels{
+    
+    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *context=appDelegate.managedObjectContext;
+    NSFetchRequest *request=[[NSFetchRequest alloc]initWithEntityName:@"HospitalModel"];
+    
+    NSError *error=nil;
+    NSArray *tempArray=[context executeFetchRequest:request error:&error];
+    
+    for (HospitalModel *model in tempArray) {
+        [context deleteObject:model];
+    }
+    [context save:&error];
+}
 @end

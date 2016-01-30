@@ -26,5 +26,5 @@
 
 +(NSMutableArray *)getHosWithMsg:(NSString *)msg;
 
-
++(void)clearModels;
 @end
