@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
             landmarkName = "-makeView"
             landmarkType = "5">
          </BreakpointContent>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "194"
-            endingLineNumber = "194"
+            startingLineNumber = "193"
+            endingLineNumber = "193"
             landmarkName = "-setting:"
             landmarkType = "5">
          </BreakpointContent>
@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "492"
-            endingLineNumber = "492"
+            startingLineNumber = "499"
+            endingLineNumber = "499"
             landmarkName = "-updateXueya:"
             landmarkType = "5">
          </BreakpointContent>
@@ -314,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "436"
-            endingLineNumber = "436"
+            startingLineNumber = "443"
+            endingLineNumber = "443"
             landmarkName = "-existPatient:"
             landmarkType = "5">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "439"
-            endingLineNumber = "439"
+            startingLineNumber = "446"
+            endingLineNumber = "446"
             landmarkName = "-existPatient:"
             landmarkType = "5">
          </BreakpointContent>
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
             landmarkName = "-existPatient:"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "437"
-            endingLineNumber = "437"
+            startingLineNumber = "444"
+            endingLineNumber = "444"
             landmarkName = "-existPatient:"
             landmarkType = "5">
          </BreakpointContent>
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "493"
-            endingLineNumber = "493"
+            startingLineNumber = "500"
+            endingLineNumber = "500"
             landmarkName = "-updateXueya:"
             landmarkType = "5">
          </BreakpointContent>
@@ -458,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "196"
-            endingLineNumber = "196"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -506,11 +506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "431"
-            endingLineNumber = "431"
+            startingLineNumber = "438"
+            endingLineNumber = "438"
             landmarkName = "-existPatient:"
             landmarkType = "5">
          </BreakpointContent>
@@ -522,11 +522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
+            startingLineNumber = "428"
+            endingLineNumber = "428"
             landmarkName = "-patientMessage:andMsg:"
             landmarkType = "5">
          </BreakpointContent>
@@ -538,11 +538,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "420"
-            endingLineNumber = "420"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
             landmarkName = "-patientMessage:andMsg:"
             landmarkType = "5">
          </BreakpointContent>
@@ -618,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
+            startingLineNumber = "433"
+            endingLineNumber = "433"
             landmarkName = "-existPatient:"
             landmarkType = "5">
          </BreakpointContent>
@@ -650,11 +650,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "497"
+            endingLineNumber = "497"
             landmarkName = "-updateXueya:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1002,11 +1002,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "-refashTimerClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1162,11 +1162,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "211"
+            endingLineNumber = "211"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1178,11 +1178,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
+            startingLineNumber = "532"
+            endingLineNumber = "532"
             landmarkName = "-refashTableViewCell:"
             landmarkType = "5">
             <Locations>
@@ -1226,11 +1226,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "536"
-            endingLineNumber = "536"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
             landmarkName = "-armBtnClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1274,11 +1274,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
+            startingLineNumber = "435"
+            endingLineNumber = "435"
             landmarkName = "-existPatient:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1322,11 +1322,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1338,7 +1338,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "201"
@@ -1354,27 +1370,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
-            landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "532"
-            endingLineNumber = "532"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
             landmarkName = "-armBtnClick:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1386,11 +1386,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "527"
-            endingLineNumber = "527"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
             landmarkName = "@implementation ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -1434,11 +1434,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
             landmarkName = "-makeView"
             landmarkType = "5">
          </BreakpointContent>
@@ -1654,11 +1654,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "387"
-            endingLineNumber = "387"
+            startingLineNumber = "394"
+            endingLineNumber = "394"
             landmarkName = "-patientMessage:andMsg:"
             landmarkType = "5">
          </BreakpointContent>
@@ -1856,11 +1856,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
+            startingLineNumber = "393"
+            endingLineNumber = "393"
             landmarkName = "-patientMessage:andMsg:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2000,11 +2000,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
+            startingLineNumber = "355"
+            endingLineNumber = "355"
             landmarkName = "-tableView:accessoryButtonTappedForRowWithIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2060,7 +2060,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/LoginViewController.m"
@@ -2176,11 +2176,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "392"
-            endingLineNumber = "392"
+            startingLineNumber = "399"
+            endingLineNumber = "399"
             landmarkName = "-patientMessage:andMsg:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2208,11 +2208,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "583"
-            endingLineNumber = "583"
+            startingLineNumber = "590"
+            endingLineNumber = "590"
             landmarkName = "-logingMessage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2352,11 +2352,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "579"
-            endingLineNumber = "579"
+            startingLineNumber = "586"
+            endingLineNumber = "586"
             landmarkName = "-logingMessage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2368,11 +2368,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "-viewWillDisappear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2406,22 +2406,6 @@
             startingLineNumber = "77"
             endingLineNumber = "77"
             landmarkName = "-viewWillAppear:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "-viewDidAppear:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2560,11 +2544,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "626"
-            endingLineNumber = "626"
+            startingLineNumber = "633"
+            endingLineNumber = "633"
             landmarkName = "-reConnectTryThree"
             landmarkType = "5">
          </BreakpointContent>
@@ -2576,11 +2560,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "630"
-            endingLineNumber = "630"
+            startingLineNumber = "637"
+            endingLineNumber = "637"
             landmarkName = "-reConnectTryThree"
             landmarkType = "5">
          </BreakpointContent>
@@ -2592,11 +2576,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "622"
-            endingLineNumber = "622"
+            startingLineNumber = "629"
+            endingLineNumber = "629"
             landmarkName = "-reConnectTryThree"
             landmarkType = "5">
          </BreakpointContent>
@@ -2608,11 +2592,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "604"
-            endingLineNumber = "604"
+            startingLineNumber = "611"
+            endingLineNumber = "611"
             landmarkName = "-reConnectTryThree"
             landmarkType = "5">
          </BreakpointContent>
@@ -2624,11 +2608,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "603"
-            endingLineNumber = "603"
+            startingLineNumber = "610"
+            endingLineNumber = "610"
             landmarkName = "-reConnectTryThree"
             landmarkType = "5">
          </BreakpointContent>
@@ -2736,11 +2720,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
             landmarkName = "-logout:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2752,11 +2736,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "364"
+            endingLineNumber = "364"
             landmarkName = "-reConnect:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2768,11 +2752,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "593"
-            endingLineNumber = "593"
+            startingLineNumber = "600"
+            endingLineNumber = "600"
             landmarkName = "-networkMessage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2784,11 +2768,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
+            startingLineNumber = "363"
+            endingLineNumber = "363"
             landmarkName = "-reConnect:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2800,11 +2784,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475748169.660834"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "-logout:"
             landmarkType = "5">
          </BreakpointContent>
@@ -2912,11 +2896,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/ViewController.m"
-            timestampString = "475903423.067286"
+            timestampString = "475911350.124436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "523"
-            endingLineNumber = "523"
+            startingLineNumber = "530"
+            endingLineNumber = "530"
             landmarkName = "-refashTableViewCell:"
             landmarkType = "5">
          </BreakpointContent>
@@ -3046,6 +3030,134 @@
             startingLineNumber = "82"
             endingLineNumber = "82"
             landmarkName = "-selectAllBtnClick:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475910751.108049"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "107"
+            endingLineNumber = "107"
+            landmarkName = "-viewDidAppear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475911350.124436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "609"
+            endingLineNumber = "609"
+            landmarkName = "-reConnectTryThree"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475911350.124436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "608"
+            endingLineNumber = "608"
+            landmarkName = "-reConnectTryThree"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475911350.124436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475911350.124436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475911350.124436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475911350.124436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "XBYL/ViewController.m"
+            timestampString = "475911350.124436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "241"
+            endingLineNumber = "241"
+            landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

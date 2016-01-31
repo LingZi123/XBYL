@@ -126,12 +126,12 @@
                 }
                 else if ([cmd isEqualToString:@"bodataACK"]){
                     //只抛偶数次
-                    if (i%2==0) {
+//                    if (i%2==0) {
                         [self.appMessageDelegate patientMessage:cmd andMsg:msg];
-                    }
-                    else{
-                        continue;
-                    }
+//                    }
+//                    else{
+//                        continue;
+//                    }
                 
                 }
                 else if ([cmd isEqualToString:@"hoslistACK"]){

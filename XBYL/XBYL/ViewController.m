@@ -108,15 +108,14 @@
         return;
     }
     [self reConnectTryThree];
-    
-    if (appDelegate.connected) {
-        
-    }
     //开启刷新时间
     if (refashTimer==nil) {
         refashTimer=[NSTimer scheduledTimerWithTimeInterval:refashValue target:self selector:@selector(refashTimerClick:) userInfo:nil repeats:YES];
     }
     [refashTimer setFireDate:[NSDate distantPast]];
+    
+   
+    
 }
 -(void)refashTimerClick:(NSTimer *)timer{
     if (infoArray.count<=0) {
@@ -296,6 +295,14 @@
                 cell.xinlvLabel.textColor=[UIColor redColor];
             }
             if ([info.personSetting.xueyangdownvalue integerValue]>[info.mulData.xueyang integerValue]||[info.mulData.xueyang integerValue]>[info.personSetting.xueyangupvalue integerValue]) {
+                cell.xueyangLabel.textColor=[UIColor redColor];
+            }
+        }
+        else if (appDelegate.defaultAlarmSetting){
+            if ([appDelegate.defaultAlarmSetting.xinlvdownvalue integerValue]>[info.mulData.xinlv integerValue]||[info.mulData.xinlv integerValue]>[appDelegate.defaultAlarmSetting.xinlvupvalue integerValue]) {
+                cell.xinlvLabel.textColor=[UIColor redColor];
+            }
+            if ([appDelegate.defaultAlarmSetting.xueyangdownvalue integerValue]>[info.mulData.xueyang integerValue]||[info.mulData.xueyang integerValue]>[appDelegate.defaultAlarmSetting.xueyangupvalue integerValue]) {
                 cell.xueyangLabel.textColor=[UIColor redColor];
             }
         }
