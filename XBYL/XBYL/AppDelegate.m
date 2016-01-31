@@ -36,9 +36,11 @@
     [nstdcomm stdcommStart];
     [self reciveData];
    
+    //系统设置数据
    NSData *systemdata=[defaults objectForKey:user_systemsetting];
-    
     _systemSetting=[NSKeyedUnarchiver unarchiveObjectWithData:systemdata];
+    
+    //用户信息
     NSData *logindata=[defaults objectForKey:user_loginUserInfo];
     _loginUserInfo=[NSKeyedUnarchiver unarchiveObjectWithData:logindata];
     
@@ -52,6 +54,18 @@
     }
     else{
         _refashValue=[tempvalue integerValue];
+    }
+    
+    NSData *alarmdata=[defaults objectForKey:user_defaultAlarmSetting];
+    if (alarmdata) {
+        _defaultAlarmSetting=(PersonSettingInfo *)[NSKeyedUnarchiver unarchiveObjectWithData:alarmdata];
+    }
+    else{
+        //付默认值
+        [self defuaultAlarmDic];
+        NSData *saveAlarmdata=[NSKeyedArchiver archivedDataWithRootObject:_defaultAlarmSetting];
+        [defaults setObject:saveAlarmdata forKey:user_defaultAlarmSetting];
+        [defaults synchronize];
     }
     
     self.mainStoryBoard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -268,4 +282,25 @@
 -(void)reciveData{
     [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
 }
+
+-(void)defuaultAlarmDic{
+    if(_defaultAlarmSetting==nil){
+        _defaultAlarmSetting=[[PersonSettingInfo alloc]init];
+    }
+    _defaultAlarmSetting.patientNo=Default_People ;
+    
+    _defaultAlarmSetting.shousuoyaupvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Up];
+    _defaultAlarmSetting.shuzhangyaupvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Up];
+    _defaultAlarmSetting.xueyangupvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Up];
+    _defaultAlarmSetting.xinlvupvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Up];
+    _defaultAlarmSetting.mailvupvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Up];
+    _defaultAlarmSetting.huxiupvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Up];
+    _defaultAlarmSetting.xinlvdownvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Down];
+    _defaultAlarmSetting.mailvdownvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Down];
+    _defaultAlarmSetting.huxidownvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Down];
+    _defaultAlarmSetting.xueyangdownvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Down];
+    _defaultAlarmSetting.shousuoyadownvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Down];
+    _defaultAlarmSetting.shuzhangyadownvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Down];
+}
+
 @end

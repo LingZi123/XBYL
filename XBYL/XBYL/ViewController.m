@@ -260,6 +260,18 @@
                 cell.mailvLabel.textColor=[UIColor redColor];
             }
         }
+        else if (appDelegate.defaultAlarmSetting){
+            if ([appDelegate.defaultAlarmSetting.shuzhangyadownvalue integerValue]>[info.xueya.DBP integerValue]||[info.xueya.DBP integerValue]>[appDelegate.defaultAlarmSetting.shuzhangyaupvalue integerValue]) {
+                cell.xueyaLabel1.textColor=[UIColor redColor];
+            }
+            if ([appDelegate.defaultAlarmSetting.shousuoyadownvalue integerValue]>[info.xueya.shousuoya integerValue]||[info.xueya.shousuoya integerValue]>[appDelegate.defaultAlarmSetting.shousuoyaupvalue integerValue]) {
+                cell.xueyaLabel2.textColor=[UIColor redColor];
+            }
+            
+            if ([appDelegate.defaultAlarmSetting.mailvdownvalue integerValue]>[info.xueya.mailv integerValue]||[info.xueya.mailv integerValue]>[appDelegate.defaultAlarmSetting.mailvupvalue integerValue]) {
+                cell.mailvLabel.textColor=[UIColor redColor];
+            }
+        }
         else{
             if (Default_Shuzhangye_Down>[info.xueya.DBP integerValue]||[info.xueya.DBP integerValue]>Default_Shuzhangye_Up) {
                 cell.xueyaLabel1.textColor=[UIColor redColor];
@@ -564,6 +576,9 @@
 -(void)logingMessage:(NSString *)mes{
     [SVProgressHUD dismiss];
     if ([mes isEqualToString:@"success"]) {
+        if(self.navigationItem.rightBarButtonItems.count>1){
+            self.navigationItem.rightBarButtonItems=@[rigthBar];//连接成功后要消失
+        }
         appDelegate.logined=YES;
         [nstdcomm stdcommRefreshHosList];
         [nstdcomm stdcommRefreshPatList];

@@ -64,18 +64,35 @@
 
 -(void)defaultSetting{
     personSetting.patientNo=_patient.patientNo;
-    personSetting.shuzhangyadownvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Down];
-    personSetting.shuzhangyaupvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Up];
-    personSetting.shousuoyadownvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Down];
-    personSetting.shousuoyaupvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Up];
-    personSetting.xueyangdownvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Down];
-    personSetting.xueyangupvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Up];
-    personSetting.xinlvdownvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Down];
-    personSetting.xinlvupvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Up];
-    personSetting.mailvdownvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Down];
-    personSetting.mailvupvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Up];
-    personSetting.huxidownvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Down];
-    personSetting.huxiupvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Up];
+    if ([self appdelegate].defaultAlarmSetting) {
+        personSetting.shuzhangyadownvalue=[self appdelegate].defaultAlarmSetting.shuzhangyadownvalue;
+        personSetting.shuzhangyaupvalue=[self appdelegate].defaultAlarmSetting.shuzhangyaupvalue;
+        personSetting.shousuoyadownvalue=[self appdelegate].defaultAlarmSetting.shousuoyadownvalue;
+        personSetting.shousuoyaupvalue=[self appdelegate].defaultAlarmSetting.shousuoyaupvalue;
+        personSetting.xueyangdownvalue=[self appdelegate].defaultAlarmSetting.xueyangdownvalue;
+        personSetting.xueyangupvalue=[self appdelegate].defaultAlarmSetting.xueyangupvalue;
+        personSetting.xinlvdownvalue=[self appdelegate].defaultAlarmSetting.xinlvdownvalue;
+        personSetting.xinlvupvalue=[self appdelegate].defaultAlarmSetting.xinlvupvalue;
+        personSetting.mailvdownvalue=[self appdelegate].defaultAlarmSetting.mailvdownvalue;
+        personSetting.mailvupvalue=[self appdelegate].defaultAlarmSetting.mailvupvalue;
+        personSetting.huxidownvalue=[self appdelegate].defaultAlarmSetting.huxidownvalue;
+        personSetting.huxiupvalue=[self appdelegate].defaultAlarmSetting.huxiupvalue;
+
+    }
+    else{
+        personSetting.shuzhangyadownvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Down];
+        personSetting.shuzhangyaupvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Up];
+        personSetting.shousuoyadownvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Down];
+        personSetting.shousuoyaupvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Up];
+        personSetting.xueyangdownvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Down];
+        personSetting.xueyangupvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Up];
+        personSetting.xinlvdownvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Down];
+        personSetting.xinlvupvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Up];
+        personSetting.mailvdownvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Down];
+        personSetting.mailvupvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Up];
+        personSetting.huxidownvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Down];
+        personSetting.huxiupvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Up];
+    }
 }
 -(void)recoveDefault:(id)sender{
     [self defaultSetting];
@@ -124,5 +141,9 @@
         [SVProgressHUD showErrorWithStatus:@"保存失败"];
     }
  
+}
+
+-(AppDelegate *)appdelegate{
+    return (AppDelegate *)[[UIApplication sharedApplication]delegate];
 }
 @end

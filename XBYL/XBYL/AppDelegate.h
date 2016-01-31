@@ -11,6 +11,7 @@
 #import "LoginViewController.h"
 #import "LoginUserInfo.h"
 #import "AppMessgeDelegate.h"
+#import "PersonSettingInfo.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>{
@@ -30,6 +31,7 @@
 @property(nonatomic,retain)UINavigationController *mainnav;
 @property(nonatomic,assign)BOOL connected;//是否已经连接
 @property(nonatomic,assign)BOOL logined;//是否已经登录
+@property(nonatomic,retain)PersonSettingInfo *defaultAlarmSetting;//默认的报警设置
 
 @property(nonatomic,assign)id<AppMessgeDelegate> appMessageDelegate;
 
@@ -37,6 +39,7 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 -(void)reciveData;
+-(void)defuaultAlarmDic;
 
 @end
 

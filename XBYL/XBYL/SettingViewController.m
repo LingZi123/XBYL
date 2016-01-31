@@ -106,34 +106,16 @@
     
     //填充报警参数值
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSData *data=[defaults objectForKey:user_defaultAlarmSetting];
-    if (data) {
-        alarmInfo=(PersonSettingInfo *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+//    NSData *data=[defaults objectForKey:user_defaultAlarmSetting];
+//    if (data) {
+//        alarmInfo=(PersonSettingInfo *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+//    }
+    if ([self appdelegate].defaultAlarmSetting==nil) {
+         [[self appdelegate] defuaultAlarmDic];
     }
-    if (alarmInfo==nil) {
-         [self defuaultAlarmDic];
-    }
-    alarmSettingView=[[AlarmSettingView alloc]initWithFrame:dateSelectedView.frame info:alarmInfo];
+    alarmSettingView=[[AlarmSettingView alloc]initWithFrame:dateSelectedView.frame info:[self appdelegate].defaultAlarmSetting];
     [self.view addSubview:alarmSettingView];
     
-}
-
--(void)defuaultAlarmDic{
-    alarmInfo=[[PersonSettingInfo alloc]init];
-    alarmInfo.patientNo=Default_People ;
-    
-    alarmInfo.shousuoyaupvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Up];
-    alarmInfo.shuzhangyaupvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Up];
-    alarmInfo.xueyangupvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Up];
-    alarmInfo.xinlvupvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Up];
-    alarmInfo.mailvupvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Up];
-    alarmInfo.huxiupvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Up];
-    alarmInfo.xinlvdownvalue=[NSString stringWithFormat:@"%d",Default_Xinlv_Down];
-    alarmInfo.mailvdownvalue=[NSString stringWithFormat:@"%d",Default_Mailv_Down];
-    alarmInfo.huxidownvalue=[NSString stringWithFormat:@"%d",Default_Huxi_Down];
-    alarmInfo.xueyangdownvalue=[NSString stringWithFormat:@"%d",Default_Xueyang_Down];
-    alarmInfo.shousuoyadownvalue=[NSString stringWithFormat:@"%d",Default_Shousuoya_Down];
-    alarmInfo.shuzhangyadownvalue=[NSString stringWithFormat:@"%d",Default_Shuzhangye_Down];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -152,8 +134,8 @@
         [settingTableView reloadData];
     }
     else{
-        [self defuaultAlarmDic];
-        [alarmSettingView recoveDefault:alarmInfo];
+        [[self appdelegate] defuaultAlarmDic];
+        [alarmSettingView recoveDefault:[self appdelegate].defaultAlarmSetting];
     }
 }
 -(void)back:(id)sender{
@@ -363,9 +345,21 @@
 
 -(void)savedata:(PersonSettingInfo *)info{
     //保存数据
-    alarmInfo=info;
-    NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
-    NSData *data=[NSKeyedArchiver archivedDataWithRootObject:info];
+    [self appdelegate].defaultAlarmSetting.shousuoyaupvalue=info.shousuoyaupvalue;
+     [self appdelegate].defaultAlarmSetting.shuzhangyaupvalue=info.shuzhangyaupvalue;
+     [self appdelegate].defaultAlarmSetting.xueyangupvalue=info.xueyangupvalue;
+     [self appdelegate].defaultAlarmSetting.xinlvupvalue=info.xinlvupvalue;
+     [self appdelegate].defaultAlarmSetting.mailvupvalue=info.mailvupvalue;
+     [self appdelegate].defaultAlarmSetting.huxiupvalue=info.huxiupvalue;
+     [self appdelegate].defaultAlarmSetting.xinlvdownvalue=info.xinlvdownvalue;
+     [self appdelegate].defaultAlarmSetting.mailvdownvalue=info.mailvdownvalue;
+     [self appdelegate].defaultAlarmSetting.huxidownvalue=info.huxidownvalue;
+     [self appdelegate].defaultAlarmSetting.xueyangdownvalue=info.xueyangdownvalue;
+     [self appdelegate].defaultAlarmSetting.shousuoyadownvalue=info.shousuoyadownvalue;
+     [self appdelegate].defaultAlarmSetting.shuzhangyadownvalue=info.shuzhangyadownvalue;
+    
+     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
+     NSData *data=[NSKeyedArchiver archivedDataWithRootObject:[self appdelegate].defaultAlarmSetting];
     [defaults setObject:data forKey:user_defaultAlarmSetting];
     [defaults synchronize];
     
@@ -375,4 +369,7 @@
 
 }
 
+-(AppDelegate *)appdelegate{
+    return (AppDelegate *)[[UIApplication sharedApplication]delegate];
+}
 @end

@@ -37,7 +37,7 @@
 //    __weak IBOutlet AlarmSettingView *armView;
 //    NSMutableArray *alarmArray;//报警参数数组
     AlarmSettingView *alarmSettingView;
-    PersonSettingInfo *alarmInfo;
+//    PersonSettingInfo *alarmInfo;
     
 //    NSInteger shousuoUpValue;
 //    NSInteger shuzhangUpValue;
