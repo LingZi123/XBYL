@@ -57,8 +57,11 @@
         UIButton *selestbtn=[[UIButton alloc]init];
         [selestbtn addTarget:self action:@selector(selectAllBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         _selectAllButton=selestbtn;
+        [self addSubview:selestbtn];
+        
         UILabel *numLabel = [[UILabel alloc] init];
-        numLabel.textAlignment = NSTextAlignmentRight;
+        numLabel.textAlignment = NSTextAlignmentLeft;
+        numLabel.text=@"全选";
         [self addSubview:numLabel];
         _numLabel = numLabel;
     }
@@ -74,6 +77,8 @@
 }
 
 -(void)selectAllBtnClick:(UIButton *)sender{
+//    _dataGroup.opened=!_dataGroup.isOpened;
+    
     if (_isSelectAll) {
         _isSelectAll=NO;
         [sender setBackgroundImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
@@ -81,12 +86,16 @@
     else{
         _isSelectAll=YES;
         [sender setBackgroundImage:[UIImage imageNamed:@"checked"] forState:UIControlStateNormal];
-        for (PatientInfo *patient in _dataGroup.patients) {
-            if (!patient.isShown) {
-                patient.isShown=YES;
-            }
+        
+    }
+    for (PatientInfo *patient in _dataGroup.patients) {
+        if (patient.isShown!=_isSelectAll) {
+            patient.isShown=_isSelectAll;
         }
+    }
 
+    if ([_delegate respondsToSelector:@selector(selectAllBtnClick)]) {
+        [_delegate selectAllBtnClick];
     }
 }
 
@@ -113,7 +122,8 @@
         [_selectAllButton setImage:[UIImage imageNamed:@"unchecked"] forState:UIControlStateNormal];
     }
 
-    _numLabel.text = [NSString stringWithFormat:@"%ld", dataGroup.patients.count];
+    _numLabel.text =@"全选";
+//    [NSString stringWithFormat:@"%ld", dataGroup.patients.count];
 }
 
 - (void)didMoveToSuperview
@@ -125,8 +135,9 @@
 {
     [super layoutSubviews];
     
-    _bgButton.frame = self.bounds;
-    _numLabel.frame = CGRectMake(self.frame.size.width - 70, 0, 60, self.frame.size.height);
+    _bgButton.frame =CGRectMake(0, 0, self.frame.size.width-60-self.frame.size.height, self.frame.size.height);
+    _selectAllButton.frame=CGRectMake(self.frame.size.width-50-self.frame.size.height, 0, self.frame.size.height, self.frame.size.height);
+    _numLabel.frame = CGRectMake(self.frame.size.width - 50, 0, 60, self.frame.size.height);
 }
 
 @end

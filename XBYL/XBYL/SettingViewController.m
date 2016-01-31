@@ -254,29 +254,27 @@
             cell.accessoryType=UITableViewCellAccessoryCheckmark  ;
             patient.isShown=YES;
         }
-
     }
+    HeadView *selectheadview=(HeadView *)[tableView headerViewForSection:indexPath.section];
+    selectheadview.dataGroup = dataArray[indexPath.section];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    if (tableView==settingTableView) {
-        HeadView *headView = [HeadView headViewWithTableView:tableView];
-        
-        headView.delegate = self;
-        headView.dataGroup = dataArray[section];
-        return headView;
-    }
-    else{
-        return nil;
-    }
-    
+    HeadView *headView = [HeadView headViewWithTableView:tableView];
+    headView.delegate = self;
+    headView.dataGroup = dataArray[section];
+    return headView;
 }
 
 #pragma mark-HeadViewDelegate
 
 - (void)clickHeadView
 {
+    [settingTableView reloadData];
+}
+
+-(void)selectAllBtnClick{
     [settingTableView reloadData];
 }
 
