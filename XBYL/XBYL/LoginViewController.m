@@ -99,6 +99,11 @@
 //        [tipView show];
         return;
     }
+    if ([self appDelegate].networkStatus==0) {
+        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:@"当前无网络，请检查网络设置"];
+        return;
+    }
     if (![self appDelegate].connected) {
         int connectResult=0;
         connectResult=[nstdcomm stdcommConnect:[self appDelegate].systemSetting.ip andPort:[[self appDelegate].systemSetting.port intValue]  andWebPort:WebPort_Default  andTermPort:TermPort_Default andLoginType:LoginType_Default];

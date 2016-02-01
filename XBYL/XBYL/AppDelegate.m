@@ -15,6 +15,7 @@
 #import "PatientInfo.h"
 #import "HospitalInfo.h"
 #import "SVProgressHUD/SVProgressHUD.h"
+#import "AFNetworkReachabilityManager.h"
 
 @interface AppDelegate ()
 
@@ -75,6 +76,14 @@
 
     [self.window makeKeyAndVisible];
     
+    [[AFNetworkReachabilityManager sharedManager]startMonitoring] ;
+    // 检测网络连接的单例,网络变化时的回调方法
+    [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        _networkStatus=(NSInteger)status;
+        if (status==0) {
+            [SVProgressHUD showErrorWithStatus:@"无网络，请检查网络设置"];
+        }
+    }];
     return YES;
 }
 

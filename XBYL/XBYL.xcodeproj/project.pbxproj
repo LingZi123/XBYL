@@ -741,6 +741,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SRCROOT)/XBYL/AFNetworking\"",
 				);
 				INFOPLIST_FILE = XBYL/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
@@ -774,6 +775,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SRCROOT)/XBYL/AFNetworking\"",
 				);
 				INFOPLIST_FILE = XBYL/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;

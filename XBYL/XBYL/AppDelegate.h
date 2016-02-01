@@ -32,6 +32,7 @@
 @property(nonatomic,assign)BOOL connected;//是否已经连接
 @property(nonatomic,assign)BOOL logined;//是否已经登录
 @property(nonatomic,retain)PersonSettingInfo *defaultAlarmSetting;//默认的报警设置
+@property(nonatomic,assign)NSInteger networkStatus;//网路状态
 
 @property(nonatomic,assign)id<AppMessgeDelegate> appMessageDelegate;
 
