@@ -594,6 +594,7 @@
     if ([mes isEqualToString:@"success"]) {
         if(self.navigationItem.rightBarButtonItems.count>1){
             self.navigationItem.rightBarButtonItems=@[rigthBar];//连接成功后要消失
+            self.navigationItem.title=[NSString stringWithFormat:@"%@  在线",appDelegate.loginUserInfo.userName];
         }
         appDelegate.logined=YES;
         [nstdcomm stdcommRefreshHosList];
@@ -608,6 +609,7 @@
     [SVProgressHUD showErrorWithStatus:@"网络断开，系统将尝试重连"];
     appDelegate.connected=NO;
     appDelegate.logined=NO;
+     self.navigationItem.title=[NSString stringWithFormat:@"%@  离线",appDelegate.loginUserInfo.userName];
     //开启自动重连3次
     //3次链接不上再显示
     [self reConnectTryThree];
@@ -626,10 +628,12 @@
                 int loginResult=  [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
                 appDelegate.logined=loginResult==1;
                 if (appDelegate.logined) {
+                    self.navigationItem.title=[NSString stringWithFormat:@"%@  在线",appDelegate.loginUserInfo.userName];
                     break;
                 }
             }
             else{
+                self.navigationItem.title=[NSString stringWithFormat:@"%@  在线",appDelegate.loginUserInfo.userName];
                 break;
             }
         }
@@ -640,6 +644,7 @@
     }
     if (reconnectCount>=3) {
         self.navigationItem.rightBarButtonItems=@[rigthBar,reconnectBtn];
+        
         
     }
     else{
