@@ -117,6 +117,7 @@
    
     
 }
+
 -(void)refashTimerClick:(NSTimer *)timer{
     if (infoArray.count<=0) {
         nodataView.hidden=NO;
@@ -198,6 +199,7 @@
     return 1;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+  
     PatientInfo *info=[infoArray objectAtIndex:indexPath.row];
     
     NSString *identif=@"MainTableViewCell";
@@ -397,7 +399,14 @@
                 [self existPatient:tempPatient];
             }
         }
-//        [_contentTablvView reloadData];
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            if (!nodataView.hidden) {
+                _contentTablvView.hidden=NO;
+                nodataView.hidden=YES;
+            }
+            [_contentTablvView reloadData];
+        });
+       
         
     }
     else if ([cmd isEqualToString:@"bpmdataACK"]){
@@ -411,7 +420,7 @@
         if (tempPatient) {
             [self existPatient:tempPatient];
         }
-//        [_contentTablvView reloadData];
+        [_contentTablvView reloadData];
 
     }
     else if ([cmd isEqualToString:@"updateonlinestatusACK"]){

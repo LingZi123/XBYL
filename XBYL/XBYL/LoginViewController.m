@@ -141,7 +141,6 @@
     
     if ([mes isEqualToString:@"success"]) {
         //写入本地
-        [self appDelegate].logined=YES;
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         if ([self appDelegate].loginUserInfo==nil) {
             [self appDelegate].loginUserInfo=[[LoginUserInfo alloc]init];
@@ -152,7 +151,6 @@
         [self appDelegate].loginUserInfo.pwd=pwdTextField.text;
         [self appDelegate].loginUserInfo.isLoginOut=NO;
         [self appDelegate].loginUserInfo.isRemeberPwd=isremeberPwd;
-        
         NSData *userInfoData=[NSKeyedArchiver archivedDataWithRootObject:[self appDelegate].loginUserInfo];
         [defaults setObject:userInfoData forKey:user_loginUserInfo];
         
@@ -161,9 +159,10 @@
             LoginUserInfo *olduser=[NSKeyedUnarchiver unarchiveObjectWithData:olddata];
             if (![olduser.userName isEqual:[self appDelegate].loginUserInfo.userName]) {
                 //清空所有数据库
+                [HospitalInfo clearModels];
                 [PersonSettingInfo clearModels];
                 [PatientInfo clearModels];
-                [HospitalInfo clearModels];
+                
                 //不存在把这个给老的
                 [defaults setObject:userInfoData forKey:user_old_loginUserInfo];
             }
@@ -174,7 +173,8 @@
         }
         
         [defaults synchronize];
- 
+        [self appDelegate].logined=YES;
+
         dispatch_sync(dispatch_get_main_queue(), ^{
         [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeNone];
         [self dismissViewControllerAnimated:YES completion:^{

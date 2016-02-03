@@ -113,48 +113,44 @@
     dispatch_async(donelistQueue, ^(){
         int count=0;
         while (isactive) {
-            if (_loginUserInfo.isLoginOut) {
-                [NSThread sleepForTimeInterval:1];
-            }
-            NSMutableArray *temparray=[listArray copy];
-            for (int i=0; i<temparray.count; i++) {
-                if (_loginUserInfo.isLoginOut||!_connected||!_logined) {
-                    break;
-                }
-                NSDictionary *dic=[temparray objectAtIndex:i];
-                NSString *cmd=[dic objectForKey:@"cmd"];
-                NSString *msg=[dic objectForKey:@"msg"];
-                
-                //刷新病人列表
-                if ([cmd isEqualToString:@"patientinfoACK"]||
-                    [cmd isEqualToString:@"bpmdataACK"]||
-                    [cmd isEqualToString:@"updateinfoACK"]||
-                    [cmd isEqualToString:@"updateonlinestatusACK"]
-                    ) {
-                    [self.appMessageDelegate patientMessage:cmd andMsg:msg];
-                }
-                else if ([cmd isEqualToString:@"bodataACK"]){
-                    //只抛偶数次
-//                    if (i%2==0) {
-                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
-//                    }
-//                    else{
-//                        continue;
-//                    }
-                
-                }
-                else if ([cmd isEqualToString:@"hoslistACK"]){
-                    //刷新病人列表
-                    if (![msg isEqualToString:@"fail"]) {
-                        //一次性返回的数据解析
-                        [HospitalInfo getHosWithMsg:msg];
+            if (_logined&&_connected) {
+                NSMutableArray *temparray=[listArray copy];
+                for (int i=0; i<temparray.count; i++) {
+                    if (_loginUserInfo.isLoginOut||!_connected||!_logined) {
+                        [listArray removeAllObjects];
+                        break;
                     }
+                    NSDictionary *dic=[temparray objectAtIndex:i];
+                    NSString *cmd=[dic objectForKey:@"cmd"];
+                    NSString *msg=[dic objectForKey:@"msg"];
+                    
+                    //刷新病人列表
+                    if ([cmd isEqualToString:@"patientinfoACK"]||
+                        [cmd isEqualToString:@"bpmdataACK"]||
+                        [cmd isEqualToString:@"updateinfoACK"]||
+                        [cmd isEqualToString:@"updateonlinestatusACK"]
+                        ) {
+                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                    }
+                    else if ([cmd isEqualToString:@"bodataACK"]){
+                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                    
+                    }
+                    else if ([cmd isEqualToString:@"hoslistACK"]){
+                        //刷新病人列表
+                        if (![msg isEqualToString:@"fail"]) {
+                            //一次性返回的数据解析
+                            [HospitalInfo getHosWithMsg:msg];
+                        }
+                    }
+                    
+                    
+                    [NSThread sleepForTimeInterval:0.1];
                 }
                 
-                
-                [NSThread sleepForTimeInterval:1];
             }
-        }
+            [NSThread sleepForTimeInterval:1];
+         }
     });
     
     //检查数据库是否过期
@@ -175,7 +171,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-//    [nstdcomm stdcommEnd];
+    [nstdcomm stdcommEnd];
     [self saveContext];
 }
 
@@ -267,6 +263,7 @@
     if (listArray==nil) {
         listArray=[[NSMutableArray alloc]init];
     }
+    
     if ([cmd isEqualToString:@"loginACK"]) {
         [self.appMessageDelegate logingMessage:msg];
     }
@@ -285,6 +282,7 @@
         }
         NSDictionary *dic=[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",listArray.count],@"index",cmd,@"cmd",msg,@"msg", nil];
         [listArray addObject:dic];
+          [NSThread sleepForTimeInterval:0.1];
     }
 }
 
