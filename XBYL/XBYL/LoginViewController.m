@@ -116,7 +116,9 @@
     }
     if ([self appDelegate].connected) {
         //登录操作
-        [self appDelegate].logined=[nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text]==1;
+        if (![self appDelegate].logined) {
+            [nstdcomm stdcommLogin:userNameTextField.text andPwd:pwdTextField.text];
+        }
     }
 }
 
@@ -151,9 +153,8 @@
         [self appDelegate].loginUserInfo.pwd=pwdTextField.text;
         [self appDelegate].loginUserInfo.isLoginOut=NO;
         [self appDelegate].loginUserInfo.isRemeberPwd=isremeberPwd;
-        NSData *userInfoData=[NSKeyedArchiver archivedDataWithRootObject:[self appDelegate].loginUserInfo];
-        [defaults setObject:userInfoData forKey:user_loginUserInfo];
         
+        NSData *userInfoData=[NSKeyedArchiver archivedDataWithRootObject:[self appDelegate].loginUserInfo];
         NSData *olddata=[defaults objectForKey:user_old_loginUserInfo];
         if (olddata) {
             LoginUserInfo *olduser=[NSKeyedUnarchiver unarchiveObjectWithData:olddata];
@@ -171,7 +172,7 @@
             //不存在把这个给老的
             [defaults setObject:userInfoData forKey:user_old_loginUserInfo];
         }
-        
+        [defaults setObject:userInfoData forKey:user_loginUserInfo];
         [defaults synchronize];
         [self appDelegate].logined=YES;
 

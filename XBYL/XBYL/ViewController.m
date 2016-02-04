@@ -127,6 +127,9 @@
         nodataView.hidden=YES;
         _contentTablvView.hidden=NO;
         [_contentTablvView reloadData];
+        
+        //把所有状态改为离线
+        
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
@@ -362,11 +365,6 @@
 - (void)reConnect:(id)sender {
     
    [SVProgressHUD showWithStatus:@"正在重接" maskType:SVProgressHUDMaskTypeNone];
-    [nstdcomm stdcommClose];
-    appDelegate.connected=NO;
-    [nstdcomm stdcommEnd];
-    [nstdcomm stdcommStart];
-    [appDelegate reciveData];
     
     if (!appDelegate.connected&&appDelegate.systemSetting) {
         appDelegate.connected=[nstdcomm stdcommConnect:appDelegate.systemSetting.ip andPort:[appDelegate.systemSetting.port intValue]  andWebPort:WebPort_Default andTermPort:TermPort_Default andLoginType:LoginType_Default]==1;
@@ -383,14 +381,9 @@
     }
 }
 
-#pragma mark-回调函数
-
-//-(void)stdMessageBox:(NSString*)cmd andMsg:(NSString*)msg{
 #pragma mark-appMessageDelegate
 
 -(void) patientMessage:(NSString *)cmd andMsg:(NSString *)msg{
-    //登录界面只接受登陆返回的信息
-    NSLog(@"msg=%@,cmd=%@",msg,cmd);
     //刷新病人列表
     if ([cmd isEqualToString:@"patientinfoACK"]) {
         if (![msg isEqualToString:@"fail"]) {
@@ -406,8 +399,6 @@
             }
             [_contentTablvView reloadData];
         });
-       
-        
     }
     else if ([cmd isEqualToString:@"bpmdataACK"]){
         //改变血压通知
@@ -480,6 +471,18 @@
                 info.mulData=model;
                 info.isRefash=YES;
             }
+            if (info.status) {
+                if (!info.status.status) {
+                    info.status.status=YES;
+                    info.isRefash=YES;
+                }
+            }
+            else{
+                info.status=[[PatientStatus alloc]init];
+                info.status.patientNo=info.patientNo;
+                info.status.status=YES;
+                info.isRefash=YES;
+            }
         }
     }
 }
@@ -508,10 +511,23 @@
                 info.xueya=model;
                 info.isRefash=YES;
             }
+            if (info.status) {
+                if (!info.status.status) {
+                    info.status.status=YES;
+                    info.isRefash=YES;
+                }
+            }
+            else{
+                info.status=[[PatientStatus alloc]init];
+                info.status.patientNo=info.patientNo;
+                info.status.status=YES;
+                info.isRefash=YES;
+            }
             break;
         }
     }
 }
+
 
 -(void)updateStatus:(PatientStatus *)model{
     
@@ -606,7 +622,7 @@
 }
 
 -(void)networkMessage:(NSString *)mes{
-    [SVProgressHUD showErrorWithStatus:@"网络断开，系统将尝试重连"];
+    [SVProgressHUD showErrorWithStatus:mes];
     appDelegate.connected=NO;
     appDelegate.logined=NO;
      self.navigationItem.title=[NSString stringWithFormat:@"%@  离线",appDelegate.loginUserInfo.userName];

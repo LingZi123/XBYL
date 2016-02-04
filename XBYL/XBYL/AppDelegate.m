@@ -81,9 +81,13 @@
     [[AFNetworkReachabilityManager sharedManager] setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         _networkStatus=(NSInteger)status;
         if (status==0) {
-            [SVProgressHUD showErrorWithStatus:@"无网络，请检查网络设置"];
+            [nstdcomm stdcommClose];
+            [self.appMessageDelegate networkMessage:@"无网络，请检查网络设置"];
         }
-    }];
+        else{
+            [self.appMessageDelegate networkMessage:@"已恢复网络"];
+        }
+        }];
     return YES;
 }
 
@@ -143,7 +147,7 @@
                             [HospitalInfo getHosWithMsg:msg];
                         }
                     }
-                    
+                    [listArray removeObject:dic];
                     
                     [NSThread sleepForTimeInterval:0.1];
                 }
@@ -272,14 +276,14 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD showErrorWithStatus:@"网络断开"];
         });
-        [self.appMessageDelegate networkMessage:msg];
+        [self.appMessageDelegate networkMessage:@"网络断开"];
     }
     else{
         
         //满了1024条就重新来过
-        if (listArray&&listArray.count>1024) {
-            [listArray removeAllObjects];
-        }
+//        if (listArray&&listArray.count>1024) {
+//            [listArray removeAllObjects];
+//        }
         NSDictionary *dic=[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",listArray.count],@"index",cmd,@"cmd",msg,@"msg", nil];
         [listArray addObject:dic];
           [NSThread sleepForTimeInterval:0.1];
