@@ -114,10 +114,39 @@
     }
     [refashTimer setFireDate:[NSDate distantPast]];
     
+    if (refashStatusTimer==nil) {
+        refashStatusTimer=[NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(refashStatusClick:) userInfo:nil repeats:YES];
+    }
+    [refashStatusTimer setFireDate:[NSDate distantPast]];
+    
    
     
 }
 
+-(void)refashStatusClick:(NSTimer *)timer{
+    NSArray *tempArray=[infoArray copy];
+    for (PatientInfo *info in tempArray) {
+        if (info.reciveCount>0) {
+            info.reciveCount=0;
+        }
+        else{
+            if (info.status) {
+                if (info.status.status) {
+                    info.status.status=NO;
+                    info.isRefash=YES;
+                }
+                else{
+                    info.isRefash=NO;
+                }
+            }
+            else{
+                info.status=[[PatientStatus alloc]init];
+                info.status.status=NO;
+                info.isRefash=YES;
+            }
+        }
+    }
+}
 -(void)refashTimerClick:(NSTimer *)timer{
     if (infoArray.count<=0) {
         nodataView.hidden=NO;
@@ -128,8 +157,6 @@
         _contentTablvView.hidden=NO;
         [_contentTablvView reloadData];
         
-        //把所有状态改为离线
-        
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
@@ -137,6 +164,8 @@
     //停止时间
     [refashTimer setFireDate:[NSDate distantFuture]];
     refashTimer=nil;
+    [refashStatusTimer setFireDate:[NSDate distantFuture]];
+    refashStatusTimer=nil;
     
 }
 -(void)makeView{
@@ -388,6 +417,7 @@
     if ([cmd isEqualToString:@"patientinfoACK"]) {
         if (![msg isEqualToString:@"fail"]) {
             PatientInfo *tempPatient=[PatientInfo getModelWithString:msg];
+            tempPatient.reciveCount+=1;
             if (tempPatient) {
                 [self existPatient:tempPatient];
             }
@@ -408,6 +438,7 @@
     else if ([cmd isEqualToString:@"updateinfoACK"]){
         //病员信息改变通知
         PatientInfo *tempPatient=[PatientInfo getModelWithString:msg];
+        tempPatient.reciveCount+=1;
         if (tempPatient) {
             [self existPatient:tempPatient];
         }
@@ -457,6 +488,7 @@
         
         if ([info.terminNo isEqualToString:model.terminNo]) {
             //修改
+            info.reciveCount+=1;
             if (info.mulData) {
                 if (![info.mulData.xueyang isEqualToString:model.xueyang]) {
                     info.mulData.xueyang=model.xueyang;
@@ -491,6 +523,7 @@
     for (int i=0;i<infoArray.count;i++) {
         PatientInfo *info=[infoArray objectAtIndex:i];
         if ([info.patientNo isEqualToString:model.patientNo]) {
+             info.reciveCount+=1;
             //修改
             if (info.xueya) {
                

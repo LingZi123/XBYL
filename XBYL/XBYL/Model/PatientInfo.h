@@ -42,6 +42,7 @@
 @property(nonatomic,copy)NSString *baseXueyaCheckDate;//基础血压测量时间
 @property(nonatomic,retain)PatientStatus *status;
 @property(nonatomic,assign)BOOL isShown;//是否显示
+@property(nonatomic,assign)NSInteger reciveCount;//接收到次数
 
 @property(nonatomic,assign)BOOL isRefash;//是否需要刷新
 

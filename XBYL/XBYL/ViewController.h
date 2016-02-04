@@ -16,12 +16,10 @@
     __weak IBOutlet UITableView *_contentTablvView;
     UILabel *detailTextLabel;
     AppDelegate *appDelegate;
-//    __weak IBOutlet UILabel *loginNameLabel;
     NSMutableArray *infoArray;//个人信息数组
-//    NSMutableArray *showArray;//显示的数组
     NSTimer *refashTimer;//刷新列表的速度
+    NSTimer *refashStatusTimer;//刷新病人状态，要是5秒没有收到数据就要设置为离线
     NSInteger refashValue;//刷新时间值
-//    NSInteger showRowCount;//显示的cell 数量
     UIBarButtonItem *reconnectBtn;
     UIBarButtonItem *rigthBar;
     
