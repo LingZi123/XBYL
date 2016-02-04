@@ -146,6 +146,7 @@
             }
         }
     }
+    [_contentTablvView reloadData];
 }
 -(void)refashTimerClick:(NSTimer *)timer{
     if (infoArray.count<=0) {
