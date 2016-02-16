@@ -20,6 +20,12 @@
 #import "SVProgressHUD/SVProgressHUD.h"
 #import "AFNetworking/AFHTTPRequestOperationManager.h"
 
+typedef NS_ENUM(NSInteger, Patient_Staus){
+    patient_status_offline=0,
+    patient_status_online=1,
+    patient_status_deletate=2
+};
+
 @interface ViewController ()
 
 @end
@@ -125,15 +131,30 @@
 
 -(void)refashStatusClick:(NSTimer *)timer{
     NSArray *tempArray=[infoArray copy];
-    for (PatientInfo *info in tempArray) {
+    for (NSInteger i=0;i<tempArray.count;i++) {
+        PatientInfo *info=[tempArray objectAtIndex:i];
         if (info.reciveCount>0) {
             info.reciveCount=0;
+            if (info.status) {
+                if (info.status.status==patient_status_offline) {
+                    info.status.status=patient_status_online;
+                    info.isRefash=YES;
+                    [self refashTableviewCell:i];
+                }
+            }
+            else{
+                info.status=[[PatientStatus alloc]init];
+                info.status.status=patient_status_online;
+                info.isRefash=YES;
+                [self refashTableviewCell:i];
+            }
         }
         else{
             if (info.status) {
-                if (info.status.status) {
-                    info.status.status=NO;
+                if (info.status.status==patient_status_online) {
+                    info.status.status=patient_status_offline;
                     info.isRefash=YES;
+                    [self refashTableviewCell:i];
                 }
                 else{
                     info.isRefash=NO;
@@ -141,12 +162,17 @@
             }
             else{
                 info.status=[[PatientStatus alloc]init];
-                info.status.status=NO;
-                info.isRefash=YES;
+                info.status.status=patient_status_offline;
+                [self refashTableviewCell:i];
             }
         }
     }
-    [_contentTablvView reloadData];
+}
+
+-(void)refashTableviewCell:(NSInteger)row{
+    //一个cell刷新
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:row inSection:0];
+    [_contentTablvView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 -(void)refashTimerClick:(NSTimer *)timer{
     if (infoArray.count<=0) {
@@ -252,12 +278,12 @@
     [cell.armBtn addTarget:self action:@selector(armBtnClick:) forControlEvents:UIControlEventTouchUpInside];
        
     if (info.status) {
-        if (info.status.status==0) {
+        if (info.status.status==patient_status_offline) {
             cell.onlineLabel.text=@"离线";
             cell.onlineImageView.backgroundColor=[UIColor grayColor];
 
         }
-        else if (info.status.status==1){
+        else if (info.status.status==patient_status_online){
             cell.onlineLabel.text=@"在线";
             cell.onlineImageView.backgroundColor=[UIColor greenColor];
         }
@@ -360,7 +386,6 @@
     return cell;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSInteger count=0;
     if (infoArray) {
          return infoArray.count;
     }
@@ -469,7 +494,7 @@
             //修改
             if (info.status==nil) {
                 info.status=[[PatientStatus alloc]init];
-                info.status.status=1;
+                info.status.status=patient_status_online;
             }
             isExist=YES;
             break;
@@ -505,15 +530,15 @@
                 info.isRefash=YES;
             }
             if (info.status) {
-                if (!info.status.status) {
-                    info.status.status=YES;
+                if (info.status.status==patient_status_offline) {
+                    info.status.status=patient_status_online;
                     info.isRefash=YES;
                 }
             }
             else{
                 info.status=[[PatientStatus alloc]init];
                 info.status.patientNo=info.patientNo;
-                info.status.status=YES;
+                info.status.status=patient_status_online;
                 info.isRefash=YES;
             }
         }
@@ -546,15 +571,15 @@
                 info.isRefash=YES;
             }
             if (info.status) {
-                if (!info.status.status) {
-                    info.status.status=YES;
+                if (info.status.status==patient_status_offline) {
+                    info.status.status=patient_status_online;
                     info.isRefash=YES;
                 }
             }
             else{
                 info.status=[[PatientStatus alloc]init];
                 info.status.patientNo=info.patientNo;
-                info.status.status=YES;
+                info.status.status=patient_status_online;
                 info.isRefash=YES;
             }
             break;
@@ -573,11 +598,13 @@
                 if (info.status.status!=model.status) {
                     info.status.status=model.status;
                     info.isRefash=YES;
+                    [self refashTableviewCell:i];
                 }
             }
             else{
                 info.status=model;
                 info.isRefash=YES;
+                [self refashTableviewCell:i];
             }
             break;
         }

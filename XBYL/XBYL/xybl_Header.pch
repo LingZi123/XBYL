@@ -33,10 +33,10 @@
 #define Regx_Ip @"\\b(?:\\d{1,3}\.){3}\\d{1,3}\\b"
 
 #define Default_RatshTimer 5
-#define Default_Shuzhangye_Down 90
-#define Default_Shuzhangye_Up 140
-#define Default_Shousuoya_Down 60
-#define Default_Shousuoya_Up 90
+#define Default_Shuzhangye_Down 60
+#define Default_Shuzhangye_Up 90
+#define Default_Shousuoya_Down 90
+#define Default_Shousuoya_Up 140
 #define Default_Xueyang_Down 90
 #define Default_Xueyang_Up 99
 #define Default_Huxi_Down 16

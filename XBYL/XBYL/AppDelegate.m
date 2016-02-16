@@ -148,12 +148,12 @@
                         }
                     }
                     [listArray removeObject:dic];
-                    
-                    [NSThread sleepForTimeInterval:0.1];
                 }
-                
+                [NSThread sleepForTimeInterval:0.1];
             }
-            [NSThread sleepForTimeInterval:1];
+            else{
+                [NSThread sleepForTimeInterval:1];
+            }
          }
     });
     
@@ -286,7 +286,6 @@
 //        }
         NSDictionary *dic=[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",listArray.count],@"index",cmd,@"cmd",msg,@"msg", nil];
         [listArray addObject:dic];
-          [NSThread sleepForTimeInterval:0.1];
     }
 }
 
