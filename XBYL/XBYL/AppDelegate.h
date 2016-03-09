@@ -31,6 +31,7 @@
 @property(nonatomic,retain)UINavigationController *mainnav;
 @property(nonatomic,assign)BOOL connected;//是否已经连接
 @property(nonatomic,assign)BOOL logined;//是否已经登录
+@property(nonatomic,assign)BOOL isInited;//是否初始化
 @property(nonatomic,retain)PersonSettingInfo *defaultAlarmSetting;//默认的报警设置
 @property(nonatomic,assign)NSInteger networkStatus;//网路状态
 
@@ -40,7 +41,7 @@
 - (NSURL *)applicationDocumentsDirectory;
 
 -(void)reciveData;
--(void)defuaultAlarmDic;
+-(void)defuaultAlarmDic;//报警参数恢复默认值
 
 @end
 

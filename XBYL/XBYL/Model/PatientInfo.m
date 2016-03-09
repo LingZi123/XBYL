@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "PatientInfoModel.h"
 #import "PersonSettingInfo.h"
+#import "Helper.h"
 
 @implementation PatientInfo
 +(PatientInfo *)getModelWithString:(NSString *)str{
@@ -68,11 +69,11 @@
             if (model.status==nil) {
                 model.status=[[PatientStatus alloc]init];
                 //默认在线
-                model.status.status=1;
+                model.status.status=patient_status_online;
                 model.status.patientNo=model.patientNo;
             }
             model.isShown=YES;
-            model.isRefash=NO;
+            model.isRefash=YES;
         }
     
         return model;

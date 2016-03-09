@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1605" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AlarmPickView">
@@ -81,9 +81,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGp-hj-2EJ">
-                    <rect key="frame" x="68" y="50" width="50" height="130"/>
+                    <rect key="frame" x="68" y="50" width="60" height="130"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="WvM-df-gRl"/>
+                        <constraint firstAttribute="width" constant="60" id="WvM-df-gRl"/>
                         <constraint firstAttribute="height" constant="130" id="opP-DY-FBQ"/>
                     </constraints>
                     <connections>
@@ -92,9 +92,9 @@
                     </connections>
                 </pickerView>
                 <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="meH-K9-3yI">
-                    <rect key="frame" x="235" y="50" width="50" height="130"/>
+                    <rect key="frame" x="235" y="50" width="60" height="130"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="50" id="ZaI-TD-wlv"/>
+                        <constraint firstAttribute="width" constant="60" id="ZaI-TD-wlv"/>
                         <constraint firstAttribute="height" constant="130" id="uRu-7X-hIw"/>
                     </constraints>
                     <connections>

@@ -164,6 +164,11 @@
                 [PersonSettingInfo clearModels];
                 [PatientInfo clearModels];
                 
+                //把报警值还原
+                [[self appDelegate] defuaultAlarmDic];
+                NSData *saveAlarmdata=[NSKeyedArchiver archivedDataWithRootObject:[self appDelegate].defaultAlarmSetting];
+                [defaults setObject:saveAlarmdata forKey:user_defaultAlarmSetting];
+                
                 //不存在把这个给老的
                 [defaults setObject:userInfoData forKey:user_old_loginUserInfo];
             }

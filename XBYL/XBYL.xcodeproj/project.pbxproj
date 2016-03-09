@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		366107A81C86B9850082984A /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 366107A71C86B9850082984A /* libstdc++.dylib */; };
+		366107DF1C86D7FC0082984A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 366107DE1C86D7FC0082984A /* libz.dylib */; };
+		366107E31C8D131C0082984A /* libACE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 366107E21C8D131C0082984A /* libACE.a */; };
+		366107E51C8D13B70082984A /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 366107E41C8D13B70082984A /* libstdc++.6.0.9.dylib */; };
 		366714B11C571E63000CCF9C /* AlarmSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 366714B01C571E63000CCF9C /* AlarmSettingView.m */; };
 		36BB35221B887FA200B2167A /* SystemSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35211B887FA200B2167A /* SystemSettingModel.m */; };
 		36BB352B1B89779200B2167A /* LoginUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB352A1B89779200B2167A /* LoginUserInfo.m */; };
@@ -44,10 +48,8 @@
 		36F6A85B1B62FE840024E783 /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F6A8591B62FE840024E783 /* MainTableViewCell.xib */; };
 		36F6A85E1B6368710024E783 /* SystemSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A85D1B6368710024E783 /* SystemSettingViewController.m */; };
 		36F6A8641B6A54F40024E783 /* PersonSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A8631B6A54F40024E783 /* PersonSettingViewController.m */; };
-		36F6A8671B6A5DC80024E783 /* tempPersonData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 36F6A8661B6A5DC80024E783 /* tempPersonData.plist */; };
 		36F6A86B1B6EE5540024E783 /* SettingViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A8691B6EE5540024E783 /* SettingViewTableViewCell.m */; };
 		36F6A86C1B6EE5540024E783 /* SettingViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F6A86A1B6EE5540024E783 /* SettingViewTableViewCell.xib */; };
-		36F6A86E1B6FAE1E0024E783 /* tempSettingData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 36F6A86D1B6FAE1E0024E783 /* tempSettingData.plist */; };
 		36F6A8711B75D9840024E783 /* RefashView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A8701B75D9840024E783 /* RefashView.m */; };
 		36F6A8731B75D99C0024E783 /* RefashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 36F6A8721B75D99C0024E783 /* RefashView.xib */; };
 		36F6A8761B75F3320024E783 /* HeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 36F6A8751B75F3320024E783 /* HeadView.m */; };
@@ -55,7 +57,6 @@
 		36FBCEFC1C5A08AB00F8561A /* PersonSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FBCEFB1C5A08AB00F8561A /* PersonSettingModel.m */; };
 		36FBCEFF1C5A08AB00F8561A /* HospitalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FBCEFE1C5A08AB00F8561A /* HospitalModel.m */; };
 		36FBCF021C5A08AC00F8561A /* UserInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36FBCF011C5A08AC00F8561A /* UserInfoModel.m */; };
-		A64B22C61C4DE971001FB46F /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04421BFDD14F00D7BB71 /* Realm.framework */; };
 		A6568B8E1C059B3000D78DD1 /* AlarmPickView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B8D1C059B3000D78DD1 /* AlarmPickView.m */; };
 		A6568B901C059B4000D78DD1 /* AlarmPickView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6568B8F1C059B4000D78DD1 /* AlarmPickView.xib */; };
 		A6568B9F1C059D4500D78DD1 /* LewPopupBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B941C059D4500D78DD1 /* LewPopupBackgroundView.m */; };
@@ -66,8 +67,6 @@
 		A6568BA41C059D4500D78DD1 /* UIViewController+LewPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6568B9E1C059D4500D78DD1 /* UIViewController+LewPopupViewController.m */; };
 		A659A79B1C4F265300E0F9BE /* libnstdcomm.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A659A7991C4F265300E0F9BE /* libnstdcomm.a */; };
 		A659A79C1C4F265300E0F9BE /* nstdcommTests.xctest in Resources */ = {isa = PBXBuildFile; fileRef = A659A79A1C4F265300E0F9BE /* nstdcommTests.xctest */; };
-		A67C043A1BFDA75B00D7BB71 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04391BFDA75B00D7BB71 /* libstdc++.tbd */; };
-		A67C04441BFDD14F00D7BB71 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04421BFDD14F00D7BB71 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,7 +86,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A67C04441BFDD14F00D7BB71 /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +93,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		360B02521C8FCAB900A29490 /* Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
+		366107A71C86B9850082984A /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		366107DE1C86D7FC0082984A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		366107E21C8D131C0082984A /* libACE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libACE.a; sourceTree = "<group>"; };
+		366107E41C8D13B70082984A /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		366714AF1C571E63000CCF9C /* AlarmSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmSettingView.h; sourceTree = "<group>"; };
 		366714B01C571E63000CCF9C /* AlarmSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmSettingView.m; sourceTree = "<group>"; };
 		36BB35131B88789E00B2167A /* xybl_Header.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xybl_Header.pch; sourceTree = "<group>"; };
@@ -153,11 +156,9 @@
 		36F6A85D1B6368710024E783 /* SystemSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemSettingViewController.m; sourceTree = "<group>"; };
 		36F6A8621B6A54F40024E783 /* PersonSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonSettingViewController.h; sourceTree = "<group>"; };
 		36F6A8631B6A54F40024E783 /* PersonSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonSettingViewController.m; sourceTree = "<group>"; };
-		36F6A8661B6A5DC80024E783 /* tempPersonData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tempPersonData.plist; sourceTree = "<group>"; };
 		36F6A8681B6EE5540024E783 /* SettingViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewTableViewCell.h; sourceTree = "<group>"; };
 		36F6A8691B6EE5540024E783 /* SettingViewTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewTableViewCell.m; sourceTree = "<group>"; };
 		36F6A86A1B6EE5540024E783 /* SettingViewTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewTableViewCell.xib; sourceTree = "<group>"; };
-		36F6A86D1B6FAE1E0024E783 /* tempSettingData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tempSettingData.plist; sourceTree = "<group>"; };
 		36F6A86F1B75D9840024E783 /* RefashView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefashView.h; sourceTree = "<group>"; };
 		36F6A8701B75D9840024E783 /* RefashView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RefashView.m; sourceTree = "<group>"; };
 		36F6A8721B75D99C0024E783 /* RefashView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RefashView.xib; sourceTree = "<group>"; };
@@ -191,7 +192,6 @@
 		A659A7991C4F265300E0F9BE /* libnstdcomm.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libnstdcomm.a; sourceTree = "<group>"; };
 		A659A79A1C4F265300E0F9BE /* nstdcommTests.xctest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = nstdcommTests.xctest; sourceTree = "<group>"; };
 		A67C04391BFDA75B00D7BB71 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
-		A67C04421BFDD14F00D7BB71 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,9 +199,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A64B22C61C4DE971001FB46F /* Realm.framework in Frameworks */,
-				A67C043A1BFDA75B00D7BB71 /* libstdc++.tbd in Frameworks */,
+				366107E51C8D13B70082984A /* libstdc++.6.0.9.dylib in Frameworks */,
+				366107DF1C86D7FC0082984A /* libz.dylib in Frameworks */,
+				366107A81C86B9850082984A /* libstdc++.dylib in Frameworks */,
 				A659A79B1C4F265300E0F9BE /* libnstdcomm.a in Frameworks */,
+				366107E31C8D131C0082984A /* libACE.a in Frameworks */,
 				36BB35561BA5745A00B2167A /* SVProgressHUD.bundle in Frameworks */,
 				36BB35501B951EF200B2167A /* CFNetwork.framework in Frameworks */,
 			);
@@ -220,7 +222,9 @@
 		36BB35081B886CB300B2167A /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				A67C04421BFDD14F00D7BB71 /* Realm.framework */,
+				366107E41C8D13B70082984A /* libstdc++.6.0.9.dylib */,
+				366107DE1C86D7FC0082984A /* libz.dylib */,
+				366107A71C86B9850082984A /* libstdc++.dylib */,
 				A67C04391BFDA75B00D7BB71 /* libstdc++.tbd */,
 				36BB35691BA631C100B2167A /* AFURLSessionManager.m */,
 				36BB35671BA631B100B2167A /* AFURLResponseSerialization.m */,
@@ -279,7 +283,6 @@
 				A6568B911C059D1400D78DD1 /* OtherClass */,
 				36BB35081B886CB300B2167A /* Framework */,
 				36F6A8771B75F4020024E783 /* Model */,
-				36F6A8651B6A5D940024E783 /* Resource */,
 				36F6A8561B62FE430024E783 /* Controller */,
 				36F6A8551B62FE370024E783 /* View */,
 				36F6A82A1B62FC5F0024E783 /* AppDelegate.h */,
@@ -361,15 +364,6 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
-		36F6A8651B6A5D940024E783 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				36F6A8661B6A5DC80024E783 /* tempPersonData.plist */,
-				36F6A86D1B6FAE1E0024E783 /* tempSettingData.plist */,
-			);
-			name = Resource;
-			sourceTree = "<group>";
-		};
 		36F6A8771B75F4020024E783 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,6 +393,7 @@
 			children = (
 				A659A7951C4F265300E0F9BE /* Release-iphonesimulator */,
 				A6568B921C059D4500D78DD1 /* popupViewController */,
+				360B02521C8FCAB900A29490 /* Helper.h */,
 			);
 			name = OtherClass;
 			sourceTree = "<group>";
@@ -425,6 +420,7 @@
 		A659A7951C4F265300E0F9BE /* Release-iphonesimulator */ = {
 			isa = PBXGroup;
 			children = (
+				366107E21C8D131C0082984A /* libACE.a */,
 				A659A7961C4F265300E0F9BE /* include */,
 				A659A7991C4F265300E0F9BE /* libnstdcomm.a */,
 				A659A79A1C4F265300E0F9BE /* nstdcommTests.xctest */,
@@ -498,9 +494,11 @@
 				TargetAttributes = {
 					36F6A8221B62FC5F0024E783 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 5E6HDDLVG9;
 					};
 					36F6A83E1B62FC5F0024E783 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = 92S2DMY739;
 						TestTargetID = 36F6A8221B62FC5F0024E783;
 					};
 				};
@@ -531,14 +529,12 @@
 			files = (
 				36F6A8351B62FC5F0024E783 /* Main.storyboard in Resources */,
 				A659A79C1C4F265300E0F9BE /* nstdcommTests.xctest in Resources */,
-				36F6A8671B6A5DC80024E783 /* tempPersonData.plist in Resources */,
 				36BB35541BA5725E00B2167A /* SVProgressHUD in Resources */,
 				36F6A83A1B62FC5F0024E783 /* LaunchScreen.xib in Resources */,
 				36BB354E1B951D4100B2167A /* AFNetworking in Resources */,
 				36F6A8731B75D99C0024E783 /* RefashView.xib in Resources */,
 				36F6A85B1B62FE840024E783 /* MainTableViewCell.xib in Resources */,
 				A6568B901C059B4000D78DD1 /* AlarmPickView.xib in Resources */,
-				36F6A86E1B6FAE1E0024E783 /* tempSettingData.plist in Resources */,
 				36F6A8371B62FC5F0024E783 /* Images.xcassets in Resources */,
 				36F6A86C1B6EE5540024E783 /* SettingViewTableViewCell.xib in Resources */,
 			);
@@ -658,7 +654,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -677,11 +674,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "c9ffe1f9-d52d-42f9-9b95-9b89f8c756f3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
@@ -702,7 +701,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -715,11 +715,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "c9ffe1f9-d52d-42f9-9b95-9b89f8c756f3";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};
@@ -729,8 +731,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -750,10 +752,17 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/XBYL",
 					"$(PROJECT_DIR)/XBYL/Release-iphonesimulator",
+					/Users/luojiao/Downloads,
 				);
-				OTHER_LDFLAGS = "-lstdc++";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-licucore",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.xb.XBYL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "c9ffe1f9-d52d-42f9-9b95-9b89f8c756f3";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
@@ -763,8 +772,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CLANG_CXX_LIBRARY = "libc++";
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -784,10 +793,18 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/XBYL",
 					"$(PROJECT_DIR)/XBYL/Release-iphonesimulator",
+					/Users/luojiao/Downloads,
 				);
-				OTHER_LDFLAGS = "-lstdc++";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-licucore",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.xb.XBYL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "c9ffe1f9-d52d-42f9-9b95-9b89f8c756f3";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};
@@ -795,6 +812,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -806,7 +825,9 @@
 				INFOPLIST_FILE = XBYLTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "c9ffe1f9-d52d-42f9-9b95-9b89f8c756f3";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XBYL.app/XBYL";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Debug;
 		};
@@ -814,6 +835,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -821,7 +844,9 @@
 				INFOPLIST_FILE = XBYLTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "c9ffe1f9-d52d-42f9-9b95-9b89f8c756f3";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XBYL.app/XBYL";
+				VALID_ARCHS = "armv7 armv7s arm64";
 			};
 			name = Release;
 		};

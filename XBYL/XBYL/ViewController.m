@@ -19,12 +19,8 @@
 #import "HospitalInfo.h"
 #import "SVProgressHUD/SVProgressHUD.h"
 #import "AFNetworking/AFHTTPRequestOperationManager.h"
+#import "Helper.h"
 
-typedef NS_ENUM(NSInteger, Patient_Staus){
-    patient_status_offline=0,
-    patient_status_online=1,
-    patient_status_deletate=2
-};
 
 @interface ViewController ()
 
@@ -66,6 +62,7 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
     if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
         self.navigationItem.leftBarButtonItem=nil;
        UIAlertView *tipView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有登录" delegate:self cancelButtonTitle:@"去登陆" otherButtonTitles:nil, nil];
+        tipView.tag=101;
         [tipView show];
         return;
     }
@@ -494,15 +491,14 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
             //修改
             if (info.status==nil) {
                 info.status=[[PatientStatus alloc]init];
-                info.status.status=patient_status_online;
             }
+            info.status.status=patient_status_online;
             isExist=YES;
             break;
         }
     }
     if (isExist==NO) {
         [infoArray addObject:patient];
-        
         //并存入数据库
         [PatientInfo InsertModelWithModel:patient];
     }
@@ -573,15 +569,15 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
             if (info.status) {
                 if (info.status.status==patient_status_offline) {
                     info.status.status=patient_status_online;
-                    info.isRefash=YES;
                 }
             }
             else{
                 info.status=[[PatientStatus alloc]init];
                 info.status.patientNo=info.patientNo;
                 info.status.status=patient_status_online;
-                info.isRefash=YES;
+               
             }
+             info.isRefash=YES;
             break;
         }
     }
@@ -619,28 +615,17 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
 }
 
 #pragma mark-事件
+//铃铛发送远程测试血压事件
 -(void)armBtnClick:(UIButton *)btn{
     PatientInfo *info=[infoArray objectAtIndex:btn.tag];
     if (info==nil) {
         return;
     }
-    AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
-    NSString *url= [NSString stringWithFormat:@"%@%@account=%@&pwd=%@&termid=%@",appDelegate.systemSetting.webPort,arm_url,appDelegate.loginUserInfo.userName,appDelegate.loginUserInfo.pwd,info.terminNo];
-    manager.responseSerializer=[AFHTTPResponseSerializer serializer];
-    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //要改的
-        NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-        if ([str isEqualToString:@"SUCCESS"]) {
-            [SVProgressHUD showErrorWithStatus:@"发送成功"];
-        }
-        else{
-            [SVProgressHUD showErrorWithStatus:@"发送失败"];
-        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"发送失败"];
-    }];
-   
+    selectedModel=info;
+    //弹出框
+    UIAlertView *armShow=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否远程测试血压 注（未配带远程血压终端测试无效）" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    armShow.tag=102;
+    [armShow show];
 }
 
 #pragma mark-SettingViewControllerDelegate
@@ -676,6 +661,9 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
         appDelegate.logined=YES;
         [nstdcomm stdcommRefreshHosList];
         [nstdcomm stdcommRefreshPatList];
+        if (istryConnect) {
+            istryConnect=NO;
+        }
     }
     else{
         appDelegate.logined=NO;
@@ -684,12 +672,18 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
 
 -(void)networkMessage:(NSString *)mes{
     [SVProgressHUD showErrorWithStatus:mes];
-    appDelegate.connected=NO;
-    appDelegate.logined=NO;
-     self.navigationItem.title=[NSString stringWithFormat:@"%@  离线",appDelegate.loginUserInfo.userName];
-    //开启自动重连3次
-    //3次链接不上再显示
-    [self reConnectTryThree];
+    if (![mes isEqualToString:@"已恢复网络"]) {
+        appDelegate.connected=NO;
+        appDelegate.logined=NO;
+        self.navigationItem.title=[NSString stringWithFormat:@"%@  离线",appDelegate.loginUserInfo.userName];
+        //开启自动重连3次
+        //3次链接不上再显示
+        istryConnect=YES;
+        [self reConnectTryThree];
+    }
+    else{
+        [self reConnectTryThree];
+    }
 }
 
 -(void)reConnectTryThree{
@@ -702,6 +696,7 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
         }
         if (appDelegate.connected) {
             if (appDelegate.loginUserInfo&&!appDelegate.logined) {
+                NSLog(@"登录");
                 int loginResult=  [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
                 appDelegate.logined=loginResult==1;
                 if (appDelegate.logined) {
@@ -714,7 +709,7 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
                 break;
             }
         }
-
+        
         [NSThread sleepForTimeInterval:1];
         reconnectCount+=1;
         
@@ -725,15 +720,40 @@ typedef NS_ENUM(NSInteger, Patient_Staus){
         
     }
     else{
-         self.navigationItem.rightBarButtonItems=@[rigthBar];
+        self.navigationItem.rightBarButtonItems=@[rigthBar];
     }
     reconnectCount=0;
 }
 
 #pragma mark-UIAlertViewDelegate
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    //进入登录界面
-    [self goLoginVC];
+    if (alertView.tag==101) {
+        //进入登录界面
+        [self goLoginVC];
+    }
+    else{
+        if (buttonIndex==1) {
+            
+            //发送远程测试血压
+            AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+            NSString *url= [NSString stringWithFormat:@"%@%@account=%@&pwd=%@&termid=%@",appDelegate.systemSetting.webPort,arm_url,appDelegate.loginUserInfo.userName,appDelegate.loginUserInfo.pwd,selectedModel.terminNo];
+            manager.responseSerializer=[AFHTTPResponseSerializer serializer];
+            [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                //要改的
+                NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+                if ([str isEqualToString:@"SUCCESS"]) {
+                    [SVProgressHUD showErrorWithStatus:@"发送成功"];
+                }
+                else{
+                    [SVProgressHUD showErrorWithStatus:@"发送失败"];
+                }
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                [SVProgressHUD showErrorWithStatus:@"发送失败"];
+            }];
+        }
+    }
+   
 }
 
 -(void)goLoginVC{

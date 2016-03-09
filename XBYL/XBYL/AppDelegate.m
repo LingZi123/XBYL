@@ -34,7 +34,10 @@
     NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
     
     //通信IO反应堆初始化(应用启动时调用,建议在APP启动后调用,只调用一次)
-    [nstdcomm stdcommStart];
+    if (!_isInited) {
+        [nstdcomm stdcommStart];
+        _isInited=YES;
+    }
     [self reciveData];
    
     //系统设置数据
@@ -92,23 +95,33 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    if (_connected) {
+        [nstdcomm stdcommClose];
+        _connected=NO;
+        _logined=NO;
+    }
+//    if (_isInited) {
+//        [nstdcomm stdcommEnd];
+//        _isInited=NO;
+//        [NSThread sleepForTimeInterval:1];
+//    }
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     isactive=NO;
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+//    if (!_isInited) {
+//        [nstdcomm stdcommStart];
+//        _isInited=YES;
+//        [NSThread sleepForTimeInterval:1];
+//    }
+//    [self reciveData];
+    [self.appMessageDelegate networkMessage:@"已恢复网络"];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     
     isactive=YES;
     
@@ -149,7 +162,7 @@
                     }
                     [listArray removeObject:dic];
                 }
-                [NSThread sleepForTimeInterval:0.1];
+                [NSThread sleepForTimeInterval:0.05];
             }
             else{
                 [NSThread sleepForTimeInterval:1];
@@ -175,7 +188,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
-    [nstdcomm stdcommEnd];
+    if(_isInited){
+        [nstdcomm stdcommEnd];
+        _isInited=NO;
+    }
+   
     [self saveContext];
 }
 
@@ -273,17 +290,27 @@
     }
     else if ([cmd isEqualToString:@"onClose"]){
         //网络断开就要重连
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [SVProgressHUD showErrorWithStatus:@"网络断开"];
-        });
-        [self.appMessageDelegate networkMessage:@"网络断开"];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [SVProgressHUD showErrorWithStatus:@"网络断开"];
+//        });
+        if (isactive) {
+            
+            if (_isInited) {
+                [nstdcomm stdcommEnd];
+                [NSThread sleepForTimeInterval:1];
+                _isInited=NO;
+            }
+            if (!_isInited) {
+                [nstdcomm stdcommStart];
+                [NSThread sleepForTimeInterval:1];
+
+            }
+            [self reciveData];
+            [self.appMessageDelegate networkMessage:@"网络断开"];
+        }
     }
     else{
         
-        //满了1024条就重新来过
-//        if (listArray&&listArray.count>1024) {
-//            [listArray removeAllObjects];
-//        }
         NSDictionary *dic=[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",listArray.count],@"index",cmd,@"cmd",msg,@"msg", nil];
         [listArray addObject:dic];
     }

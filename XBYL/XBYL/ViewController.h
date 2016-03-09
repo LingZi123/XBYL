@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "AppDelegate.h"
 #import "SettingViewController.h"
+#import "PatientInfo.h"
 
 @interface ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SettingViewControllerDelegate,AppMessgeDelegate,UIAlertViewDelegate>
 {
@@ -27,6 +28,9 @@
     UIBarButtonItem *leftBar;
     
     int reconnectCount;
+    BOOL istryConnect;//尝试3次链接
+    
+    PatientInfo *selectedModel;//选择远程发送测试血压的model
     
     
 }
