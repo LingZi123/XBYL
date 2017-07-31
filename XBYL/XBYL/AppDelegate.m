@@ -316,8 +316,20 @@
     }
 }
 
+
+-(void)stdDataBox:(NSString*)cmd andData:(NSData*) buf{
+    //NSLog(@"Recv Message cmd:%@, msg:%@", cmd, msg);
+    //此处处理回应数据
+    if([cmd isEqualToString:@"wavedataACK"]){
+        
+        NSLog(@"wavedataACK %@",buf);
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_SIGLE_DATA object:buf];
+        
+    }
+}
+
 -(void)reciveData{
-    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:)];
+    [nstdcomm stdRegMessageBox:self andSelect:@selector(stdMessageBox:andMsg:) andSelectDat:@selector(stdDataBox:andData:) andTermId:0];
 }
 
 -(void)defuaultAlarmDic{

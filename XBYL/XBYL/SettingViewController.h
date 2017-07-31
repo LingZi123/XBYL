@@ -11,6 +11,7 @@
 #import "AlarmPickView.h"
 #import "AlarmSettingView.h"
 #import "PersonSettingInfo.h"
+#import "BaseViewController.h"
 
 @protocol SettingViewControllerDelegate <NSObject>
 
@@ -18,7 +19,7 @@
 
 @end
 
-@interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,HeadViewDelegate,UIActionSheetDelegate,AlarmPickViewDelegate,AlarmSettingViewDelegate>{
+@interface SettingViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,HeadViewDelegate,UIActionSheetDelegate,AlarmPickViewDelegate,AlarmSettingViewDelegate>{
     
     __weak IBOutlet UISegmentedControl *segmentSelected;
     __weak IBOutlet UIView *dateSelectedView;

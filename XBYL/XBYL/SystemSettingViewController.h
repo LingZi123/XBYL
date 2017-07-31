@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface SystemSettingViewController : UIViewController<UITextFieldDelegate>{
+@interface SystemSettingViewController : BaseViewController<UITextFieldDelegate>{
     
     __weak IBOutlet UITextField *ipField;
     __weak IBOutlet UITextField *portField;

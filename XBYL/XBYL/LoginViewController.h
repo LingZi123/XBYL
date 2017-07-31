@@ -11,11 +11,12 @@
 #import "LoginUserInfo.h"
 #import "AppDelegate.h"
 #import "AppMessgeDelegate.h"
+#import "BaseViewController.h"
 
 typedef void (^loginSuccessBlock)(LoginUserInfo *tempUserinfo);
 
 
-@interface LoginViewController : UIViewController<UIAlertViewDelegate,UITextFieldDelegate,AppMessgeDelegate>{
+@interface LoginViewController : BaseViewController<UIAlertViewDelegate,UITextFieldDelegate,AppMessgeDelegate>{
 
     __weak IBOutlet UITextField *userNameTextField;
     __weak IBOutlet UITextField *pwdTextField;

@@ -10,8 +10,9 @@
 #import "AppDelegate.h"
 #import "SettingViewController.h"
 #import "PatientInfo.h"
+#import "BaseViewController.h"
 
-@interface ViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SettingViewControllerDelegate,AppMessgeDelegate,UIAlertViewDelegate>
+@interface ViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,SettingViewControllerDelegate,AppMessgeDelegate,UIAlertViewDelegate>
 {
     
     __weak IBOutlet UITableView *_contentTablvView;

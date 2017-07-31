@@ -11,8 +11,9 @@
 #import "PersonSettingInfo.h"
 #import "AlarmPickView.h"
 #import "AlarmSettingView.h"
+#import "BaseViewController.h"
 
-@interface PersonSettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,AlarmPickViewDelegate,AlarmSettingViewDelegate>
+@interface PersonSettingViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,AlarmPickViewDelegate,AlarmSettingViewDelegate>
 {
     NSString *titleName;
     PersonSettingInfo *personSetting;

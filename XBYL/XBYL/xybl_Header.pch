@@ -46,6 +46,10 @@
 #define Default_Xinlv_Down 40
 #define Default_Xinlv_Up 180
 
+
 #define Default_People @"People"//所有人员的设置
+
+#define NOTIF_SIGLE_DATA @"NOTIF_SIGLE_DATA"//心电数据通知
+
 
 

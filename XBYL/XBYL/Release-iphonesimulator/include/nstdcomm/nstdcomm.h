@@ -34,7 +34,18 @@ typedef void (^callbackCmd)(NSString* cmd);
 
 +(int)stdcommEnd;
 
-+(void)stdRegMessageBox:(NSObject*)obj andSelect:(SEL)select;
+//////////////////////////////////////////////////////////////////
+//修改及新增项
+//新增波形数据接收回调
++(void)stdRegMessageBox:(NSObject*)obj andSelect:(SEL)select andSelectDat:(SEL)selectdat andTermId:(int)termid;
+
+//切换单终端波型模式和多终端文本参数模式（终端ID为0时为多终端文本模式，指定具体终端号时会返回该终端波形数据，具它终端文本数据会占停）
++(void)stdSetTremId:(unsigned int)termid;
+
+//读取指定终端血压
++(int)stdcommGetPatBPM:(NSString *)patid andTermid:(int)termid ;
+
+
 
 @end
 #endif

@@ -20,9 +20,10 @@
 #import "SVProgressHUD/SVProgressHUD.h"
 #import "AFNetworking/AFHTTPRequestOperationManager.h"
 #import "Helper.h"
+#import "HeartRateCurveViewController.h"
 
 
-@interface ViewController ()
+@interface ViewController ()<HeartRateCurveViewControllerDelegate>
 
 @end
 
@@ -402,6 +403,18 @@
     }
 }
 
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    PatientInfo *info=[infoArray objectAtIndex:indexPath.row];
+    HeartRateCurveViewController *vc=[[HeartRateCurveViewController alloc]initWithNibName:@"HeartRateCurveViewController" bundle:[NSBundle mainBundle]];
+    vc.patientInfo=info;
+    vc.delegate=self;
+    
+    [self presentViewController:vc animated:YES completion:nil];
+    [nstdcomm stdSetTremId:[info.terminNo intValue]];
+
+}
 -(void)personSetting:(UIButton *)sender{
     
     
@@ -767,5 +780,10 @@
     view.backgroundColor = [UIColor clearColor];
     [tableView setTableFooterView:view];
     [tableView setTableHeaderView:view];
+}
+
+#pragma mark-HeartRateCurveViewControllerDelegate
+-(void)closeHeartRateViewController{
+     [nstdcomm stdSetTremId:0];
 }
 @end

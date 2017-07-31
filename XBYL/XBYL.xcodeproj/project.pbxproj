@@ -7,10 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		366107A81C86B9850082984A /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 366107A71C86B9850082984A /* libstdc++.dylib */; };
-		366107DF1C86D7FC0082984A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 366107DE1C86D7FC0082984A /* libz.dylib */; };
+		3658112D1F2E1A3D001BAA04 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3658112C1F2E1A3D001BAA04 /* libc++.tbd */; };
+		365811351F2F5FC5001BAA04 /* HeartRateCurveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 365811331F2F5FC5001BAA04 /* HeartRateCurveViewController.m */; };
+		365811361F2F5FC5001BAA04 /* HeartRateCurveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 365811341F2F5FC5001BAA04 /* HeartRateCurveViewController.xib */; };
+		3658113B1F2F5FE6001BAA04 /* BODataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 365811381F2F5FE6001BAA04 /* BODataModel.m */; };
+		3658113C1F2F5FE6001BAA04 /* PointContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658113A1F2F5FE6001BAA04 /* PointContainer.m */; };
+		365811421F2F600D001BAA04 /* HeartLiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3658113E1F2F600D001BAA04 /* HeartLiveView.m */; };
+		365811431F2F600D001BAA04 /* SurFaceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 365811401F2F600D001BAA04 /* SurFaceView.m */; };
+		365811441F2F600D001BAA04 /* SurFaceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 365811411F2F600D001BAA04 /* SurFaceView.xib */; };
+		365811471F2F61B6001BAA04 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 365811461F2F61B6001BAA04 /* BaseViewController.m */; };
+		365811491F2F66E3001BAA04 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 365811481F2F66E3001BAA04 /* libstdc++.6.0.9.tbd */; };
+		3658114B1F2F66E9001BAA04 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3658114A1F2F66E9001BAA04 /* libz.tbd */; };
+		3658114C1F2F66F9001BAA04 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A67C04391BFDA75B00D7BB71 /* libstdc++.tbd */; };
 		366107E31C8D131C0082984A /* libACE.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 366107E21C8D131C0082984A /* libACE.a */; };
-		366107E51C8D13B70082984A /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 366107E41C8D13B70082984A /* libstdc++.6.0.9.dylib */; };
 		366714B11C571E63000CCF9C /* AlarmSettingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 366714B01C571E63000CCF9C /* AlarmSettingView.m */; };
 		36BB35221B887FA200B2167A /* SystemSettingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB35211B887FA200B2167A /* SystemSettingModel.m */; };
 		36BB352B1B89779200B2167A /* LoginUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BB352A1B89779200B2167A /* LoginUserInfo.m */; };
@@ -94,10 +103,24 @@
 
 /* Begin PBXFileReference section */
 		360B02521C8FCAB900A29490 /* Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
-		366107A71C86B9850082984A /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
-		366107DE1C86D7FC0082984A /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		3658112C1F2E1A3D001BAA04 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		365811321F2F5FC5001BAA04 /* HeartRateCurveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartRateCurveViewController.h; sourceTree = "<group>"; };
+		365811331F2F5FC5001BAA04 /* HeartRateCurveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartRateCurveViewController.m; sourceTree = "<group>"; };
+		365811341F2F5FC5001BAA04 /* HeartRateCurveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeartRateCurveViewController.xib; sourceTree = "<group>"; };
+		365811371F2F5FE6001BAA04 /* BODataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BODataModel.h; sourceTree = "<group>"; };
+		365811381F2F5FE6001BAA04 /* BODataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BODataModel.m; sourceTree = "<group>"; };
+		365811391F2F5FE6001BAA04 /* PointContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointContainer.h; sourceTree = "<group>"; };
+		3658113A1F2F5FE6001BAA04 /* PointContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointContainer.m; sourceTree = "<group>"; };
+		3658113D1F2F600D001BAA04 /* HeartLiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeartLiveView.h; sourceTree = "<group>"; };
+		3658113E1F2F600D001BAA04 /* HeartLiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeartLiveView.m; sourceTree = "<group>"; };
+		3658113F1F2F600D001BAA04 /* SurFaceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SurFaceView.h; sourceTree = "<group>"; };
+		365811401F2F600D001BAA04 /* SurFaceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SurFaceView.m; sourceTree = "<group>"; };
+		365811411F2F600D001BAA04 /* SurFaceView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SurFaceView.xib; sourceTree = "<group>"; };
+		365811451F2F61B6001BAA04 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		365811461F2F61B6001BAA04 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		365811481F2F66E3001BAA04 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		3658114A1F2F66E9001BAA04 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		366107E21C8D131C0082984A /* libACE.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libACE.a; sourceTree = "<group>"; };
-		366107E41C8D13B70082984A /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		366714AF1C571E63000CCF9C /* AlarmSettingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmSettingView.h; sourceTree = "<group>"; };
 		366714B01C571E63000CCF9C /* AlarmSettingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmSettingView.m; sourceTree = "<group>"; };
 		36BB35131B88789E00B2167A /* xybl_Header.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xybl_Header.pch; sourceTree = "<group>"; };
@@ -199,9 +222,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				366107E51C8D13B70082984A /* libstdc++.6.0.9.dylib in Frameworks */,
-				366107DF1C86D7FC0082984A /* libz.dylib in Frameworks */,
-				366107A81C86B9850082984A /* libstdc++.dylib in Frameworks */,
+				3658114C1F2F66F9001BAA04 /* libstdc++.tbd in Frameworks */,
+				3658114B1F2F66E9001BAA04 /* libz.tbd in Frameworks */,
+				365811491F2F66E3001BAA04 /* libstdc++.6.0.9.tbd in Frameworks */,
+				3658112D1F2E1A3D001BAA04 /* libc++.tbd in Frameworks */,
 				A659A79B1C4F265300E0F9BE /* libnstdcomm.a in Frameworks */,
 				366107E31C8D131C0082984A /* libACE.a in Frameworks */,
 				36BB35561BA5745A00B2167A /* SVProgressHUD.bundle in Frameworks */,
@@ -219,12 +243,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3658112B1F2E1A3D001BAA04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3658114A1F2F66E9001BAA04 /* libz.tbd */,
+				365811481F2F66E3001BAA04 /* libstdc++.6.0.9.tbd */,
+				3658112C1F2E1A3D001BAA04 /* libc++.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		36BB35081B886CB300B2167A /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				366107E41C8D13B70082984A /* libstdc++.6.0.9.dylib */,
-				366107DE1C86D7FC0082984A /* libz.dylib */,
-				366107A71C86B9850082984A /* libstdc++.dylib */,
 				A67C04391BFDA75B00D7BB71 /* libstdc++.tbd */,
 				36BB35691BA631C100B2167A /* AFURLSessionManager.m */,
 				36BB35671BA631B100B2167A /* AFURLResponseSerialization.m */,
@@ -265,6 +296,7 @@
 				36F6A8251B62FC5F0024E783 /* XBYL */,
 				36F6A8421B62FC5F0024E783 /* XBYLTests */,
 				36F6A8241B62FC5F0024E783 /* Products */,
+				3658112B1F2E1A3D001BAA04 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -326,6 +358,11 @@
 		36F6A8551B62FE370024E783 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3658113D1F2F600D001BAA04 /* HeartLiveView.h */,
+				3658113E1F2F600D001BAA04 /* HeartLiveView.m */,
+				3658113F1F2F600D001BAA04 /* SurFaceView.h */,
+				365811401F2F600D001BAA04 /* SurFaceView.m */,
+				365811411F2F600D001BAA04 /* SurFaceView.xib */,
 				36F6A8741B75F3320024E783 /* HeadView.h */,
 				36F6A8751B75F3320024E783 /* HeadView.m */,
 				36F6A8571B62FE840024E783 /* MainTableViewCell.h */,
@@ -349,6 +386,11 @@
 		36F6A8561B62FE430024E783 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				365811451F2F61B6001BAA04 /* BaseViewController.h */,
+				365811461F2F61B6001BAA04 /* BaseViewController.m */,
+				365811321F2F5FC5001BAA04 /* HeartRateCurveViewController.h */,
+				365811331F2F5FC5001BAA04 /* HeartRateCurveViewController.m */,
+				365811341F2F5FC5001BAA04 /* HeartRateCurveViewController.xib */,
 				36F6A8301B62FC5F0024E783 /* ViewController.h */,
 				36F6A8311B62FC5F0024E783 /* ViewController.m */,
 				36F6A84F1B62FD5E0024E783 /* LoginViewController.h */,
@@ -367,6 +409,10 @@
 		36F6A8771B75F4020024E783 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				365811371F2F5FE6001BAA04 /* BODataModel.h */,
+				365811381F2F5FE6001BAA04 /* BODataModel.m */,
+				365811391F2F5FE6001BAA04 /* PointContainer.h */,
+				3658113A1F2F5FE6001BAA04 /* PointContainer.m */,
 				36BB35401B9314F700B2167A /* DB */,
 				36BB35201B887FA200B2167A /* SystemSettingModel.h */,
 				36BB35211B887FA200B2167A /* SystemSettingModel.m */,
@@ -527,6 +573,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				365811361F2F5FC5001BAA04 /* HeartRateCurveViewController.xib in Resources */,
 				36F6A8351B62FC5F0024E783 /* Main.storyboard in Resources */,
 				A659A79C1C4F265300E0F9BE /* nstdcommTests.xctest in Resources */,
 				36BB35541BA5725E00B2167A /* SVProgressHUD in Resources */,
@@ -534,6 +581,7 @@
 				36BB354E1B951D4100B2167A /* AFNetworking in Resources */,
 				36F6A8731B75D99C0024E783 /* RefashView.xib in Resources */,
 				36F6A85B1B62FE840024E783 /* MainTableViewCell.xib in Resources */,
+				365811441F2F600D001BAA04 /* SurFaceView.xib in Resources */,
 				A6568B901C059B4000D78DD1 /* AlarmPickView.xib in Resources */,
 				36F6A8371B62FC5F0024E783 /* Images.xcassets in Resources */,
 				36F6A86C1B6EE5540024E783 /* SettingViewTableViewCell.xib in Resources */,
@@ -566,7 +614,9 @@
 				36BB352E1B89B65300B2167A /* PatientInfo.m in Sources */,
 				36FBCF021C5A08AC00F8561A /* UserInfoModel.m in Sources */,
 				A6568BA11C059D4500D78DD1 /* LewPopupViewAnimationFade.m in Sources */,
+				365811431F2F600D001BAA04 /* SurFaceView.m in Sources */,
 				36F6A85E1B6368710024E783 /* SystemSettingViewController.m in Sources */,
+				365811421F2F600D001BAA04 /* HeartLiveView.m in Sources */,
 				36F6A8711B75D9840024E783 /* RefashView.m in Sources */,
 				36BB35341B89FD2F00B2167A /* XueyaModel.m in Sources */,
 				36FBCEFF1C5A08AB00F8561A /* HospitalModel.m in Sources */,
@@ -577,8 +627,10 @@
 				36F6A8641B6A54F40024E783 /* PersonSettingViewController.m in Sources */,
 				36BB35371B8A12FB00B2167A /* PatientStatus.m in Sources */,
 				36BB353C1B8DE9A300B2167A /* HospitalInfo.m in Sources */,
+				365811471F2F61B6001BAA04 /* BaseViewController.m in Sources */,
 				36F6A8291B62FC5F0024E783 /* main.m in Sources */,
 				A6568B8E1C059B3000D78DD1 /* AlarmPickView.m in Sources */,
+				365811351F2F5FC5001BAA04 /* HeartRateCurveViewController.m in Sources */,
 				36F6A86B1B6EE5540024E783 /* SettingViewTableViewCell.m in Sources */,
 				36FBCEF91C5A08AB00F8561A /* PatientInfoModel.m in Sources */,
 				36BB352B1B89779200B2167A /* LoginUserInfo.m in Sources */,
@@ -589,9 +641,11 @@
 				366714B11C571E63000CCF9C /* AlarmSettingView.m in Sources */,
 				36BB355C1BA6315F00B2167A /* AFHTTPRequestOperation.m in Sources */,
 				36BB35311B89FCF900B2167A /* MulDataModel.m in Sources */,
+				3658113B1F2F5FE6001BAA04 /* BODataModel.m in Sources */,
 				36BB35601BA6318300B2167A /* AFNetworkReachabilityManager.m in Sources */,
 				A6568BA31C059D4500D78DD1 /* LewPopupViewAnimationSpring.m in Sources */,
 				36BB35621BA6319000B2167A /* AFSecurityPolicy.m in Sources */,
+				3658113C1F2F5FE6001BAA04 /* PointContainer.m in Sources */,
 				36BB35641BA6319C00B2167A /* AFURLConnectionOperation.m in Sources */,
 				36BB35681BA631B100B2167A /* AFURLResponseSerialization.m in Sources */,
 				36BB356A1BA631C100B2167A /* AFURLSessionManager.m in Sources */,
@@ -746,7 +800,7 @@
 					"\"$(SRCROOT)/XBYL/AFNetworking\"",
 				);
 				INFOPLIST_FILE = XBYL/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -787,7 +841,7 @@
 					"\"$(SRCROOT)/XBYL/AFNetworking\"",
 				);
 				INFOPLIST_FILE = XBYL/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
