@@ -65,8 +65,8 @@ static float respViewHeight=0.25f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     isActive=YES;
-    viewWidth=CGRectGetWidth(self.view.bounds);
-    viewHeight=CGRectGetHeight(self.view.bounds);
+    viewWidth=CGRectGetHeight([UIScreen mainScreen ].bounds);
+    viewHeight=CGRectGetWidth([UIScreen mainScreen ].bounds)-20;
     boViewWidth=(NSInteger)(viewWidth-leftWith);
     //画界面
     //设置HR页面
@@ -79,7 +79,7 @@ static float respViewHeight=0.25f;
     [self.view addSubview:self.spoView];
     
     //添加通知
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:SIGLE_DATA object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_SIGLE_DATA object:nil];
     isActive=YES;
     [self displayData];
 
@@ -111,7 +111,7 @@ static float respViewHeight=0.25f;
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     isActive=NO;
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:SIGLE_DATA object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_SIGLE_DATA object:nil];
     if (self.hrTimer!=nil) {
         self.hrTimer=nil;
     }
@@ -127,7 +127,7 @@ static float respViewHeight=0.25f;
 
 -(SurFaceView *)hrView{
     if (!_hrView) {
-        _hrView=[[SurFaceView alloc]initWithFrame:CGRectMake(leftWith+10, 0, viewWidth-leftWith, viewHeight*hrViewHeight)];
+        _hrView=[[SurFaceView alloc]initWithFrame:CGRectMake(leftWith+10, 10, viewWidth-leftWith, viewHeight*hrViewHeight)];
         [_hrView setDefaultContentView];
         _hrView.titileLabel.text=@"HR:--";
         NSLog(@"leftview.frame=%@,hrview.frame=%@,self.view.bouds=%@",NSStringFromCGRect(self.leftView.frame),NSStringFromCGRect(_hrView.frame),NSStringFromCGRect(self.view.bounds));
@@ -179,7 +179,7 @@ static float respViewHeight=0.25f;
 //    }
    
     for (int i=0; i<array.count;i++) {
-        [self.ecgContainer addPointAsRefreshChangeform:[self bubbleRefreshPoint:self.hrView array:array]];
+        [self.ecgContainer addPointAsRefreshChangeform:[self.ecgContainer bubbleRefreshPoint:boViewWidth viewHeight:CGRectGetHeight(self.hrView.bounds) array:array]];
         
         [self.hrView fireDrawingWithPoints:self.ecgContainer.refreshPointContainer pointsCount:self.ecgContainer.numberOfRefreshElements];
 //        [NSThread sleepForTimeInterval:0.001];
@@ -195,14 +195,12 @@ static float respViewHeight=0.25f;
 //刷新方式绘制
 - (void)timerRefresnRespFun:(NSMutableArray *)array
 {
-
-    
     if (self.respContainer==nil) {
         self.respContainer=[[PointContainer alloc]initWithSize:boViewWidth];
     }
     [self.respView setOnlineContentView];
     for (int i=0; i<array.count;i++) {
-        [self.respContainer addPointAsRefreshChangeform:[self bubbleRefreshPoint:self.respView array:array]];
+        [self.respContainer addPointAsRefreshChangeform:[self.respContainer bubbleRefreshPoint:boViewWidth viewHeight:CGRectGetHeight(self.respView.bounds) array:array]];
         
         [self.respView fireDrawingWithPoints:self.respContainer.refreshPointContainer pointsCount:self.respContainer.numberOfRefreshElements];
 
@@ -219,7 +217,7 @@ static float respViewHeight=0.25f;
     [self.spoView setOnlineContentView];
     
     for (int i=0; i<array.count;i++) {
-        [self.spo2Container addPointAsRefreshChangeform:[self bubbleRefreshPoint:self.spoView array:array]];
+        [self.spo2Container addPointAsRefreshChangeform:[self.spo2Container bubbleRefreshPoint:boViewWidth viewHeight:CGRectGetHeight(self.spoView.bounds) array:array]];
         
         [self.spoView fireDrawingWithPoints:self.spo2Container.refreshPointContainer pointsCount:self.spo2Container.numberOfRefreshElements];
 
@@ -249,32 +247,13 @@ static float respViewHeight=0.25f;
     return UIInterfaceOrientationMaskLandscapeRight;
 }
 
-- (CGPoint)bubbleRefreshPoint:(SurFaceView *)senderView array:(NSMutableArray *)array
-{
-    static NSInteger dataSourceCounterIndex = -1;
-    dataSourceCounterIndex ++;
-    dataSourceCounterIndex %= [array count];
-    
-    
-    NSInteger pixelPerPoint = 1;
-    static NSInteger xCoordinateInMoniter = 0;
-    
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(senderView.bounds)-30)/2048)};
-    xCoordinateInMoniter += pixelPerPoint;
-    xCoordinateInMoniter %= boViewWidth;
-    
-    if (targetPointToAdd.y<10) {
-        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
-    }
-    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
-    return targetPointToAdd;
-}
+
 
 
 
 #pragma mark-数据
 -(void)reciveNotif:(NSNotification *)sender{
-    if([sender.name isEqualToString:SIGLE_DATA]){
+    if([sender.name isEqualToString:NOTIF_SIGLE_DATA]){
         
         NSLog(@"接收到通知");
         if (self.reciveArray==nil) {
@@ -320,8 +299,8 @@ static float respViewHeight=0.25f;
                         }
                         
                         [self timerRefresnHrFun:model.ecgArray];
-//                        [self timerRefresnRespFun:model.repsArray];
-//                        [self timerRefresnSPOFun:model.spo2Array];
+                        [self timerRefresnRespFun:model.repsArray];
+                        [self timerRefresnSPOFun:model.spo2Array];
                     });
                     if ([self.reciveArray containsObject:buf]) {
                         [self.reciveArray removeObject:buf];
@@ -337,7 +316,12 @@ static float respViewHeight=0.25f;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)testBloodAction:(id)sender {
-    [nstdcomm stdcommGetPatBPM:self.patientInfo.patientNo andTermid:[self.patientInfo.terminNo intValue]];
+    
+    //该警告是因为string 类型转intvalue值和integerValue 不一致，正确值应该是integerValue
+    [nstdcomm stdcommGetPatBPM:self.patientInfo.patientNo andTermid:[self.patientInfo.terminNo integerValue]];
+    //修改测量值
+    self.bloodPressureLabel.text=@"正在远程测量血压";
+    
 }
 
 @end

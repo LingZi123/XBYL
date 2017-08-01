@@ -412,7 +412,7 @@
     vc.delegate=self;
     
     [self presentViewController:vc animated:YES completion:nil];
-    [nstdcomm stdSetTremId:[info.terminNo intValue]];
+    [nstdcomm stdSetTremId:[info.terminNo integerValue]];
 
 }
 -(void)personSetting:(UIButton *)sender{

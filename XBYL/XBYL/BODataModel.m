@@ -64,9 +64,9 @@ static const NSInteger datalength=676;
         }
 
         i=i+2;
-        NSLog(@"tempdata=%d",tempdata);
+//        NSLog(@"tempdata=%d",tempdata);
     }
-    NSLog(@"model====%@",model);
+//    NSLog(@"model====%@",model);
     return model;
 }
 @end

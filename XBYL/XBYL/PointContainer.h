@@ -22,4 +22,5 @@
 //刷新变换
 - (void)addPointAsRefreshChangeform:(CGPoint)point;
 
+- (CGPoint)bubbleRefreshPoint:(NSInteger)viewWidth  viewHeight:(CGFloat)viewHeight array:(NSMutableArray *)array;
 @end

@@ -160,6 +160,9 @@
                             [HospitalInfo getHosWithMsg:msg];
                         }
                     }
+                    else{
+                        NSLog(@"cmd=====%@",cmd);
+                    }
                     [listArray removeObject:dic];
                 }
                 [NSThread sleepForTimeInterval:0.05];
@@ -322,7 +325,7 @@
     //此处处理回应数据
     if([cmd isEqualToString:@"wavedataACK"]){
         
-        NSLog(@"wavedataACK %@",buf);
+//        NSLog(@"wavedataACK %@",buf);
         [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_SIGLE_DATA object:buf];
         
     }

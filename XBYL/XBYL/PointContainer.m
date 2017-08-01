@@ -69,4 +69,25 @@
     //    putchar('\n');
 }
 
+
+- (CGPoint)bubbleRefreshPoint:(NSInteger)viewWidth  viewHeight:(CGFloat)viewHeight array:(NSMutableArray *)array
+{
+    static NSInteger dataSourceCounterIndex = -1;
+    dataSourceCounterIndex ++;
+    dataSourceCounterIndex %= [array count];
+    
+    
+    NSInteger pixelPerPoint = 1;
+    static NSInteger xCoordinateInMoniter = 0;
+    
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((viewHeight-30)/2048)};
+    xCoordinateInMoniter += pixelPerPoint;
+    xCoordinateInMoniter %= viewWidth;
+    
+    if (targetPointToAdd.y<10) {
+        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
+    }
+    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
+    return targetPointToAdd;
+}
 @end
