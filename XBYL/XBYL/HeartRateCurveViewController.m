@@ -14,6 +14,7 @@
 #import "nstdcomm.h"
 
 static const NSInteger leftWith=160;
+static const CGFloat multiple=1.5f;//放大系数默认为1
 static float hrViewHeight=0.375f;
 static float respViewHeight=0.25f;
 
@@ -319,7 +320,7 @@ static float respViewHeight=0.25f;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.hrView.bounds)-30)/2048)};
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.hrView.bounds)-30)/2048*multiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
     
@@ -340,7 +341,7 @@ static float respViewHeight=0.25f;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.respView.bounds)-30)/2048)};
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.respView.bounds)-30)/2048*multiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
     
@@ -361,7 +362,7 @@ static float respViewHeight=0.25f;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.spoView.bounds)-30)/2048)};
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.spoView.bounds)-30)/2048*multiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
     
