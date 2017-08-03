@@ -9,17 +9,20 @@
 #import "PointContainer.h"
 
 @interface PointContainer ()
-@property (nonatomic , assign) NSInteger numberOfRefreshElements;
+@property (nonatomic , assign) NSInteger numberOfHrElements;
+@property (nonatomic , assign) NSInteger numberOfSpoElements;
+@property (nonatomic , assign) NSInteger numberOfRespElements;
 
-@property (nonatomic , assign) CGPoint *refreshPointContainer;
-
+@property (nonatomic , assign) CGPoint *hrPointContainer;
+@property (nonatomic , assign) CGPoint *spoPointContainer;
+@property (nonatomic , assign) CGPoint *respPointContainer;
 @end
 @implementation PointContainer
 
 - (void)dealloc
 {
-    free(self.refreshPointContainer);
-    self.refreshPointContainer = NULL;
+    free(self.hrPointContainer);
+    self.hrPointContainer = NULL;
 }
 
 + (PointContainer *)sharedContainer:(NSInteger)size
@@ -28,38 +31,45 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         container_ptr = [[self alloc] init];
-        container_ptr.refreshPointContainer = malloc(sizeof(CGPoint) * size);
-        memset(container_ptr.refreshPointContainer, 0, sizeof(CGPoint) * size);
+        container_ptr.hrPointContainer = malloc(sizeof(CGPoint) * size);
+        memset(container_ptr.hrPointContainer, 0, sizeof(CGPoint) * size);
+        
+        container_ptr.spoPointContainer = malloc(sizeof(CGPoint) * size);
+        memset(container_ptr.spoPointContainer, 0, sizeof(CGPoint) * size);
+        
+        container_ptr.respPointContainer = malloc(sizeof(CGPoint) * size);
+        memset(container_ptr.respPointContainer, 0, sizeof(CGPoint) * size);
+        
         container_ptr.kMaxContainerCapacity=size;
     });
     return container_ptr;
 }
 
 
--(instancetype)initWithSize:(NSInteger )size{
-    self=[super init];
-    if (self) {
-        self.refreshPointContainer = malloc(sizeof(CGPoint) * size);
-        memset(self.refreshPointContainer, 0, sizeof(CGPoint) * size);
-        self.kMaxContainerCapacity=size;
-    }
-    return self;
-}
-- (void)addPointAsRefreshChangeform:(CGPoint)point
+//-(instancetype)initWithSize:(NSInteger )size{
+//    self=[super init];
+//    if (self) {
+//        self.refreshPointContainer = malloc(sizeof(CGPoint) * size);
+//        memset(self.refreshPointContainer, 0, sizeof(CGPoint) * size);
+//        self.kMaxContainerCapacity=size;
+//    }
+//    return self;
+//}
+- (void)addPointAsHrChangeform:(CGPoint)point
 {
     static NSInteger currentPointsCount = 0;
     if (currentPointsCount < self.kMaxContainerCapacity) {
-        self.numberOfRefreshElements = currentPointsCount + 1;
-        self.refreshPointContainer[currentPointsCount] = point;
+        self.numberOfHrElements = currentPointsCount + 1;
+        self.hrPointContainer[currentPointsCount] = point;
         currentPointsCount ++;
     } else {
         NSInteger workIndex = 0;
         while (workIndex != self.kMaxContainerCapacity - 1) {
-            self.refreshPointContainer[workIndex] = self.refreshPointContainer[workIndex + 1];
+            self.hrPointContainer[workIndex] = self.hrPointContainer[workIndex + 1];
             workIndex ++;
         }
-        self.refreshPointContainer[self.kMaxContainerCapacity - 1] = point;
-        self.numberOfRefreshElements = self.kMaxContainerCapacity;
+        self.hrPointContainer[self.kMaxContainerCapacity - 1] = point;
+        self.numberOfHrElements = self.kMaxContainerCapacity;
     }
     
     //    printf("当前元素个数:%2d->",self.numberOfRefreshElements);
@@ -69,25 +79,52 @@
     //    putchar('\n');
 }
 
-
-- (CGPoint)bubbleRefreshPoint:(NSInteger)viewWidth  viewHeight:(CGFloat)viewHeight array:(NSMutableArray *)array
+- (void)addPointAsSpoChangeform:(CGPoint)point
 {
-    static NSInteger dataSourceCounterIndex = -1;
-    dataSourceCounterIndex ++;
-    dataSourceCounterIndex %= [array count];
-    
-    
-    NSInteger pixelPerPoint = 1;
-    static NSInteger xCoordinateInMoniter = 0;
-    
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((viewHeight-30)/2048)};
-    xCoordinateInMoniter += pixelPerPoint;
-    xCoordinateInMoniter %= viewWidth;
-    
-    if (targetPointToAdd.y<10) {
-        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
+    static NSInteger currentPointsCount = 0;
+    if (currentPointsCount < self.kMaxContainerCapacity) {
+        self.numberOfSpoElements = currentPointsCount + 1;
+        self.spoPointContainer[currentPointsCount] = point;
+        currentPointsCount ++;
+    } else {
+        NSInteger workIndex = 0;
+        while (workIndex != self.kMaxContainerCapacity - 1) {
+            self.spoPointContainer[workIndex] = self.spoPointContainer[workIndex + 1];
+            workIndex ++;
+        }
+        self.spoPointContainer[self.kMaxContainerCapacity - 1] = point;
+        self.numberOfSpoElements = self.kMaxContainerCapacity;
     }
-    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
-    return targetPointToAdd;
+    
+    //    printf("当前元素个数:%2d->",self.numberOfRefreshElements);
+    //    for (int k = 0; k != kMaxContainerCapacity; ++k) {
+    //        printf("(%4.0f,%4.0f)",self.refreshPointContainer[k].x,self.refreshPointContainer[k].y);
+    //    }
+    //    putchar('\n');
 }
+
+- (void)addPointAsRespChangeform:(CGPoint)point
+{
+    static NSInteger currentPointsCount = 0;
+    if (currentPointsCount < self.kMaxContainerCapacity) {
+        self.numberOfRespElements = currentPointsCount + 1;
+        self.respPointContainer[currentPointsCount] = point;
+        currentPointsCount ++;
+    } else {
+        NSInteger workIndex = 0;
+        while (workIndex != self.kMaxContainerCapacity - 1) {
+            self.respPointContainer[workIndex] = self.respPointContainer[workIndex + 1];
+            workIndex ++;
+        }
+        self.respPointContainer[self.kMaxContainerCapacity - 1] = point;
+        self.numberOfRespElements = self.kMaxContainerCapacity;
+    }
+    
+    //    printf("当前元素个数:%2d->",self.numberOfRefreshElements);
+    //    for (int k = 0; k != kMaxContainerCapacity; ++k) {
+    //        printf("(%4.0f,%4.0f)",self.refreshPointContainer[k].x,self.refreshPointContainer[k].y);
+    //    }
+    //    putchar('\n');
+}
+
 @end

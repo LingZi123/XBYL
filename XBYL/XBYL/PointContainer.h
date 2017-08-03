@@ -12,15 +12,20 @@
 @interface PointContainer : NSObject
 
 @property(nonatomic,assign)NSInteger kMaxContainerCapacity;
-@property (nonatomic , readonly) NSInteger numberOfRefreshElements;
-@property (nonatomic , readonly) NSInteger numberOfTranslationElements;
-@property (nonatomic , readonly) CGPoint *refreshPointContainer;
+@property (nonatomic , readonly) NSInteger numberOfHrElements;
+@property (nonatomic , readonly) NSInteger numberOfSpoElements;
+@property (nonatomic , readonly) NSInteger numberOfRespElements;
+@property (nonatomic , readonly) CGPoint *hrPointContainer;
+@property (nonatomic , readonly) CGPoint *spoPointContainer;
+@property (nonatomic , readonly) CGPoint *respPointContainer;
 
 + (PointContainer *)sharedContainer:(NSInteger)size;
 
 -(instancetype)initWithSize:(NSInteger )size;
 //刷新变换
-- (void)addPointAsRefreshChangeform:(CGPoint)point;
+- (void)addPointAsHrChangeform:(CGPoint)point;
+- (void)addPointAsSpoChangeform:(CGPoint)point;
+- (void)addPointAsRespChangeform:(CGPoint)point;
 
 - (CGPoint)bubbleRefreshPoint:(NSInteger)viewWidth  viewHeight:(CGFloat)viewHeight array:(NSMutableArray *)array;
 @end

@@ -35,10 +35,6 @@ static float respViewHeight=0.25f;
 @property (weak, nonatomic) IBOutlet UILabel *jeadsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fingerLabel;
 
-@property(nonatomic,retain)PointContainer *ecgContainer;
-@property(nonatomic,retain)PointContainer *spo2Container;
-@property(nonatomic,retain)PointContainer *respContainer;
-
 @property(nonatomic,retain)NSTimer *hrTimer;
 @property(nonatomic,retain)NSTimer *respTimer;
 @property(nonatomic,retain)NSTimer *spoTimer;
@@ -171,23 +167,16 @@ static float respViewHeight=0.25f;
 - (void)timerRefresnHrFun:(NSMutableArray *)array
 {
 //    if (!isonline) {
-        if (self.ecgContainer==nil) {
-            self.ecgContainer=[[PointContainer alloc]initWithSize:boViewWidth];
-        }
          [self.hrView setOnlineContentView];
 //        isonline=YES;
 //    }
    
     for (int i=0; i<array.count;i++) {
-        [self.ecgContainer addPointAsRefreshChangeform:[self.ecgContainer bubbleRefreshPoint:boViewWidth viewHeight:CGRectGetHeight(self.hrView.bounds) array:array]];
+        [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:array]];
         
-        [self.hrView fireDrawingWithPoints:self.ecgContainer.refreshPointContainer pointsCount:self.ecgContainer.numberOfRefreshElements];
-//        [NSThread sleepForTimeInterval:0.001];
+        [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
         
-//        [NSThread sleepForTimeInterval:0.001];
     }
-   
-   
    
     
 }
@@ -195,14 +184,12 @@ static float respViewHeight=0.25f;
 //刷新方式绘制
 - (void)timerRefresnRespFun:(NSMutableArray *)array
 {
-    if (self.respContainer==nil) {
-        self.respContainer=[[PointContainer alloc]initWithSize:boViewWidth];
-    }
+
     [self.respView setOnlineContentView];
     for (int i=0; i<array.count;i++) {
-        [self.respContainer addPointAsRefreshChangeform:[self.respContainer bubbleRefreshPoint:boViewWidth viewHeight:CGRectGetHeight(self.respView.bounds) array:array]];
+        [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:array]];
         
-        [self.respView fireDrawingWithPoints:self.respContainer.refreshPointContainer pointsCount:self.respContainer.numberOfRefreshElements];
+        [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
 
     }
 
@@ -211,15 +198,13 @@ static float respViewHeight=0.25f;
 //刷新方式绘制
 - (void)timerRefresnSPOFun:(NSMutableArray *)array
 {
-    if (self.spo2Container==nil) {
-        self.spo2Container=[[PointContainer alloc]initWithSize:boViewWidth];
-    }
+
     [self.spoView setOnlineContentView];
     
     for (int i=0; i<array.count;i++) {
-        [self.spo2Container addPointAsRefreshChangeform:[self.spo2Container bubbleRefreshPoint:boViewWidth viewHeight:CGRectGetHeight(self.spoView.bounds) array:array]];
+        [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:array]];
         
-        [self.spoView fireDrawingWithPoints:self.spo2Container.refreshPointContainer pointsCount:self.spo2Container.numberOfRefreshElements];
+        [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
 
     }
 
@@ -324,4 +309,66 @@ static float respViewHeight=0.25f;
     
 }
 
+- (CGPoint)bubbleHrPoint:(NSMutableArray *)array
+{
+    static NSInteger dataSourceCounterIndex = -1;
+    dataSourceCounterIndex ++;
+    dataSourceCounterIndex %= [array count];
+    
+    
+    NSInteger pixelPerPoint = 1;
+    static NSInteger xCoordinateInMoniter = 0;
+    
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.hrView.bounds)-30)/2048)};
+    xCoordinateInMoniter += pixelPerPoint;
+    xCoordinateInMoniter %= boViewWidth;
+    
+    if (targetPointToAdd.y<10) {
+        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
+    }
+    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
+    return targetPointToAdd;
+}
+
+- (CGPoint)bubbleRespPoint:(NSMutableArray *)array
+{
+    static NSInteger dataSourceCounterIndex = -1;
+    dataSourceCounterIndex ++;
+    dataSourceCounterIndex %= [array count];
+    
+    
+    NSInteger pixelPerPoint = 1;
+    static NSInteger xCoordinateInMoniter = 0;
+    
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.respView.bounds)-30)/2048)};
+    xCoordinateInMoniter += pixelPerPoint;
+    xCoordinateInMoniter %= boViewWidth;
+    
+    if (targetPointToAdd.y<10) {
+        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
+    }
+    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
+    return targetPointToAdd;
+}
+
+- (CGPoint)bubbleSpoPoint:(NSMutableArray *)array
+{
+    static NSInteger dataSourceCounterIndex = -1;
+    dataSourceCounterIndex ++;
+    dataSourceCounterIndex %= [array count];
+    
+    
+    NSInteger pixelPerPoint = 1;
+    static NSInteger xCoordinateInMoniter = 0;
+    
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.spoView.bounds)-30)/2048)};
+    xCoordinateInMoniter += pixelPerPoint;
+    xCoordinateInMoniter %= boViewWidth;
+    
+    if (targetPointToAdd.y<10) {
+        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
+    }
+    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
+    return targetPointToAdd;
+}
 @end
