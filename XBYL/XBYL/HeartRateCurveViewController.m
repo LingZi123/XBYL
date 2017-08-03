@@ -167,7 +167,7 @@ static float respViewHeight=0.25f;
 - (void)timerRefresnHrFun:(NSMutableArray *)array
 {
 //    if (!isonline) {
-         [self.hrView setOnlineContentView];
+    [self.hrView setOnlineContentView:[UIColor greenColor].CGColor];
 //        isonline=YES;
 //    }
    
@@ -185,7 +185,7 @@ static float respViewHeight=0.25f;
 - (void)timerRefresnRespFun:(NSMutableArray *)array
 {
 
-    [self.respView setOnlineContentView];
+    [self.respView setOnlineContentView:[UIColor yellowColor].CGColor];
     for (int i=0; i<array.count;i++) {
         [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:array]];
         
@@ -199,7 +199,7 @@ static float respViewHeight=0.25f;
 - (void)timerRefresnSPOFun:(NSMutableArray *)array
 {
 
-    [self.spoView setOnlineContentView];
+    [self.spoView setOnlineContentView:[UIColor redColor].CGColor];
     
     for (int i=0; i<array.count;i++) {
         [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:array]];

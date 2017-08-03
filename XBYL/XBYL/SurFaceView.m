@@ -49,12 +49,13 @@
 }
 
 //设置在线视图
--(void)setOnlineContentView{
+-(void)setOnlineContentView:(CGColorRef)color{
     if (isOnline) {
         return;
     }
     isOnline=YES;
     self.heartView.backgroundColor=[UIColor blackColor];
+    self.heartView.color=color;
     defatultSurFaceViewLabel.hidden=YES;
     //    [heartView fireDrawingWithPoints:self.points pointsCount:self.currentPointsCount];
     

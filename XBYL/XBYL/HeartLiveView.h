@@ -10,5 +10,6 @@
 
 @interface HeartLiveView : UIView
 - (void)fireDrawingWithPoints:(CGPoint *)points pointsCount:(NSInteger)count;
+@property(nonatomic,assign)CGColorRef color;
 
 @end

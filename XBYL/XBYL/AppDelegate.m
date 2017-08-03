@@ -160,7 +160,11 @@
                             [HospitalInfo getHosWithMsg:msg];
                         }
                     }
+                    else if ([cmd isEqualToString:@"getbpmACK"]){
+                        NSLog(@"getbpmACK===%@",dic);
+                    }
                     else{
+                        
                         NSLog(@"cmd=====%@",cmd);
                     }
                     [listArray removeObject:dic];
