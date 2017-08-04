@@ -18,6 +18,6 @@
 
 -(void)setDefaultContentView;//设置默认的视图
 //设置在线视图
--(void)setOnlineContentView:(CGColorRef)color;
+-(void)setOnlineContentView:(CGColorRef)color fullmodel:(BOOL)fullmodel;
 - (void)fireDrawingWithPoints:(CGPoint *)points pointsCount:(NSInteger)count;
 @end

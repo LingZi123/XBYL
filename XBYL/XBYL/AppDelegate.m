@@ -160,9 +160,6 @@
                             [HospitalInfo getHosWithMsg:msg];
                         }
                     }
-                    else if ([cmd isEqualToString:@"getbpmACK"]){
-                        NSLog(@"getbpmACK===%@",dic);
-                    }
                     else{
                         
                         NSLog(@"cmd=====%@",cmd);
@@ -315,6 +312,9 @@
             [self reciveData];
             [self.appMessageDelegate networkMessage:@"网络断开"];
         }
+    }
+    else if ([cmd isEqualToString:@"getbpmACK"]){
+        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_getbpmACK object:msg];
     }
     else{
         

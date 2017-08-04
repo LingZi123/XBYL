@@ -18,6 +18,10 @@ static const CGFloat multiple=1.5f;//放大系数默认为1
 static float hrViewHeight=0.375f;
 static float respViewHeight=0.25f;
 
+static const NSInteger maxMultiple=2048;
+static const NSInteger midMultiple=1024;
+static const NSInteger smallMultiple=512;
+
 @interface HeartRateCurveViewController ()
 
 @property (weak, nonatomic) IBOutlet UIView *leftView;
@@ -44,6 +48,7 @@ static float respViewHeight=0.25f;
 
 @property(nonatomic,retain)NSMutableArray *reciveArray;
 
+@property (weak, nonatomic) IBOutlet UILabel *pbmStatusLabel;
 
 @end
 
@@ -55,6 +60,10 @@ static float respViewHeight=0.25f;
     bool isonline;
     
     NSInteger boViewWidth;
+    
+    NSInteger hrMultiple;
+    NSInteger spoMultiple;
+    NSInteger respMultiple;
     
 }
 
@@ -75,8 +84,11 @@ static float respViewHeight=0.25f;
     [self.view addSubview:self.respView];
     [self.view addSubview:self.spoView];
     
-    //添加通知
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_SIGLE_DATA object:nil];
+    //设置默认值
+    hrMultiple=maxMultiple;
+    spoMultiple=maxMultiple;
+    respMultiple=maxMultiple;
+    
     isActive=YES;
     [self displayData];
 
@@ -103,12 +115,17 @@ static float respViewHeight=0.25f;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    //添加通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_SIGLE_DATA object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_getbpmACK object:nil];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     isActive=NO;
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_SIGLE_DATA object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_getbpmACK object:nil];
+    
     if (self.hrTimer!=nil) {
         self.hrTimer=nil;
     }
@@ -167,11 +184,19 @@ static float respViewHeight=0.25f;
 //刷新方式绘制
 - (void)timerRefresnHrFun:(NSMutableArray *)array
 {
-//    if (!isonline) {
-    [self.hrView setOnlineContentView:[UIColor greenColor].CGColor];
-//        isonline=YES;
-//    }
-   
+    [self.hrView setOnlineContentView:[UIColor greenColor].CGColor fullmodel:NO];
+
+    //遍历求放大倍数
+   NSInteger maxValue = [[array valueForKeyPath:@"@max.floatValue"] integerValue];
+    if (maxValue>1024) {
+        hrMultiple=maxMultiple;
+    }
+    else if (maxValue<512&&maxValue<=1024){
+        hrMultiple=midMultiple;
+    }
+    else{
+        hrMultiple=smallMultiple;
+    }
     for (int i=0; i<array.count;i++) {
         [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:array]];
         
@@ -186,7 +211,20 @@ static float respViewHeight=0.25f;
 - (void)timerRefresnRespFun:(NSMutableArray *)array
 {
 
-    [self.respView setOnlineContentView:[UIColor yellowColor].CGColor];
+    [self.respView setOnlineContentView:[UIColor yellowColor].CGColor fullmodel:NO];
+    //遍历求放大倍数
+    NSInteger maxValue = [[array valueForKeyPath:@"@max.floatValue"] integerValue];
+    if (maxValue>1024) {
+        respMultiple=maxMultiple;
+    }
+    else if (maxValue<512&&maxValue<=1024){
+        respMultiple=midMultiple;
+    }
+    else{
+        respMultiple=smallMultiple;
+    }
+
+    
     for (int i=0; i<array.count;i++) {
         [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:array]];
         
@@ -200,7 +238,19 @@ static float respViewHeight=0.25f;
 - (void)timerRefresnSPOFun:(NSMutableArray *)array
 {
 
-    [self.spoView setOnlineContentView:[UIColor redColor].CGColor];
+    [self.spoView setOnlineContentView:[UIColor redColor].CGColor fullmodel:YES];
+    
+    //遍历求放大倍数
+    NSInteger maxValue = [[array valueForKeyPath:@"@max.floatValue"] integerValue];
+    if (maxValue>1024) {
+        spoMultiple=maxMultiple;
+    }
+    else if (maxValue<512&&maxValue<=1024){
+        spoMultiple=midMultiple;
+    }
+    else{
+        spoMultiple=smallMultiple;
+    }
     
     for (int i=0; i<array.count;i++) {
         [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:array]];
@@ -250,6 +300,39 @@ static float respViewHeight=0.25f;
 //         BODataModel *model=[BODataModel getModelWithData:sender.object];
 //        NSLog(@"model==%@",model);
     
+    }
+    else if ([sender.name isEqualToString:NOTIF_getbpmACK]){
+        NSString *msg=sender.object;
+        XueyaModel *model=[XueyaModel getModelWithStringByTest:msg];
+        if (model) {
+            //更新数据
+            NSString *resultstr=@"";
+            if ([model.resultStr isEqualToString:@"0"]) {
+                //测量成功
+                resultstr=@"测量成功";
+                self.bloodPressureLabel.text=[NSString stringWithFormat:@"%@/%@",model.shousuoya,model.DBP];
+            }
+            else{
+                resultstr=@"测量失败";
+                self.bloodPressureLabel.text=@"--/--";
+            }
+            
+            NSString *statusstr=@"";
+            if ([model.statusStr isEqualToString:@"0"]) {
+                statusstr=@"血压计断开";
+            }
+            else if ([model.statusStr isEqualToString:@"1"]){
+                statusstr=@"血压计正常连接";
+            }
+            else{
+                statusstr=@"血压计正常连接但电量低";
+            }
+            self.pbmStatusLabel.text=[NSString stringWithFormat:@"%@  %@",resultstr,statusstr];
+        }
+        else{
+            self.bloodPressureLabel.text=@"--/--";
+            self.pbmStatusLabel.text=@"测量失败";
+        }
     }
 }
 
@@ -320,7 +403,7 @@ static float respViewHeight=0.25f;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.hrView.bounds)-30)/2048*multiple)};
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,(CGRectGetHeight(self.hrView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+hrMultiple*0.5f)*((CGRectGetHeight(self.hrView.bounds)-30)/hrMultiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
     
@@ -341,7 +424,7 @@ static float respViewHeight=0.25f;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.respView.bounds)-30)/2048*multiple)};
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,(CGRectGetHeight(self.hrView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+respMultiple*0.5f)*((CGRectGetHeight(self.respView.bounds)-30)/respMultiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
     
@@ -362,7 +445,7 @@ static float respViewHeight=0.25f;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,[array[dataSourceCounterIndex] integerValue]*((CGRectGetHeight(self.spoView.bounds)-30)/2048*multiple)};
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,(CGRectGetHeight(self.hrView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+spoMultiple*0.5f)*((CGRectGetHeight(self.spoView.bounds)-30)/spoMultiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
     

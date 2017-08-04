@@ -15,5 +15,10 @@
 @property(nonatomic,copy)NSString *mailv;//脉率
 @property(nonatomic,copy)NSString *addTime;//采集时间
 
+@property(nonatomic,copy)NSString *statusStr;//血压终端状态
+@property(nonatomic,copy)NSString *resultStr;//测量结果
+
 +(XueyaModel *)getModelWithString:(NSString *)str;
+
++(XueyaModel *)getModelWithStringByTest:(NSString *)str;//远程测量
 @end

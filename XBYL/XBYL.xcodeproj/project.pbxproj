@@ -541,6 +541,7 @@
 					36F6A8221B62FC5F0024E783 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 5E6HDDLVG9;
+						ProvisioningStyle = Automatic;
 					};
 					36F6A83E1B62FC5F0024E783 = {
 						CreatedOnToolsVersion = 6.3.1;
@@ -786,7 +787,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5E6HDDLVG9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -814,7 +816,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xb.XBYL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c9ffe1f9-d52d-42f9-9b95-9b89f8c756f3";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};
@@ -827,7 +830,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = BrandAsset;
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Chongqing New Standard Medical Equipment Co., Ltd. (5E6HDDLVG9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 5E6HDDLVG9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -856,7 +860,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.xb.XBYL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c9ffe1f9-d52d-42f9-9b95-9b89f8c756f3";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = "armv7 armv7s arm64";
 			};

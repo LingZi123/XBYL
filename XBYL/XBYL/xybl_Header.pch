@@ -50,6 +50,7 @@
 #define Default_People @"People"//所有人员的设置
 
 #define NOTIF_SIGLE_DATA @"NOTIF_SIGLE_DATA"//心电数据通知
+#define NOTIF_getbpmACK @"NOTIF_getbpmACK" //血压通知
 
 
 
