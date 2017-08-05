@@ -16,7 +16,10 @@
 
 @end
 
-@implementation HeartLiveView
+@implementation HeartLiveView{
+    CGFloat full_height;
+    CGFloat full_width;
+}
 
 - (void)setPoints:(CGPoint *)points
 {
@@ -37,8 +40,8 @@
 - (void)drawGrid
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGFloat full_height = self.frame.size.height;
-    CGFloat full_width = self.frame.size.width;
+    full_height = self.frame.size.height;
+    full_width = self.frame.size.width;
     CGFloat cell_square_width = 30;
     
     CGContextSetLineWidth(context, 0.5);
@@ -49,8 +52,8 @@
     CGContextAddLineToPoint(context, full_width, 0);
     
     //画第二条横线
-    CGContextMoveToPoint(context, 0, full_height);
-    CGContextAddLineToPoint(context, full_width, full_height);
+//    CGContextMoveToPoint(context, 0, full_height);
+//    CGContextAddLineToPoint(context, full_width, full_height);
     
     CGContextStrokePath(context);
     
@@ -135,7 +138,7 @@
     CGFloat curveLineWidth = 0.8;
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(currentContext, curveLineWidth);
-    CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), self.color);
+    CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), [UIColor clearColor].CGColor);
     CGContextMoveToPoint(currentContext, self.points[0].x, self.points[0].y);
     
     CGPoint stardpoint=self.points[0];
@@ -144,25 +147,27 @@
         if (self.points[i - 1].x < self.points[i].x) {
             CGContextAddLineToPoint(currentContext, self.points[i].x, self.points[i].y);
         } else {
-            CGContextMoveToPoint(currentContext, self.points[i].x, self.points[i].y);
             //确定了起点
             stardpoint=CGPointMake(self.points[i].x,self.points[i].y);
+            CGContextMoveToPoint(currentContext, self.points[i].x, self.points[i].y);
+            
         }
     }
    
     //确定终点
-    CGPoint endPoint=self.points[self.currentPointsCount];
-    CGPoint xstartPoint=CGPointMake(stardpoint.x, self.frame.size.height);
-    CGPoint xendPoint=CGPointMake(endPoint.x, self.frame.size.height);
+    CGPoint endPoint=self.points[self.currentPointsCount-1];
+    CGPoint xstartPoint=CGPointMake(stardpoint.x, full_height);
+    CGPoint xendPoint=CGPointMake(endPoint.x, full_height);
+    
+    NSLog(@"xstartPoint.x=%f,xstartPoint.y=%f,xendPoint.x=%f,xendPoint.y=%f,stardpoint.x=%f,stardpoint.y=%f,endPoint.x=%f,endPoint.y=%f",xstartPoint.x,xstartPoint.y,xendPoint.x,xendPoint.y,stardpoint.x,stardpoint.y,endPoint.x,endPoint.y);
+    
     CGContextAddLineToPoint(currentContext, xendPoint.x, xendPoint.y);
     CGContextAddLineToPoint(currentContext, xstartPoint.x, xstartPoint.y);
-    
+    CGContextSetFillColorWithColor(currentContext,[UIColor redColor].CGColor);
+    CGContextFillPath(currentContext);//填充路径
     CGContextStrokePath(UIGraphicsGetCurrentContext());
+//    CGContextClosePath(currentContext);
     
-    
-    //    CGContextClosePath(currentContext);
-        CGContextSetFillColorWithColor(currentContext,[UIColor redColor].CGColor);
-        CGContextFillPath(currentContext);//填充路径
 }
 
 // Only override drawRect: if you perform custom drawing.

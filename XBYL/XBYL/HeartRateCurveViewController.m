@@ -238,7 +238,7 @@ static const NSInteger smallMultiple=512;
 - (void)timerRefresnSPOFun:(NSMutableArray *)array
 {
 
-    [self.spoView setOnlineContentView:[UIColor redColor].CGColor fullmodel:YES];
+    [self.spoView setOnlineContentView:[UIColor redColor].CGColor fullmodel:NO];
     
     //遍历求放大倍数
     NSInteger maxValue = [[array valueForKeyPath:@"@max.floatValue"] integerValue];
