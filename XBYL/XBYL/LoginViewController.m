@@ -184,8 +184,9 @@
         dispatch_sync(dispatch_get_main_queue(), ^{
         [SVProgressHUD showWithStatus:@"登录中" maskType:SVProgressHUDMaskTypeNone];
         [self dismissViewControllerAnimated:YES completion:^{
-            [nstdcomm stdcommRefreshHosList];
-            [nstdcomm stdcommRefreshPatList];
+//            [nstdcomm stdcommRefreshHosList];
+//            [nstdcomm stdcommRefreshPatList];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_loginClick object:nil];
             [SVProgressHUD dismiss];
         }];
         });

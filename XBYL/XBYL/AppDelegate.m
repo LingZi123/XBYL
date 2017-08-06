@@ -147,10 +147,12 @@
                         [cmd isEqualToString:@"updateinfoACK"]||
                         [cmd isEqualToString:@"updateonlinestatusACK"]
                         ) {
-                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_patientMessage object:dic];
+//                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
                     }
                     else if ([cmd isEqualToString:@"bodataACK"]){
-                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_patientMessage object:dic];
+//                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
                     
                     }
                     else if ([cmd isEqualToString:@"hoslistACK"]){

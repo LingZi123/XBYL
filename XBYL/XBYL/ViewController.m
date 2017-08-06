@@ -31,11 +31,14 @@
 
 
 -(void)dealloc{
-    appDelegate.appMessageDelegate=nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIF_patientMessage object:nil];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self makeView];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_loginClick object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_patientMessage object:nil];
     
     //读取文件填充数据
     if (infoArray==nil) {
@@ -53,8 +56,7 @@
     else{
         refashValue=[tempvalue integerValue];
     }
-
-    appDelegate.appMessageDelegate=self;
+   
     //读取病人数据
     [self getPatientInfoList];
     
@@ -67,7 +69,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
+    appDelegate.appMessageDelegate=self;
     if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
         self.navigationItem.leftBarButtonItem=nil;
        UIAlertView *tipView=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有登录" delegate:self cancelButtonTitle:@"去登陆" otherButtonTitles:nil, nil];
@@ -122,7 +124,9 @@
     if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
         return;
     }
-    [self reConnectTryThree];
+    if (!appDelegate.loginUserInfo.isLoginOut) {
+         [self reConnectTryThree];
+    }
     //开启刷新时间
     if (refashTimer==nil) {
         refashTimer=[NSTimer scheduledTimerWithTimeInterval:refashValue target:self selector:@selector(refashTimerClick:) userInfo:nil repeats:YES];
@@ -197,6 +201,8 @@
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    appDelegate.appMessageDelegate=nil;
+    
     //停止时间
     [refashTimer setFireDate:[NSDate distantFuture]];
     refashTimer=nil;
@@ -460,50 +466,6 @@
 #pragma mark-appMessageDelegate
 
 -(void) patientMessage:(NSString *)cmd andMsg:(NSString *)msg{
-    //刷新病人列表
-    if ([cmd isEqualToString:@"patientinfoACK"]) {
-        if (![msg isEqualToString:@"fail"]) {
-            PatientInfo *tempPatient=[PatientInfo getModelWithString:msg];
-            tempPatient.reciveCount+=1;
-            if (tempPatient) {
-                [self existPatient:tempPatient];
-            }
-        }
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            if (!nodataView.hidden) {
-                _contentTablvView.hidden=NO;
-                nodataView.hidden=YES;
-            }
-            [_contentTablvView reloadData];
-        });
-    }
-    else if ([cmd isEqualToString:@"bpmdataACK"]){
-        //改变血压通知
-        XueyaModel *model=[XueyaModel getModelWithString:msg];
-        [self updateXueya:model];
-    }
-    else if ([cmd isEqualToString:@"updateinfoACK"]){
-        //病员信息改变通知
-        PatientInfo *tempPatient=[PatientInfo getModelWithString:msg];
-        tempPatient.reciveCount+=1;
-        if (tempPatient) {
-            [self existPatient:tempPatient];
-        }
-        [_contentTablvView reloadData];
-
-    }
-    else if ([cmd isEqualToString:@"updateonlinestatusACK"]){
-        //病员在线状态改变通知
-        PatientStatus *status=[PatientStatus getModelWithString:msg];
-        [self updateStatus:status];
-        
-    }
-    else if ([cmd isEqualToString:@"bodataACK"]){
-        //多参数数据到达通知
-        MulDataModel *model=[MulDataModel getModelWithString:msg];
-        [self updateMulData:model];
-        
-    }
 }
 
 -(void)existPatient:(PatientInfo *)patient{
@@ -720,7 +682,10 @@
         [self reConnectTryThree];
     }
     else{
-        [self reConnectTryThree];
+        if (appDelegate.loginUserInfo&&appDelegate.logined) {
+             [self reConnectTryThree];
+        }
+       
     }
 }
 
@@ -810,5 +775,73 @@
 #pragma mark-HeartRateCurveViewControllerDelegate
 -(void)closeHeartRateViewController{
      [nstdcomm stdSetTremId:0];
+}
+
+-(void)reciveNotif:(NSNotification *)sender{
+    if ([sender.name isEqualToString:NOTIF_loginClick]) {
+        //重新获取患者数据
+        [self getPatientInfoList];
+        if(self.navigationItem.rightBarButtonItems.count>1){
+            self.navigationItem.rightBarButtonItems=@[rigthBar];//连接成功后要消失
+            self.navigationItem.title=[NSString stringWithFormat:@"%@  在线",appDelegate.loginUserInfo.userName];
+        }
+        appDelegate.logined=YES;
+        [nstdcomm stdcommRefreshHosList];
+        [nstdcomm stdcommRefreshPatList];
+        if (istryConnect) {
+            istryConnect=NO;
+        }
+
+    }
+    else if ([sender.name isEqualToString:NOTIF_patientMessage]){
+        NSDictionary *dic=sender.object;
+        NSString *cmd=[dic objectForKey:@"cmd"];
+        NSString *msg=[dic objectForKey:@"msg"];
+        
+        //刷新病人列表
+        if ([cmd isEqualToString:@"patientinfoACK"]) {
+            if (![msg isEqualToString:@"fail"]) {
+                PatientInfo *tempPatient=[PatientInfo getModelWithString:msg];
+                tempPatient.reciveCount+=1;
+                if (tempPatient) {
+                    [self existPatient:tempPatient];
+                }
+            }
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                if (!nodataView.hidden) {
+                    _contentTablvView.hidden=NO;
+                    nodataView.hidden=YES;
+                }
+                [_contentTablvView reloadData];
+            });
+        }
+        else if ([cmd isEqualToString:@"bpmdataACK"]){
+            //改变血压通知
+            XueyaModel *model=[XueyaModel getModelWithString:msg];
+            [self updateXueya:model];
+        }
+        else if ([cmd isEqualToString:@"updateinfoACK"]){
+            //病员信息改变通知
+            PatientInfo *tempPatient=[PatientInfo getModelWithString:msg];
+            tempPatient.reciveCount+=1;
+            if (tempPatient) {
+                [self existPatient:tempPatient];
+            }
+            [_contentTablvView reloadData];
+            
+        }
+        else if ([cmd isEqualToString:@"updateonlinestatusACK"]){
+            //病员在线状态改变通知
+            PatientStatus *status=[PatientStatus getModelWithString:msg];
+            [self updateStatus:status];
+            
+        }
+        else if ([cmd isEqualToString:@"bodataACK"]){
+            //多参数数据到达通知
+            MulDataModel *model=[MulDataModel getModelWithString:msg];
+            [self updateMulData:model];
+            
+        }
+    }
 }
 @end
