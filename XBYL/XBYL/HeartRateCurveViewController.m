@@ -311,6 +311,8 @@ static const NSInteger smallMultiple=512;
                 //测量成功
                 resultstr=@"测量成功";
                 self.bloodPressureLabel.text=[NSString stringWithFormat:@"%@/%@",model.shousuoya,model.DBP];
+                self.patientInfo.xueya.shousuoya=model.shousuoya;
+                self.patientInfo.xueya.DBP=model.DBP;
             }
             else{
                 resultstr=@"测量失败";
