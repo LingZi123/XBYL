@@ -164,7 +164,7 @@
                     }
                     else{
                         
-                        NSLog(@"cmd=====%@",cmd);
+//                        NSLog(@"cmd=====%@",cmd);
                     }
                     [listArray removeObject:dic];
                 }
@@ -285,7 +285,7 @@
 #pragma mark-数据接收
 -(void)stdMessageBox:(NSString*)cmd andMsg:(NSString*)msg{
     
-    NSLog(@"msg=%@,cmd=%@",msg,cmd);
+//    NSLog(@"msg=%@,cmd=%@",msg,cmd);
 
     if (listArray==nil) {
         listArray=[[NSMutableArray alloc]init];

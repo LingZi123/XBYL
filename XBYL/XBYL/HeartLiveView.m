@@ -135,7 +135,7 @@
     if (self.currentPointsCount == 0) {
         return;
     }
-    CGFloat curveLineWidth = 0.8;
+    CGFloat curveLineWidth = 1.0;
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(currentContext, curveLineWidth);
     CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), [UIColor clearColor].CGColor);
@@ -148,7 +148,7 @@
             CGContextAddLineToPoint(currentContext, self.points[i].x, self.points[i].y);
         } else {
             //确定了起点
-            stardpoint=CGPointMake(self.points[i].x,self.points[i].y);
+//            stardpoint=CGPointMake(self.points[i].x,self.points[i].y);
             CGContextMoveToPoint(currentContext, self.points[i].x, self.points[i].y);
             
         }

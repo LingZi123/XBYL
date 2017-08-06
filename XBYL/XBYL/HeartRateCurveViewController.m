@@ -65,6 +65,16 @@ static const NSInteger smallMultiple=512;
     NSInteger spoMultiple;
     NSInteger respMultiple;
     
+    NSMutableArray *currentHrPointArray;
+    NSInteger hrindex;
+    NSMutableArray *currentSpoPointArray;
+      NSInteger spoindex;
+    NSMutableArray *curretnRespPointArray;
+      NSInteger respindex;
+    bool newHrData;
+    bool newSpoData;
+    bool newRespData;
+    
 }
 
 
@@ -83,15 +93,15 @@ static const NSInteger smallMultiple=512;
     [self.view addSubview:self.hrView];
     [self.view addSubview:self.respView];
     [self.view addSubview:self.spoView];
+    hrindex=1;
+    spoindex=1;
+    respindex=1;
     
     //设置默认值
     hrMultiple=maxMultiple;
     spoMultiple=maxMultiple;
     respMultiple=maxMultiple;
     
-    isActive=YES;
-    [self displayData];
-
     //页面显示
     self.bedNoLabel.text=self.patientInfo.bingchuangNo;
     self.nameLabel.text=self.patientInfo.patientName;
@@ -115,6 +125,10 @@ static const NSInteger smallMultiple=512;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    isActive=YES;
+    [self displayData];
+    
+    [self createWorkDataSourceWithTimeInterval:0.2];
     //添加通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_SIGLE_DATA object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_getbpmACK object:nil];
@@ -127,16 +141,17 @@ static const NSInteger smallMultiple=512;
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_getbpmACK object:nil];
     
     if (self.hrTimer!=nil) {
+        [self.hrTimer setFireDate:[NSDate distantFuture]];
         self.hrTimer=nil;
     }
     if (self.respTimer!=nil) {
+        [self.respTimer setFireDate:[NSDate distantFuture]];
         self.respTimer=nil;
     }
     if (self.spoTimer!=nil) {
+        [self.spoTimer setFireDate:[NSDate distantFuture]];
         self.spoTimer=nil;
     }
-    
-    [self.delegate closeHeartRateViewController];
 }
 
 -(SurFaceView *)hrView{
@@ -174,17 +189,138 @@ static const NSInteger smallMultiple=512;
 }
 
 
-//- (void)createWorkDataSourceWithTimeInterval:(NSTimeInterval )timeInterval
-//{
-//    self.hrTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefresnHrFun) userInfo:nil repeats:YES];
-//    self.respTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefresnRespFun) userInfo:nil repeats:YES];
-//    self.spoTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefresnSPOFun) userInfo:nil repeats:YES];
-//}
+- (void)createWorkDataSourceWithTimeInterval:(NSTimeInterval )timeInterval
+{
+    self.hrTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefreshHrSiglePoint) userInfo:nil repeats:YES];
+    self.respTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefresnRespSiglePoint) userInfo:nil repeats:YES];
+    self.spoTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefresnSpoSiglePoint) userInfo:nil repeats:YES];
+}
+
+
+//画一个点
+-(void)timerRefreshHrSiglePoint{
+    if (currentHrPointArray==nil) {
+        return;
+    }
+    if (hrindex>5) {
+        if (!newHrData) {
+            hrindex=1;
+            return;
+        }
+        else{
+            hrindex=1;
+        }
+    }
+    
+//    NSLog(@"timerRefreshHrSiglePoint index=%lD",(long)hrindex);
+    
+    if (newHrData) {
+        newHrData=NO;
+    }
+    for (int i=0; i<25;i++) {
+
+        [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:currentHrPointArray]];
+        [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
+    }
+    
+    hrindex=hrindex+1;
+    
+    //说明没有画完就来了新数据
+    if (newHrData&&hrindex<6) {
+        for (int j=0; j<currentHrPointArray.count-hrindex*25; j++) {
+            [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:currentHrPointArray]];
+            [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
+        }
+        hrindex=1;
+    }
+}
+
+///画一个点
+-(void)timerRefresnRespSiglePoint{
+    if (curretnRespPointArray==nil) {
+        return;
+    }
+    if (respindex>5) {
+        if (!newRespData) {
+            respindex=1;
+            return;
+        }
+        else{
+            respindex=1;
+        }
+    }
+    
+//    NSLog(@"timerRefreshHrSiglePoint index=%lD",(long)respindex);
+    
+    if (newRespData) {
+        newRespData=NO;
+    }
+    for (int i=0; i<25;i++) {
+        
+        [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:curretnRespPointArray]];
+        
+        [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
+    }
+    
+    respindex=respindex+1;
+    
+    //说明没有画完就来了新数据
+    if (newHrData&&respindex<6) {
+        for (int j=0; j<currentHrPointArray.count-respindex*25; j++) {
+            [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:curretnRespPointArray]];
+            
+            [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
+        }
+        respindex=1;
+    }
+}
+
+
+//画一个点
+-(void)timerRefresnSpoSiglePoint{
+    if (currentSpoPointArray==nil) {
+        return;
+    }
+    if (spoindex>5) {
+        if (!newSpoData) {
+            spoindex=1;
+            return;
+        }
+        else{
+            spoindex=1;
+        }
+    }
+    
+    NSLog(@"timerRefreshHrSiglePoint index=%lD",(long)spoindex);
+    
+    if (newSpoData) {
+        newSpoData=NO;
+    }
+    for (int i=0; i<25;i++) {
+        
+        [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:currentSpoPointArray]];
+        
+        [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
+    }
+    
+    spoindex=spoindex+1;
+    
+    //说明没有画完就来了新数据
+    if (newHrData&&spoindex<6) {
+        for (int j=0; j<currentHrPointArray.count-spoindex*25; j++) {
+            [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:currentSpoPointArray]];
+            
+            [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
+        }
+        spoindex=1;
+    }
+}
 
 //刷新方式绘制
 - (void)timerRefresnHrFun:(NSMutableArray *)array
 {
-    [self.hrView setOnlineContentView:[UIColor greenColor].CGColor fullmodel:NO];
+    NSLog(@"timerRefresnHrFun");
+   [self.hrView setOnlineContentView:[UIColor greenColor].CGColor fullmodel:NO];
 
     //遍历求放大倍数
    NSInteger maxValue = [[array valueForKeyPath:@"@max.floatValue"] integerValue];
@@ -197,14 +333,27 @@ static const NSInteger smallMultiple=512;
     else{
         hrMultiple=smallMultiple;
     }
-    for (int i=0; i<array.count;i++) {
-        [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:array]];
-        
-        [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
-        
-    }
-   
     
+    if (currentHrPointArray==nil) {
+        currentHrPointArray=[[NSMutableArray alloc]init];
+    }
+    else{
+        [currentHrPointArray removeAllObjects];
+    }
+    
+    [currentHrPointArray addObjectsFromArray:array];
+    newHrData=YES;
+//    for (int i=0; i<array.count;i++) {
+//        
+//        [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:array]];
+//        
+//        if (i%5==4) {
+//            [UIView animateWithDuration:0.04 animations:^{
+//                [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
+//            }];
+//        }
+//        
+//    }
 }
 
 //刷新方式绘制
@@ -223,14 +372,24 @@ static const NSInteger smallMultiple=512;
     else{
         respMultiple=smallMultiple;
     }
+    
+    if (curretnRespPointArray==nil) {
+        curretnRespPointArray=[[NSMutableArray alloc]init];
+    }
+    else{
+        [curretnRespPointArray removeAllObjects];
+    }
+    
+    [curretnRespPointArray addObjectsFromArray:array];
+    newRespData=YES;
 
     
-    for (int i=0; i<array.count;i++) {
-        [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:array]];
-        
-        [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
-
-    }
+//    for (int i=0; i<array.count;i++) {
+//        [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:array]];
+//        
+//        [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
+//
+//    }
 
 }
 
@@ -252,12 +411,21 @@ static const NSInteger smallMultiple=512;
         spoMultiple=smallMultiple;
     }
     
-    for (int i=0; i<array.count;i++) {
-        [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:array]];
-        
-        [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
-
+    if (currentSpoPointArray==nil) {
+        currentSpoPointArray=[[NSMutableArray alloc]init];
     }
+    else{
+        [currentSpoPointArray removeAllObjects];
+    }
+    
+    [currentSpoPointArray addObjectsFromArray:array];
+    newSpoData=YES;
+//    for (int i=0; i<array.count;i++) {
+//        [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:array]];
+//        
+//        [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
+//
+//    }
 
 }
 
@@ -284,7 +452,35 @@ static const NSInteger smallMultiple=512;
 }
 
 
+-(void)drawHeartView:(NSData *)data{
+    BODataModel *model=[BODataModel getModelWithData:data];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.bodyTemperatureLabel.text=[NSString stringWithFormat:@"%d",model.tp];
+        self.pulseFrequencyLabel.text=[NSString stringWithFormat:@"%d",model.pluse];
+        self.noLabel.text=[NSString stringWithFormat:@"%d",model.mask];
+        self.spoView.titileLabel.text=[NSString stringWithFormat:@"SPO2:%d",model.spo2];
+        self.respView.titileLabel.text=[NSString stringWithFormat:@"RESP:%d",model.resp];
+        self.hrView.titileLabel.text=[NSString stringWithFormat:@"HR:%d",model.hr];
+        
+        if (model.fingerflag==0) {
+            self.fingerLabel.backgroundColor=[UIColor greenColor];
+        }
+        else{
+            self.fingerLabel.backgroundColor=[UIColor redColor];
+        }
+        
+        if (model.jeadsflag==0) {
+            self.jeadsLabel.backgroundColor=[UIColor greenColor];
+        }
+        else{
+            self.jeadsLabel.backgroundColor=[UIColor redColor];
+        }
+        [self timerRefresnHrFun:model.ecgArray];
+        [self timerRefresnRespFun:model.repsArray];
+        [self timerRefresnSPOFun:model.spo2Array];
+    });
 
+}
 
 
 #pragma mark-数据
@@ -299,7 +495,7 @@ static const NSInteger smallMultiple=512;
         [self.reciveArray addObject:sender.object];
 //         BODataModel *model=[BODataModel getModelWithData:sender.object];
 //        NSLog(@"model==%@",model);
-    
+//        [self drawHeartView:sender.object];
     }
     else if ([sender.name isEqualToString:NOTIF_getbpmACK]){
         NSString *msg=sender.object;
@@ -343,36 +539,16 @@ static const NSInteger smallMultiple=512;
     dispatch_queue_t donelistQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_async(donelistQueue, ^(){
         while (isActive) {
+            if (!isActive) {
+                break;
+            }
             NSMutableArray *tempArray=[self.reciveArray copy];
             if (tempArray&&tempArray.count>0) {
                 for (NSData *buf in tempArray) {
-                    BODataModel *model=[BODataModel getModelWithData:buf];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        self.bodyTemperatureLabel.text=[NSString stringWithFormat:@"%d",model.tp];
-                        self.pulseFrequencyLabel.text=[NSString stringWithFormat:@"%d",model.pluse];
-                        self.noLabel.text=[NSString stringWithFormat:@"%d",model.mask];
-                        self.spoView.titileLabel.text=[NSString stringWithFormat:@"SPO2:%d",model.spo2];
-                        self.respView.titileLabel.text=[NSString stringWithFormat:@"RESP:%d",model.resp];
-                        self.hrView.titileLabel.text=[NSString stringWithFormat:@"HR:%d",model.hr];
-                        
-                        if (model.fingerflag==0) {
-                            self.fingerLabel.backgroundColor=[UIColor greenColor];
-                        }
-                        else{
-                            self.fingerLabel.backgroundColor=[UIColor redColor];
-                        }
-                        
-                        if (model.jeadsflag==0) {
-                            self.jeadsLabel.backgroundColor=[UIColor greenColor];
-                        }
-                        else{
-                            self.jeadsLabel.backgroundColor=[UIColor redColor];
-                        }
-                        
-                        [self timerRefresnHrFun:model.ecgArray];
-                        [self timerRefresnRespFun:model.repsArray];
-                        [self timerRefresnSPOFun:model.spo2Array];
-                    });
+                    if (!isActive) {
+                        break;
+                    }
+                    [self drawHeartView:buf];
                     if ([self.reciveArray containsObject:buf]) {
                         [self.reciveArray removeObject:buf];
                     }
@@ -384,6 +560,7 @@ static const NSInteger smallMultiple=512;
 
 #pragma mark-action
 - (IBAction)backAction:(id)sender {
+    [self.delegate closeHeartRateViewController];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (IBAction)testBloodAction:(id)sender {
@@ -409,10 +586,7 @@ static const NSInteger smallMultiple=512;
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
     
-    if (targetPointToAdd.y<10) {
-        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
-    }
-    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
+//    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
     return targetPointToAdd;
 }
 
@@ -426,14 +600,10 @@ static const NSInteger smallMultiple=512;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,(CGRectGetHeight(self.hrView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+respMultiple*0.5f)*((CGRectGetHeight(self.respView.bounds)-30)/respMultiple)};
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,(CGRectGetHeight(self.respView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+respMultiple*0.5f)*((CGRectGetHeight(self.respView.bounds)-30)/respMultiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
-    
-    if (targetPointToAdd.y<10) {
-        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
-    }
-    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
+//    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
     return targetPointToAdd;
 }
 
@@ -447,14 +617,10 @@ static const NSInteger smallMultiple=512;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
-    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,(CGRectGetHeight(self.hrView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+spoMultiple*0.5f)*((CGRectGetHeight(self.spoView.bounds)-30)/spoMultiple)};
+    CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter,(CGRectGetHeight(self.spoView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+spoMultiple*0.5f)*((CGRectGetHeight(self.spoView.bounds)-30)/spoMultiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
-    
-    if (targetPointToAdd.y<10) {
-        NSLog(@"targetPointToAdd.yr=%f",targetPointToAdd.y);
-    }
-    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
+//    NSLog(@"吐出来的点:%@",NSStringFromCGPoint(targetPointToAdd));
     return targetPointToAdd;
 }
 @end
