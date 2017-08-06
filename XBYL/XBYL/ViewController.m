@@ -29,6 +29,10 @@
 
 @implementation ViewController
 
+
+-(void)dealloc{
+    appDelegate.appMessageDelegate=nil;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self makeView];
@@ -49,6 +53,10 @@
     else{
         refashValue=[tempvalue integerValue];
     }
+
+    appDelegate.appMessageDelegate=self;
+    //读取病人数据
+    [self getPatientInfoList];
     
 }
 
@@ -73,41 +81,44 @@
             self.navigationItem.title=appDelegate.loginUserInfo.userName;
         }
     }
-    appDelegate.appMessageDelegate=self;
-
-//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSArray *tempArray=[PatientInfo getAllModel];
-        if (tempArray) {
-            if (tempArray.count<=0) {
-                [infoArray removeAllObjects];
-            }
-            for (PatientInfo *tempinfo in tempArray) {
-                BOOL isexist=NO;
-                for (PatientInfo *sourceInfo in infoArray) {
-                    if ([tempinfo.patientNo isEqual:sourceInfo.patientNo]) {
-                        sourceInfo.isShown=tempinfo.isShown;
-                        sourceInfo.personSetting=tempinfo.personSetting;
-                        isexist=true;
-                        break;
-                    }
-                }
-                if (!isexist) {
-                    [infoArray addObject:tempinfo];
-                }
-            }
-            
-//            dispatch_async(dispatch_get_main_queue(), ^{
-                [_contentTablvView reloadData];
-                
-//            });
-        }
-        else {
-            [infoArray removeAllObjects];
-        }
-//    });
 }
 
+-(void)getPatientInfoList{
+    
+    //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+    NSArray *tempArray=[PatientInfo getAllModel];
+    if (tempArray) {
+        if (tempArray.count<=0) {
+            [infoArray removeAllObjects];
+        }
+        for (PatientInfo *tempinfo in tempArray) {
+            BOOL isexist=NO;
+            for (PatientInfo *sourceInfo in infoArray) {
+                if ([tempinfo.patientNo isEqual:sourceInfo.patientNo]) {
+                    sourceInfo.isShown=tempinfo.isShown;
+                    sourceInfo.personSetting=tempinfo.personSetting;
+                    isexist=true;
+                    break;
+                }
+            }
+            if (!isexist) {
+                [infoArray addObject:tempinfo];
+            }
+        }
+        
+        //            dispatch_async(dispatch_get_main_queue(), ^{
+        [_contentTablvView reloadData];
+        
+        //            });
+    }
+    else {
+        [infoArray removeAllObjects];
+    }
+    //    });
+}
 -(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
     if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
         return;
     }
@@ -185,7 +196,7 @@
     }
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    appDelegate.appMessageDelegate=nil;
+    [super viewWillDisappear:animated];
     //停止时间
     [refashTimer setFireDate:[NSDate distantFuture]];
     refashTimer=nil;
@@ -644,18 +655,30 @@
 #pragma mark-SettingViewControllerDelegate
 -(void)complateSetting:(NSInteger)refashTime dataArray:(NSMutableArray *)dataArray{
     refashValue=refashTime;
-//    if (dataArray) {
-//        for (HospitalInfo *hos in dataArray) {
-//            for (PatientInfo *pat in hos.patients) {
-//                for (PatientInfo *thepat in infoArray) {
-//                    if ([thepat.patientNo isEqualToString:pat.patientNo]&&!pat.isShown) {
-//                        [infoArray removeObject:thepat];
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//    }
+    if (dataArray) {
+        for (HospitalInfo *hos in dataArray) {
+            for (PatientInfo *pat in hos.patients) {
+                BOOL isExist=NO;
+                for (PatientInfo *thepat in infoArray) {
+                    if ([thepat.patientNo isEqualToString:pat.patientNo]){
+                        isExist=YES;
+                        if (!pat.isShown) {
+                            [infoArray removeObject:thepat];
+                            break;
+
+                        }
+                    }
+                }
+                if (!isExist) {
+                    if (pat.isShown) {
+                        [infoArray addObject:pat];
+                    }
+                }
+            }
+        }
+    }
+    
+    [_contentTablvView reloadData];
     
 }
 
@@ -667,6 +690,8 @@
 -(void)logingMessage:(NSString *)mes{
     [SVProgressHUD dismiss];
     if ([mes isEqualToString:@"success"]) {
+        //重新获取患者数据
+        [self getPatientInfoList];
         if(self.navigationItem.rightBarButtonItems.count>1){
             self.navigationItem.rightBarButtonItems=@[rigthBar];//连接成功后要消失
             self.navigationItem.title=[NSString stringWithFormat:@"%@  在线",appDelegate.loginUserInfo.userName];
