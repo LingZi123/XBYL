@@ -350,7 +350,8 @@ static const NSInteger smallMultiple=512;
         if (!isActive) {
             break;
         }
-        [self performSelector:@selector(complateHrView:) withObject:array afterDelay:0.15f];
+//        [self performSelector:@selector(complateHrView:) withObject:array];
+        [self complateHrView:array];
     }
 }
 
@@ -398,7 +399,8 @@ static const NSInteger smallMultiple=512;
         if (!isActive) {
             break;
         }
-        [self performSelector:@selector(complateRespView:) withObject:array afterDelay:0.15];
+//        [self performSelector:@selector(complateRespView:) withObject:array afterDelay:0.15];
+        [self complateRespView:array];
     }
 
 }
@@ -449,7 +451,8 @@ static const NSInteger smallMultiple=512;
         if (!isActive) {
             break;
         }
-        [self performSelector:@selector(complateSpoView:) withObject:array afterDelay:0.15];
+//        [self performSelector:@selector(complateSpoView:) withObject:array afterDelay:0.15];
+        [self complateSpoView:array];
     }
 
 }
