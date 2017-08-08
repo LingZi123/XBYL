@@ -396,19 +396,22 @@ static const NSInteger smallMultiple=512;
     else if ([sender.name isEqualToString:NOTIF_getbpmACK]){
         NSString *msg=sender.object;
         XueyaModel *model=[XueyaModel getModelWithStringByTest:msg];
+        
+        NSString *pbmStatusStr=@"";
+        NSString *bloodPressure=@"";
         if (model) {
             //更新数据
             NSString *resultstr=@"";
             if ([model.resultStr isEqualToString:@"0"]) {
                 //测量成功
                 resultstr=@"测量成功";
-                self.bloodPressureLabel.text=[NSString stringWithFormat:@"%@/%@",model.shousuoya,model.DBP];
+                bloodPressure=[NSString stringWithFormat:@"%@/%@",model.shousuoya,model.DBP];
                 self.patientInfo.xueya.shousuoya=model.shousuoya;
                 self.patientInfo.xueya.DBP=model.DBP;
             }
             else{
                 resultstr=@"测量失败";
-                self.bloodPressureLabel.text=@"--/--";
+                bloodPressure=@"--/--";
             }
             
             NSString *statusstr=@"";
@@ -421,12 +424,17 @@ static const NSInteger smallMultiple=512;
             else{
                 statusstr=@"血压计正常连接但电量低";
             }
-            self.pbmStatusLabel.text=[NSString stringWithFormat:@"%@  %@",resultstr,statusstr];
+            pbmStatusStr=[NSString stringWithFormat:@"%@  %@",resultstr,statusstr];
         }
         else{
-            self.bloodPressureLabel.text=@"--/--";
-            self.pbmStatusLabel.text=@"测量失败";
+            bloodPressure=@"--/--";
+            pbmStatusStr=@"测量失败";
         }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.bloodPressureLabel.text=bloodPressure;
+            self.pbmStatusLabel.text=pbmStatusStr;
+        });
     }
 }
 

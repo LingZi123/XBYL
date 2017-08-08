@@ -32,6 +32,8 @@
 
 -(void)dealloc{
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIF_patientMessage object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_getbpmACK object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_loginClick object:nil];
     
 }
 - (void)viewDidLoad {
@@ -39,6 +41,7 @@
     [self makeView];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_loginClick object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_patientMessage object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_getbpmACK object:nil];
     
     //读取文件填充数据
     if (infoArray==nil) {
@@ -202,7 +205,6 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     appDelegate.appMessageDelegate=nil;
-    
     //停止时间
     [refashTimer setFireDate:[NSDate distantFuture]];
     refashTimer=nil;
@@ -737,23 +739,25 @@
     else{
         if (buttonIndex==1) {
             
-            //发送远程测试血压
-            AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
-            NSString *url= [NSString stringWithFormat:@"%@%@account=%@&pwd=%@&termid=%@",appDelegate.systemSetting.webPort,arm_url,appDelegate.loginUserInfo.userName,appDelegate.loginUserInfo.pwd,selectedModel.terminNo];
-            manager.responseSerializer=[AFHTTPResponseSerializer serializer];
-            [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                //要改的
-                NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
-                if ([str isEqualToString:@"SUCCESS"]) {
-                    [SVProgressHUD showErrorWithStatus:@"发送成功"];
-                }
-                else{
-                    [SVProgressHUD showErrorWithStatus:@"发送失败"];
-                }
-                
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                [SVProgressHUD showErrorWithStatus:@"发送失败"];
-            }];
+//            //发送远程测试血压
+//            AFHTTPRequestOperationManager *manager=[AFHTTPRequestOperationManager manager];
+//            NSString *url= [NSString stringWithFormat:@"%@%@account=%@&pwd=%@&termid=%@",appDelegate.systemSetting.webPort,arm_url,appDelegate.loginUserInfo.userName,appDelegate.loginUserInfo.pwd,selectedModel.terminNo];
+//            manager.responseSerializer=[AFHTTPResponseSerializer serializer];
+//            [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                //要改的
+//                NSString *str=[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding];
+//                if ([str isEqualToString:@"SUCCESS"]) {
+//                    [SVProgressHUD showErrorWithStatus:@"发送成功"];
+//                }
+//                else{
+//                    [SVProgressHUD showErrorWithStatus:@"发送失败"];
+//                }
+//                
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                [SVProgressHUD showErrorWithStatus:@"发送失败"];
+//            }];
+            
+            [nstdcomm stdcommGetPatBPM:selectedModel.patientNo andTermid:[selectedModel.terminNo integerValue]];
         }
     }
    
@@ -842,6 +846,12 @@
             [self updateMulData:model];
             
         }
+    }
+    else if ([sender.name isEqualToString:NOTIF_getbpmACK]){
+
+        NSString *msg=sender.object;
+        XueyaModel *model=[XueyaModel getModelWithStringByTest:msg];
+        [self updateXueya:model];
     }
 }
 @end
