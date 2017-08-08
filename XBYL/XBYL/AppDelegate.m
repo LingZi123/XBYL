@@ -131,42 +131,52 @@
         int count=0;
         while (isactive) {
             if (_logined&&_connected) {
-                NSMutableArray *temparray=[listArray copy];
-                for (int i=0; i<temparray.count; i++) {
-                    if (_loginUserInfo.isLoginOut||!_connected||!_logined) {
-                        [listArray removeAllObjects];
-                        break;
-                    }
-                    NSDictionary *dic=[temparray objectAtIndex:i];
-                    NSString *cmd=[dic objectForKey:@"cmd"];
-                    NSString *msg=[dic objectForKey:@"msg"];
-                    
-                    //刷新病人列表
-                    if ([cmd isEqualToString:@"patientinfoACK"]||
-                        [cmd isEqualToString:@"bpmdataACK"]||
-                        [cmd isEqualToString:@"updateinfoACK"]||
-                        [cmd isEqualToString:@"updateonlinestatusACK"]
-                        ) {
-                        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_patientMessage object:dic];
-//                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
-                    }
-                    else if ([cmd isEqualToString:@"bodataACK"]){
-                        [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_patientMessage object:dic];
-//                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
-                    
-                    }
-                    else if ([cmd isEqualToString:@"hoslistACK"]){
+                
+                NSMutableArray *temparray=nil;
+                @synchronized (listArray) {
+                    temparray=[listArray copy];
+                }
+                if (temparray) {
+                    for (int i=0; i<temparray.count; i++) {
+                        if (_loginUserInfo.isLoginOut||!_connected||!_logined) {
+                            @synchronized (listArray) {
+                                 [listArray removeAllObjects];
+                            }
+                            break;
+                        }
+                        NSDictionary *dic=[temparray objectAtIndex:i];
+                        NSString *cmd=[dic objectForKey:@"cmd"];
+                        NSString *msg=[dic objectForKey:@"msg"];
+                        
                         //刷新病人列表
-                        if (![msg isEqualToString:@"fail"]) {
-                            //一次性返回的数据解析
-                            [HospitalInfo getHosWithMsg:msg];
+                        if ([cmd isEqualToString:@"patientinfoACK"]||
+                            [cmd isEqualToString:@"bpmdataACK"]||
+                            [cmd isEqualToString:@"updateinfoACK"]||
+                            [cmd isEqualToString:@"updateonlinestatusACK"]
+                            ) {
+                            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_patientMessage object:dic];
+                            //                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                        }
+                        else if ([cmd isEqualToString:@"bodataACK"]){
+                            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_patientMessage object:dic];
+                            //                        [self.appMessageDelegate patientMessage:cmd andMsg:msg];
+                            
+                        }
+                        else if ([cmd isEqualToString:@"hoslistACK"]){
+                            //刷新病人列表
+                            if (![msg isEqualToString:@"fail"]) {
+                                //一次性返回的数据解析
+                                [HospitalInfo getHosWithMsg:msg];
+                            }
+                        }
+                        else{
+                            
+                            //                        NSLog(@"cmd=====%@",cmd);
+                        }
+                        @synchronized (listArray) {
+                            [listArray removeObject:dic];
                         }
                     }
-                    else{
-                        
-//                        NSLog(@"cmd=====%@",cmd);
-                    }
-                    [listArray removeObject:dic];
                 }
                 [NSThread sleepForTimeInterval:0.05];
             }
@@ -321,7 +331,10 @@
     else{
         
         NSDictionary *dic=[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",listArray.count],@"index",cmd,@"cmd",msg,@"msg", nil];
-        [listArray addObject:dic];
+        @synchronized (listArray) {
+            [listArray addObject:dic];
+        }
+        
     }
 }
 

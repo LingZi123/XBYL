@@ -319,9 +319,20 @@ static const NSInteger smallMultiple=512;
 //刷新方式绘制
 - (void)timerRefresnHrFun:(NSMutableArray *)array
 {
-    NSLog(@"timerRefresnHrFun");
-   [self.hrView setOnlineContentView:[UIColor greenColor].CGColor fullmodel:NO];
+//    NSLog(@"timerRefresnHrFun");
+   
+//    for (int i=0; i<5;i++) {
+//        if (!isActive) {
+//            break;
+//        }
+//        [self performSelector:@selector(complateHrView:) withObject:array];
+        [self complateHrView:array];
+//    }
+}
 
+-(void)getMaxHrMultiple:(NSMutableArray *)array{
+    [self.hrView setOnlineContentView:[UIColor greenColor].CGColor fullmodel:NO];
+    
     //遍历求放大倍数
     NSInteger maxValue = [[array valueForKeyPath:@"@max.floatValue"] integerValue];
     NSInteger minValue = [[array valueForKeyPath:@"@min.floatValue"] integerValue];
@@ -337,7 +348,7 @@ static const NSInteger smallMultiple=512;
     else if(chaValue<=smallMultiple){
         hrMultiple=smallMultiple;
     }
-    
+
     NSInteger nextmaxValue=maxValue-midMultiple+hrMultiple/2;
     NSInteger nextminValue=minValue-midMultiple+hrMultiple/2;
     if (nextmaxValue>hrMultiple||nextminValue<0) {
@@ -346,30 +357,34 @@ static const NSInteger smallMultiple=512;
         }
     }
 
-    for (int i=0; i<5;i++) {
-        if (!isActive) {
-            break;
-        }
-//        [self performSelector:@selector(complateHrView:) withObject:array];
-        [self complateHrView:array];
-    }
 }
-
 -(void)complateHrView :(NSMutableArray *)arry{
-    for (int i=0; i<25; i++) {
-        if (!isActive) {
-            break;
-        }
+//    for (int i=0; i<25; i++) {
+//        if (!isActive) {
+//            break;
+//        }
         [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:arry]];
         [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
 
-    }
+//    }
 }
 
 //刷新方式绘制
 - (void)timerRefresnRespFun:(NSMutableArray *)array
 {
 
+    
+//    for (int i=0; i<5;i++) {
+//        if (!isActive) {
+//            break;
+//        }
+//        [self performSelector:@selector(complateRespView:) withObject:array afterDelay:0.15];
+        [self complateRespView:array];
+//    }
+
+}
+-(void)getMaxRespMultiple:(NSMutableArray *)array{
+    
     [self.respView setOnlineContentView:[UIColor yellowColor].CGColor fullmodel:NO];
     //遍历求放大倍数
     NSInteger maxValue = [[array valueForKeyPath:@"@max.floatValue"] integerValue];
@@ -394,33 +409,28 @@ static const NSInteger smallMultiple=512;
             respMultiple=respMultiple*2;
         }
     }
-
-    for (int i=0; i<5;i++) {
-        if (!isActive) {
-            break;
-        }
-//        [self performSelector:@selector(complateRespView:) withObject:array afterDelay:0.15];
-        [self complateRespView:array];
-    }
-
+    
 }
-
 -(void)complateRespView :(NSMutableArray *)arry{
-    for (int i=0; i<25; i++) {
-        if (!isActive) {
-            break;
-        }
+//    for (int i=0; i<25; i++) {
+//        if (!isActive) {
+//            break;
+//        }
         [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:arry]];
         
         [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
-    }
+//    }
 }
 
 
 //刷新方式绘制
 - (void)timerRefresnSPOFun:(NSMutableArray *)array
 {
+        [self complateSpoView:array];
+}
 
+
+-(void)getMaxSpoMultiple:(NSMutableArray *)array{
     [self.spoView setOnlineContentView:[UIColor redColor].CGColor fullmodel:NO];
     
     //遍历求放大倍数
@@ -438,7 +448,7 @@ static const NSInteger smallMultiple=512;
     else if(chaValue<=smallMultiple){
         spoMultiple=smallMultiple;
     }
-    
+
     NSInteger nextmaxValue=maxValue-midMultiple+spoMultiple/2;
     NSInteger nextminValue=minValue-midMultiple+spoMultiple/2;
     if (nextmaxValue>spoMultiple||nextminValue<0) {
@@ -446,25 +456,16 @@ static const NSInteger smallMultiple=512;
             spoMultiple=spoMultiple*2;
         }
     }
-    
-    for (int i=0; i<5;i++) {
-        if (!isActive) {
-            break;
-        }
-//        [self performSelector:@selector(complateSpoView:) withObject:array afterDelay:0.15];
-        [self complateSpoView:array];
-    }
 
 }
-
 -(void)complateSpoView :(NSMutableArray *)arry{
-    for (int i=0; i<25; i++) {
-        if (!isActive) {
-            break;
-        }
+//    for (int i=0; i<25; i++) {
+//        if (!isActive) {
+//            break;
+//        }
         [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:arry]];
         [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
-    }
+//    }
 }
 
 
@@ -513,11 +514,27 @@ static const NSInteger smallMultiple=512;
         else{
             self.jeadsLabel.backgroundColor=[UIColor redColor];
         }
-        [self timerRefresnHrFun:model.ecgArray];
-        [self timerRefresnRespFun:model.repsArray];
-        [self timerRefresnSPOFun:model.spo2Array];
     });
+    
+    //求最大倍数
+    [self getMaxHrMultiple:model.ecgArray];
+    [self getMaxSpoMultiple:model.spo2Array];
+    [self getMaxRespMultiple:model.repsArray];
+    
+    for (int i=0;i<125;i++) {
+        if (!isActive) {
+            break;
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self timerRefresnHrFun:model.ecgArray];
+            [self timerRefresnRespFun:model.repsArray];
+            [self timerRefresnSPOFun:model.spo2Array];
 
+        });
+        
+        [NSThread sleepForTimeInterval:0.008];
+    }
+    
 }
 
 
@@ -529,8 +546,9 @@ static const NSInteger smallMultiple=512;
         if (self.reciveArray==nil) {
             self.reciveArray=[[NSMutableArray alloc]init];
         }
-        
-        [self.reciveArray addObject:sender.object];
+        @synchronized (self.reciveArray) {
+             [self.reciveArray addObject:sender.object];
+        }
     }
     else if ([sender.name isEqualToString:NOTIF_getbpmACK]){
         NSString *msg=sender.object;
@@ -577,18 +595,25 @@ static const NSInteger smallMultiple=512;
             if (!isActive) {
                 break;
             }
-            NSMutableArray *tempArray=[self.reciveArray copy];
+            NSMutableArray *tempArray=nil;
+            @synchronized (self.reciveArray) {
+                tempArray=[self.reciveArray copy];
+            }
             if (tempArray&&tempArray.count>0) {
                 for (NSData *buf in tempArray) {
                     if (!isActive) {
                         break;
                     }
                     [self drawHeartView:buf];
-                    if ([self.reciveArray containsObject:buf]) {
-                        [self.reciveArray removeObject:buf];
+                    @synchronized (self.reciveArray) {
+                        if ([self.reciveArray containsObject:buf]) {
+                            [self.reciveArray removeObject:buf];
+                        }
                     }
+                    
                 }
             }
+            [NSThread sleepForTimeInterval:0.05];
         }
     });
 }
