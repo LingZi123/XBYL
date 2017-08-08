@@ -20,4 +20,5 @@
 //设置在线视图
 -(void)setOnlineContentView:(CGColorRef)color fullmodel:(BOOL)fullmodel;
 - (void)fireDrawingWithPoints:(CGPoint *)points pointsCount:(NSInteger)count;
+
 @end

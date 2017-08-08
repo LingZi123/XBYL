@@ -57,9 +57,7 @@
     self.heartView.backgroundColor=[UIColor blackColor];
     self.heartView.color=color;
     self.heartView.fillModel=fullmodel;
-//    self.heartView.transform=CGAffineTransformScale(self.heartView.transform, 1.0, -1.0)
     defatultSurFaceViewLabel.hidden=YES;
-    //    [heartView fireDrawingWithPoints:self.points pointsCount:self.currentPointsCount];
     
 }
 

@@ -427,9 +427,9 @@
     HeartRateCurveViewController *vc=[[HeartRateCurveViewController alloc]initWithNibName:@"HeartRateCurveViewController" bundle:[NSBundle mainBundle]];
     vc.patientInfo=info;
     vc.delegate=self;
-    
     [self presentViewController:vc animated:YES completion:nil];
-    [nstdcomm stdSetTremId:[info.terminNo integerValue]];
+    
+    
 
 }
 -(void)personSetting:(UIButton *)sender{

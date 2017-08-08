@@ -33,14 +33,15 @@
 
 +(XueyaModel *)getModelWithStringByTest:(NSString *)str{
     if (str) {
+        NSLog(@"adfdf %@",str);
         XueyaModel *model=[[XueyaModel alloc]init];
         NSArray *arr = [str componentsSeparatedByString:NSLocalizedString(@"|", nil)];
         if (arr) {
             model.patientNo=arr[0];
             model.shousuoya=arr[1];
             model.DBP=arr[2];
-            model.resultStr=arr[3];
-            model.statusStr=arr[4];
+            model.statusStr=arr[3];
+            model.resultStr=arr[4];
         }
         
         return model;

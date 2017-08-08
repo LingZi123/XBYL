@@ -40,10 +40,6 @@ static const NSInteger smallMultiple=512;
 @property (weak, nonatomic) IBOutlet UILabel *jeadsLabel;
 @property (weak, nonatomic) IBOutlet UILabel *fingerLabel;
 
-@property(nonatomic,retain)NSTimer *hrTimer;
-@property(nonatomic,retain)NSTimer *respTimer;
-@property(nonatomic,retain)NSTimer *spoTimer;
-
 @property (nonatomic , strong) NSArray *dataSource;
 
 @property(nonatomic,retain)NSMutableArray *reciveArray;
@@ -65,16 +61,6 @@ static const NSInteger smallMultiple=512;
     NSInteger spoMultiple;
     NSInteger respMultiple;
     
-//    NSMutableArray *currentHrPointArray;
-//    NSInteger hrindex;
-//    NSMutableArray *currentSpoPointArray;
-//      NSInteger spoindex;
-//    NSMutableArray *curretnRespPointArray;
-//      NSInteger respindex;
-//    bool newHrData;
-//    bool newSpoData;
-//    bool newRespData;
-    
 }
 
 
@@ -93,9 +79,6 @@ static const NSInteger smallMultiple=512;
     [self.view addSubview:self.hrView];
     [self.view addSubview:self.respView];
     [self.view addSubview:self.spoView];
-//    hrindex=1;
-//    spoindex=1;
-//    respindex=1;
     
     //设置默认值
     hrMultiple=maxMultiple;
@@ -128,10 +111,14 @@ static const NSInteger smallMultiple=512;
     isActive=YES;
     [self displayData];
     
-//    [self createWorkDataSourceWithTimeInterval:0.2];
     //添加通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_SIGLE_DATA object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_getbpmACK object:nil];
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [nstdcomm stdSetTremId:[self.patientInfo.terminNo integerValue]];
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
@@ -140,18 +127,6 @@ static const NSInteger smallMultiple=512;
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_SIGLE_DATA object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_getbpmACK object:nil];
     
-    if (self.hrTimer!=nil) {
-        [self.hrTimer setFireDate:[NSDate distantFuture]];
-        self.hrTimer=nil;
-    }
-    if (self.respTimer!=nil) {
-        [self.respTimer setFireDate:[NSDate distantFuture]];
-        self.respTimer=nil;
-    }
-    if (self.spoTimer!=nil) {
-        [self.spoTimer setFireDate:[NSDate distantFuture]];
-        self.spoTimer=nil;
-    }
 }
 
 -(SurFaceView *)hrView{
@@ -189,145 +164,11 @@ static const NSInteger smallMultiple=512;
 }
 
 
-//- (void)createWorkDataSourceWithTimeInterval:(NSTimeInterval )timeInterval
-//{
-//    self.hrTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefreshHrSiglePoint) userInfo:nil repeats:YES];
-//    self.respTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefresnRespSiglePoint) userInfo:nil repeats:YES];
-//    self.spoTimer=[NSTimer scheduledTimerWithTimeInterval:timeInterval target:self selector:@selector(timerRefresnSpoSiglePoint) userInfo:nil repeats:YES];
-//}
-
-
-////画一个点
-//-(void)timerRefreshHrSiglePoint{
-//    if (currentHrPointArray==nil) {
-//        return;
-//    }
-//    if (hrindex>5) {
-//        if (!newHrData) {
-//            hrindex=1;
-//            return;
-//        }
-//        else{
-//            hrindex=1;
-//        }
-//    }
-//    
-////    NSLog(@"timerRefreshHrSiglePoint index=%lD",(long)hrindex);
-//    
-//    if (newHrData) {
-//        newHrData=NO;
-//    }
-//    for (int i=0; i<25;i++) {
-//
-//        [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:currentHrPointArray]];
-//        [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
-//    }
-//    
-//    hrindex=hrindex+1;
-//    
-//    //说明没有画完就来了新数据
-//    if (newHrData&&hrindex<6) {
-//        for (int j=0; j<currentHrPointArray.count-hrindex*25; j++) {
-//            [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:currentHrPointArray]];
-//            [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
-//        }
-//        hrindex=1;
-//    }
-//}
-//
-/////画一个点
-//-(void)timerRefresnRespSiglePoint{
-//    if (curretnRespPointArray==nil) {
-//        return;
-//    }
-//    if (respindex>5) {
-//        if (!newRespData) {
-//            respindex=1;
-//            return;
-//        }
-//        else{
-//            respindex=1;
-//        }
-//    }
-//    
-////    NSLog(@"timerRefreshHrSiglePoint index=%lD",(long)respindex);
-//    
-//    if (newRespData) {
-//        newRespData=NO;
-//    }
-//    for (int i=0; i<25;i++) {
-//        
-//        [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:curretnRespPointArray]];
-//        
-//        [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
-//    }
-//    
-//    respindex=respindex+1;
-//    
-//    //说明没有画完就来了新数据
-//    if (newHrData&&respindex<6) {
-//        for (int j=0; j<currentHrPointArray.count-respindex*25; j++) {
-//            [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:curretnRespPointArray]];
-//            
-//            [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
-//        }
-//        respindex=1;
-//    }
-//}
-//
-//
-////画一个点
-//-(void)timerRefresnSpoSiglePoint{
-//    if (currentSpoPointArray==nil) {
-//        return;
-//    }
-//    if (spoindex>5) {
-//        if (!newSpoData) {
-//            spoindex=1;
-//            return;
-//        }
-//        else{
-//            spoindex=1;
-//        }
-//    }
-//    
-//    NSLog(@"timerRefreshHrSiglePoint index=%lD",(long)spoindex);
-//    
-//    if (newSpoData) {
-//        newSpoData=NO;
-//    }
-//    for (int i=0; i<25;i++) {
-//        
-//        [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:currentSpoPointArray]];
-//        
-//        [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
-//    }
-//    
-//    spoindex=spoindex+1;
-//    
-//    //说明没有画完就来了新数据
-//    if (newHrData&&spoindex<6) {
-//        for (int j=0; j<currentHrPointArray.count-spoindex*25; j++) {
-//            [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:currentSpoPointArray]];
-//            
-//            [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
-//        }
-//        spoindex=1;
-//    }
-//}
-//
 //刷新方式绘制
 - (void)timerRefresnHrFun:(NSMutableArray *)array
 {
-//    NSLog(@"timerRefresnHrFun");
-   
-//    for (int i=0; i<5;i++) {
-//        if (!isActive) {
-//            break;
-//        }
-//        [self performSelector:@selector(complateHrView:) withObject:array];
         [self complateHrView:array];
-//    }
+
 }
 
 -(void)getMaxHrMultiple:(NSMutableArray *)array{
@@ -359,28 +200,16 @@ static const NSInteger smallMultiple=512;
 
 }
 -(void)complateHrView :(NSMutableArray *)arry{
-//    for (int i=0; i<25; i++) {
-//        if (!isActive) {
-//            break;
-//        }
+
         [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:arry]];
         [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
-
-//    }
 }
 
 //刷新方式绘制
 - (void)timerRefresnRespFun:(NSMutableArray *)array
 {
 
-    
-//    for (int i=0; i<5;i++) {
-//        if (!isActive) {
-//            break;
-//        }
-//        [self performSelector:@selector(complateRespView:) withObject:array afterDelay:0.15];
         [self complateRespView:array];
-//    }
 
 }
 -(void)getMaxRespMultiple:(NSMutableArray *)array{
@@ -412,14 +241,9 @@ static const NSInteger smallMultiple=512;
     
 }
 -(void)complateRespView :(NSMutableArray *)arry{
-//    for (int i=0; i<25; i++) {
-//        if (!isActive) {
-//            break;
-//        }
         [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:arry]];
         
         [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
-//    }
 }
 
 
@@ -522,9 +346,6 @@ static const NSInteger smallMultiple=512;
     [self getMaxRespMultiple:model.repsArray];
     
     for (int i=0;i<125;i++) {
-        if (!isActive) {
-            break;
-        }
         dispatch_async(dispatch_get_main_queue(), ^{
             [self timerRefresnHrFun:model.ecgArray];
             [self timerRefresnRespFun:model.repsArray];
@@ -546,9 +367,9 @@ static const NSInteger smallMultiple=512;
         if (self.reciveArray==nil) {
             self.reciveArray=[[NSMutableArray alloc]init];
         }
-        @synchronized (self.reciveArray) {
+//        @synchronized (self.reciveArray) {
              [self.reciveArray addObject:sender.object];
-        }
+//        }
     }
     else if ([sender.name isEqualToString:NOTIF_getbpmACK]){
         NSString *msg=sender.object;
@@ -596,24 +417,25 @@ static const NSInteger smallMultiple=512;
                 break;
             }
             NSMutableArray *tempArray=nil;
-            @synchronized (self.reciveArray) {
+//            @synchronized (self.reciveArray) {
                 tempArray=[self.reciveArray copy];
-            }
+//            }
             if (tempArray&&tempArray.count>0) {
                 for (NSData *buf in tempArray) {
                     if (!isActive) {
                         break;
                     }
                     [self drawHeartView:buf];
-                    @synchronized (self.reciveArray) {
+//                    @synchronized (self.reciveArray) {
                         if ([self.reciveArray containsObject:buf]) {
                             [self.reciveArray removeObject:buf];
                         }
-                    }
+//                    }
+                    [NSThread sleepForTimeInterval:0.05];
                     
                 }
             }
-            [NSThread sleepForTimeInterval:0.05];
+//            [NSThread sleepForTimeInterval:0.05];
         }
     });
 }
