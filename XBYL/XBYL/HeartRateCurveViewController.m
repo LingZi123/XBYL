@@ -125,7 +125,10 @@ static const NSInteger smallMultiple=512;
     //添加通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_SIGLE_DATA object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_getbpmACK object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -138,7 +141,14 @@ static const NSInteger smallMultiple=512;
     isActive=NO;
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_SIGLE_DATA object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_getbpmACK object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
     
+}
+
+- (void)applicationWillResignActive:(NSNotification *)notification
+{
+    //进后台时调用此函数
+    [self backAction:nil];
 }
 
 -(SurFaceView *)hrView{

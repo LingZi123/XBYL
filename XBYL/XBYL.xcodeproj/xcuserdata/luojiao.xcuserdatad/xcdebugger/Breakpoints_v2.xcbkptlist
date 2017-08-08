@@ -410,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "XBYL/HeartRateCurveViewController.m"
-            timestampString = "523896441.558547"
+            timestampString = "523897107.22718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "513"
-            endingLineNumber = "513"
+            startingLineNumber = "523"
+            endingLineNumber = "523"
             landmarkName = "-bubbleRespPoint:"
             landmarkType = "7">
          </BreakpointContent>
