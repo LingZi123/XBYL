@@ -23,6 +23,14 @@
 {
     free(self.hrPointContainer);
     self.hrPointContainer = NULL;
+    free(self.respPointContainer);
+    self.respPointContainer = NULL;
+    free(self.spoPointContainer);
+    self.spoPointContainer = NULL;
+    
+    self.numberOfRespElements=0;
+    self.numberOfSpoElements=0;
+    self.numberOfHrElements=0;
 }
 
 + (PointContainer *)sharedContainer:(NSInteger)size
@@ -46,15 +54,23 @@
 }
 
 
-//-(instancetype)initWithSize:(NSInteger )size{
-//    self=[super init];
-//    if (self) {
-//        self.refreshPointContainer = malloc(sizeof(CGPoint) * size);
-//        memset(self.refreshPointContainer, 0, sizeof(CGPoint) * size);
-//        self.kMaxContainerCapacity=size;
-//    }
-//    return self;
-//}
+-(instancetype)initWithSize:(NSInteger )size{
+    self=[super init];
+    if (self) {
+        self.hrPointContainer = malloc(sizeof(CGPoint) * size);
+        memset(self.hrPointContainer, 0, sizeof(CGPoint) * size);
+        
+        self.spoPointContainer = malloc(sizeof(CGPoint) * size);
+        memset(self.spoPointContainer, 0, sizeof(CGPoint) * size);
+        
+        self.respPointContainer = malloc(sizeof(CGPoint) * size);
+        memset(self.respPointContainer, 0, sizeof(CGPoint) * size);
+        
+        self.kMaxContainerCapacity=size;
+
+    }
+    return self;
+}
 - (void)addPointAsHrChangeform:(CGPoint)point
 {
     static NSInteger currentPointsCount = 0;
@@ -127,4 +143,12 @@
     //    putchar('\n');
 }
 
+-(void)clear{
+    self.numberOfHrElements=0;
+    self.numberOfSpoElements=0;
+    self.numberOfRespElements=0;
+//    self.hrPointContainer=nil;
+//    self.respPointContainer=nil;
+//    self.respPointContainer=nil;
+}
 @end

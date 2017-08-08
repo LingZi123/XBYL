@@ -28,4 +28,7 @@
 - (void)addPointAsRespChangeform:(CGPoint)point;
 
 - (CGPoint)bubbleRefreshPoint:(NSInteger)viewWidth  viewHeight:(CGFloat)viewHeight array:(NSMutableArray *)array;
+
+-(void)clear;
+
 @end

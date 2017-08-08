@@ -45,6 +45,7 @@ static const NSInteger smallMultiple=512;
 @property(nonatomic,retain)NSMutableArray *reciveArray;
 
 @property (weak, nonatomic) IBOutlet UILabel *pbmStatusLabel;
+@property(nonatomic,retain)PointContainer *pointContainer;
 
 @end
 
@@ -53,13 +54,15 @@ static const NSInteger smallMultiple=512;
     CGFloat viewWidth;
     bool isActive;
     
-    bool isonline;
-    
+    bool isHrFirst;
+     bool isRespFirst;
+     bool isSpoFirst;
     NSInteger boViewWidth;
     
     NSInteger hrMultiple;
     NSInteger spoMultiple;
     NSInteger respMultiple;
+    
     
 }
 
@@ -104,6 +107,14 @@ static const NSInteger smallMultiple=512;
     else{
         self.statusLabel.text=@"离线";
     }
+    isHrFirst=isRespFirst=isSpoFirst=YES;
+}
+
+-(PointContainer *)pointContainer{
+    if (_pointContainer==nil) {
+        _pointContainer=[[PointContainer alloc]initWithSize:boViewWidth];
+    }
+    return _pointContainer;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -114,6 +125,7 @@ static const NSInteger smallMultiple=512;
     //添加通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_SIGLE_DATA object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_getbpmACK object:nil];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -201,8 +213,8 @@ static const NSInteger smallMultiple=512;
 }
 -(void)complateHrView :(NSMutableArray *)arry{
 
-        [[PointContainer sharedContainer:boViewWidth] addPointAsHrChangeform:[self bubbleHrPoint:arry]];
-        [self.hrView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].hrPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfHrElements];
+        [self.pointContainer addPointAsHrChangeform:[self bubbleHrPoint:arry]];
+        [self.hrView fireDrawingWithPoints:self.pointContainer.hrPointContainer pointsCount:self.pointContainer.numberOfHrElements];
 }
 
 //刷新方式绘制
@@ -241,9 +253,9 @@ static const NSInteger smallMultiple=512;
     
 }
 -(void)complateRespView :(NSMutableArray *)arry{
-        [[PointContainer sharedContainer:boViewWidth] addPointAsRespChangeform:[self bubbleRespPoint:arry]];
+        [self.pointContainer addPointAsRespChangeform:[self bubbleRespPoint:arry]];
         
-        [self.respView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].respPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfRespElements];
+        [self.respView fireDrawingWithPoints:self.pointContainer.respPointContainer pointsCount:self.pointContainer.numberOfRespElements];
 }
 
 
@@ -287,8 +299,8 @@ static const NSInteger smallMultiple=512;
 //        if (!isActive) {
 //            break;
 //        }
-        [[PointContainer sharedContainer:boViewWidth] addPointAsSpoChangeform:[self bubbleSpoPoint:arry]];
-        [self.spoView fireDrawingWithPoints:[PointContainer sharedContainer:boViewWidth].spoPointContainer pointsCount:[PointContainer sharedContainer:boViewWidth].numberOfSpoElements];
+        [self.pointContainer addPointAsSpoChangeform:[self bubbleSpoPoint:arry]];
+        [self.spoView fireDrawingWithPoints:self.pointContainer.spoPointContainer pointsCount:self.pointContainer.numberOfSpoElements];
 //    }
 }
 
@@ -464,7 +476,13 @@ static const NSInteger smallMultiple=512;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
+    if (isHrFirst) {
+        xCoordinateInMoniter=0;
+        isHrFirst=NO;
+    }
+    
     CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter*0.8,(CGRectGetHeight(self.hrView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+hrMultiple*0.5f)*((CGRectGetHeight(self.hrView.bounds)-30)/hrMultiple)};
+    
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
     
@@ -482,6 +500,12 @@ static const NSInteger smallMultiple=512;
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
     
+    if (isRespFirst) {
+        xCoordinateInMoniter=0;
+        isRespFirst=NO;
+    }
+
+    
     CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter*0.8,(CGRectGetHeight(self.respView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+respMultiple*0.5f)*((CGRectGetHeight(self.respView.bounds)-30)/respMultiple)};
     xCoordinateInMoniter += pixelPerPoint;
     xCoordinateInMoniter %= boViewWidth;
@@ -498,6 +522,12 @@ static const NSInteger smallMultiple=512;
     
     NSInteger pixelPerPoint = 1;
     static NSInteger xCoordinateInMoniter = 0;
+    
+    if (isSpoFirst) {
+        xCoordinateInMoniter=0;
+        isSpoFirst=NO;
+    }
+
     
     CGPoint targetPointToAdd = (CGPoint){xCoordinateInMoniter*0.8,(CGRectGetHeight(self.spoView.bounds)-30)-([array[dataSourceCounterIndex] integerValue]-midMultiple+spoMultiple*0.5f)*((CGRectGetHeight(self.spoView.bounds)-30)/spoMultiple)};
     xCoordinateInMoniter += pixelPerPoint;
