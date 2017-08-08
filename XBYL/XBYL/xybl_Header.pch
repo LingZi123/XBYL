@@ -54,6 +54,7 @@
 
 #define NOTIF_loginClick @"NOTIF_loginClick" //登录通知
 #define NOTIF_patientMessage @"NOTIF_patientMessage" //刷新病人列表
+#define NOTIF_networkMessage @"NOTIF_networkMessage" //网络断开
 
 
 

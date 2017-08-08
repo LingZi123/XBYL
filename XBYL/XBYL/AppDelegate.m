@@ -85,10 +85,10 @@
         _networkStatus=(NSInteger)status;
         if (status==0) {
             [nstdcomm stdcommClose];
-            [self.appMessageDelegate networkMessage:@"无网络，请检查网络设置"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_networkMessage object:@"无网络，请检查网络设置"];
         }
         else{
-            [self.appMessageDelegate networkMessage:@"已恢复网络"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_networkMessage object:@"已恢复网络"];
         }
         }];
     return YES;
@@ -118,7 +118,7 @@
 //        [NSThread sleepForTimeInterval:1];
 //    }
 //    [self reciveData];
-    [self.appMessageDelegate networkMessage:@"已恢复网络"];
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_networkMessage object:@"已恢复网络"];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -315,7 +315,7 @@
 
             }
             [self reciveData];
-            [self.appMessageDelegate networkMessage:@"网络断开"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_networkMessage object:@"网络断开"];
         }
     }
     else if ([cmd isEqualToString:@"getbpmACK"]){

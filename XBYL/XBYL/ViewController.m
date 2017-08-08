@@ -34,6 +34,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NOTIF_patientMessage object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_getbpmACK object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_loginClick object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:NOTIF_networkMessage object:nil];
     
 }
 - (void)viewDidLoad {
@@ -42,6 +43,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_loginClick object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_patientMessage object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_getbpmACK object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(reciveNotif:) name:NOTIF_networkMessage object:nil];
     
     //读取文件填充数据
     if (infoArray==nil) {
@@ -673,22 +675,7 @@
 }
 
 -(void)networkMessage:(NSString *)mes{
-    [SVProgressHUD showErrorWithStatus:mes];
-    if (![mes isEqualToString:@"已恢复网络"]) {
-        appDelegate.connected=NO;
-        appDelegate.logined=NO;
-        self.navigationItem.title=[NSString stringWithFormat:@"%@  离线",appDelegate.loginUserInfo.userName];
-        //开启自动重连3次
-        //3次链接不上再显示
-        istryConnect=YES;
-        [self reConnectTryThree];
-    }
-    else{
-        if (appDelegate.loginUserInfo&&appDelegate.logined) {
-             [self reConnectTryThree];
-        }
-       
-    }
+    
 }
 
 -(void)reConnectTryThree{
@@ -852,6 +839,30 @@
         NSString *msg=sender.object;
         XueyaModel *model=[XueyaModel getModelWithStringByTest:msg];
         [self updateXueya:model];
+    }
+    else if([sender.name isEqualToString:NOTIF_networkMessage]){
+        NSString *mes=sender.object;
+        dispatch_async(dispatch_get_main_queue(), ^{
+             [SVProgressHUD showErrorWithStatus:mes];
+        });
+        if (![mes isEqualToString:@"已恢复网络"]) {
+            appDelegate.connected=NO;
+            appDelegate.logined=NO;
+            
+             dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.title=[NSString stringWithFormat:@"%@  离线",appDelegate.loginUserInfo.userName];
+             });
+            //开启自动重连3次
+            //3次链接不上再显示
+            istryConnect=YES;
+            [self reConnectTryThree];
+        }
+        else{
+            if (appDelegate.loginUserInfo&&appDelegate.logined) {
+                [self reConnectTryThree];
+            }
+            
+        }
     }
 }
 @end
