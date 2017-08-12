@@ -24,16 +24,16 @@
     // Dispose of any resources that can be recreated.
 }
 
-// 支持设备自动旋转
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-
-// 支持竖屏显示
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
+//// 支持设备自动旋转
+//- (BOOL)shouldAutorotate
+//{
+//    return YES;
+//}
+//
+//// 支持竖屏显示
+//- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+//{
+//    return UIInterfaceOrientationMaskPortrait;
+//}
 
 @end

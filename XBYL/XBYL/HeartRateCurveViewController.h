@@ -16,7 +16,7 @@
 
 @end
 
-@interface HeartRateCurveViewController : BaseViewController
+@interface HeartRateCurveViewController : UIViewController
 
 @property(nonatomic,retain)PatientInfo *patientInfo;
 @property(nonatomic,assign)id<HeartRateCurveViewControllerDelegate>delegate;

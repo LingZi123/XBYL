@@ -72,6 +72,7 @@ static const NSInteger smallMultiple=512;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.view setTransform:CGAffineTransformMakeRotation(M_PI_2)];
     isActive=YES;
     viewWidth=CGRectGetHeight([UIScreen mainScreen ].bounds);
     viewHeight=CGRectGetWidth([UIScreen mainScreen ].bounds)-20;
@@ -125,6 +126,7 @@ static const NSInteger smallMultiple=512;
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [UIApplication sharedApplication].statusBarHidden = YES;
     isActive=YES;
     [self displayData];
     
@@ -324,23 +326,23 @@ static const NSInteger smallMultiple=512;
 // 如果需要横屏的时候，一定要重写这个方法并返回NO
 - (BOOL)prefersStatusBarHidden
 {
-    return NO;
-}
-
-// 支持设备自动旋转
-- (BOOL)shouldAutorotate
-{
     return YES;
 }
-
-// 支持横屏显示
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-{
-    // 如果该界面需要支持横竖屏切换
-//    return UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait;
-    // 如果该界面仅支持横屏
-    return UIInterfaceOrientationMaskLandscapeRight;
-}
+//
+//// 支持设备自动旋转
+//- (BOOL)shouldAutorotate
+//{
+//    return YES;
+//}
+//
+//// 支持横屏显示
+//- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+//{
+//    // 如果该界面需要支持横竖屏切换
+////    return UIInterfaceOrientationMaskLandscapeRight | UIInterfaceOrientationMaskPortrait;
+//    // 如果该界面仅支持横屏
+//    return UIInterfaceOrientationMaskLandscapeRight;
+//}
 
 
 -(void)drawHeartView:(NSData *)data{

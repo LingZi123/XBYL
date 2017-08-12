@@ -74,6 +74,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [UIApplication sharedApplication].statusBarHidden = NO;
     appDelegate.appMessageDelegate=self;
     if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
         self.navigationItem.leftBarButtonItem=nil;
