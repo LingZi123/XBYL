@@ -19,6 +19,7 @@
             model.xueyang=arr[1];
             model.xinlv=arr[2];
             model.mailv=arr[3];
+            model.resp=arr[4];
         }
         
         return model;

@@ -370,12 +370,17 @@
         cell.xueyangLabel.text=info.mulData.xueyang;
         cell.xinlvLabel.textColor=[UIColor blackColor];
         cell.xueyangLabel.textColor=[UIColor blackColor];
+        cell.huxiLabel.text=info.mulData.resp;
+        cell.huxiLabel.textColor=[UIColor blackColor];
         if (info.personSetting) {
             if ([info.personSetting.xinlvdownvalue integerValue]>[info.mulData.xinlv integerValue]||[info.mulData.xinlv integerValue]>[info.personSetting.xinlvupvalue integerValue]) {
                 cell.xinlvLabel.textColor=[UIColor redColor];
             }
             if ([info.personSetting.xueyangdownvalue integerValue]>[info.mulData.xueyang integerValue]||[info.mulData.xueyang integerValue]>[info.personSetting.xueyangupvalue integerValue]) {
                 cell.xueyangLabel.textColor=[UIColor redColor];
+            }
+            if ([info.personSetting.huxidownvalue integerValue]>[info.mulData.resp integerValue]||[info.mulData.resp integerValue]>[info.personSetting.huxiupvalue integerValue]) {
+                cell.huxiLabel.textColor=[UIColor redColor];
             }
         }
         else if (appDelegate.defaultAlarmSetting){
@@ -385,6 +390,9 @@
             if ([appDelegate.defaultAlarmSetting.xueyangdownvalue integerValue]>[info.mulData.xueyang integerValue]||[info.mulData.xueyang integerValue]>[appDelegate.defaultAlarmSetting.xueyangupvalue integerValue]) {
                 cell.xueyangLabel.textColor=[UIColor redColor];
             }
+            if ([appDelegate.defaultAlarmSetting.huxidownvalue integerValue]>[info.mulData.resp integerValue]||[info.mulData.resp integerValue]>[appDelegate.defaultAlarmSetting.huxiupvalue integerValue]) {
+                cell.huxiLabel.textColor=[UIColor redColor];
+            }
         }
         else{
             if (Default_Xinlv_Down>[info.mulData.xinlv integerValue]||[info.mulData.xinlv integerValue]>Default_Xinlv_Up) {
@@ -392,6 +400,9 @@
             }
             if (Default_Xueyang_Down>[info.mulData.xueyang integerValue]||[info.mulData.xueyang integerValue]>Default_Xueyang_Up) {
                 cell.xueyangLabel.textColor=[UIColor redColor];
+            }
+            if (Default_Huxi_Down>[info.mulData.resp integerValue]||[info.mulData.resp integerValue]>Default_Huxi_Up) {
+                cell.huxiLabel.textColor=[UIColor redColor];
             }
         }
     }

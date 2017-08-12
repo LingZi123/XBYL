@@ -14,6 +14,7 @@
 @property(nonatomic,copy)NSString *mailv;//脉率
 @property(nonatomic,copy)NSString *xinlv;//心率
 @property(nonatomic,copy)NSString *xueyang;//血氧饱和度
+@property(nonatomic,copy)NSString *resp;//呼吸
 +(MulDataModel *)getModelWithString:(NSString *)str;
 
 @end
