@@ -136,7 +136,9 @@
                 if (temparray) {
                     for (int i=0; i<temparray.count; i++) {
                         if (_loginUserInfo.isLoginOut||!_connected||!_logined) {
-                           [listArray removeAllObjects];
+                            @synchronized (listArray) {
+                                [listArray removeAllObjects];
+                            }
                             break;
                         }
                         NSDictionary *dic=[temparray objectAtIndex:i];
@@ -168,7 +170,9 @@
                             
                             //                        NSLog(@"cmd=====%@",cmd);
                         }
-                        [listArray removeObject:dic];
+                        @synchronized (listArray) {
+                            [listArray removeObject:dic];
+                        }
                     }
                 }
                 [NSThread sleepForTimeInterval:0.05];
@@ -324,8 +328,9 @@
     else{
         
         NSDictionary *dic=[[NSDictionary alloc]initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",listArray.count],@"index",cmd,@"cmd",msg,@"msg", nil];
-        [listArray addObject:dic];
-        
+        @synchronized (listArray) {
+            [listArray addObject:dic];
+        }
     }
 }
 

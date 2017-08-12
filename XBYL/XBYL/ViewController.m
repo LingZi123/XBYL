@@ -129,9 +129,9 @@
     if (appDelegate.loginUserInfo==nil||appDelegate.loginUserInfo.isLoginOut||appDelegate.systemSetting==nil) {
         return;
     }
-    if (!appDelegate.loginUserInfo.isLoginOut) {
-         [self reConnectTryThree];
-    }
+//    if (!appDelegate.loginUserInfo.isLoginOut) {
+//         [self reConnectTryThree];
+//    }
     //开启刷新时间
     if (refashTimer==nil) {
         refashTimer=[NSTimer scheduledTimerWithTimeInterval:refashValue target:self selector:@selector(refashTimerClick:) userInfo:nil repeats:YES];
@@ -701,7 +701,7 @@
             if (appDelegate.loginUserInfo&&!appDelegate.logined) {
                 NSLog(@"登录");
                 int loginResult=  [nstdcomm stdcommLogin:appDelegate.loginUserInfo.userName andPwd:appDelegate.loginUserInfo.pwd];
-                appDelegate.logined=loginResult==1;
+//                appDelegate.logined=loginResult==1;
                 if (appDelegate.logined) {
                     self.navigationItem.title=[NSString stringWithFormat:@"%@  在线",appDelegate.loginUserInfo.userName];
                     break;
@@ -869,8 +869,11 @@
             [self reConnectTryThree];
         }
         else{
-            if (appDelegate.loginUserInfo&&appDelegate.logined) {
+            if (appDelegate.loginUserInfo&&!appDelegate.loginUserInfo.isLoginOut) {
                 [self reConnectTryThree];
+            }
+            else{
+                
             }
             
         }
