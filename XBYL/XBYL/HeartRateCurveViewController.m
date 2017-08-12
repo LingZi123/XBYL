@@ -47,6 +47,9 @@ static const NSInteger smallMultiple=512;
 @property (weak, nonatomic) IBOutlet UILabel *pbmStatusLabel;
 @property(nonatomic,retain)PointContainer *pointContainer;
 
+@property (weak, nonatomic) IBOutlet UILabel *jeadsTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *figerTextLabel;
+
 @end
 
 @implementation HeartRateCurveViewController{
@@ -106,6 +109,9 @@ static const NSInteger smallMultiple=512;
     }
     else{
         self.statusLabel.text=@"离线";
+    }
+    if (self.patientInfo.xueya) {
+        self.bloodPressureLabel.text=[NSString stringWithFormat:@"%@/%@",self.patientInfo.xueya.DBP,self.patientInfo.xueya.shousuoya];
     }
     isHrFirst=isRespFirst=isSpoFirst=YES;
 }
@@ -340,7 +346,10 @@ static const NSInteger smallMultiple=512;
 -(void)drawHeartView:(NSData *)data{
     BODataModel *model=[BODataModel getModelWithData:data];
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.bodyTemperatureLabel.text=[NSString stringWithFormat:@"%d",model.tp];
+        
+        //温值需除以10后保留一位小数显示
+        
+        self.bodyTemperatureLabel.text=[NSString stringWithFormat:@"%.1f",model.tp/10.f];
         self.pulseFrequencyLabel.text=[NSString stringWithFormat:@"%d",model.pluse];
         self.noLabel.text=[NSString stringWithFormat:@"%d",model.mask];
         self.spoView.titileLabel.text=[NSString stringWithFormat:@"SPO2:%d",model.spo2];
@@ -352,6 +361,12 @@ static const NSInteger smallMultiple=512;
         }
         else{
             self.fingerLabel.backgroundColor=[UIColor redColor];
+            if (model.fingerflag==1) {
+                self.figerTextLabel.text=@"血氧夹子脱落";
+            }
+            else{
+                self.figerTextLabel.text=@"导联线故障";
+            }
         }
         
         if (model.jeadsflag==0) {
@@ -359,6 +374,7 @@ static const NSInteger smallMultiple=512;
         }
         else{
             self.jeadsLabel.backgroundColor=[UIColor redColor];
+            self.jeadsTextLabel.text=@"心电电极脱落";
         }
     });
     
@@ -405,7 +421,7 @@ static const NSInteger smallMultiple=512;
             if ([model.resultStr isEqualToString:@"0"]) {
                 //测量成功
                 resultstr=@"测量成功";
-                bloodPressure=[NSString stringWithFormat:@"%@/%@",model.shousuoya,model.DBP];
+                bloodPressure=[NSString stringWithFormat:@"%@/%@",model.DBP,model.shousuoya];
                 self.patientInfo.xueya.shousuoya=model.shousuoya;
                 self.patientInfo.xueya.DBP=model.DBP;
             }

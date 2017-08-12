@@ -19,8 +19,8 @@
 @property(nonatomic,assign)ushort pluse;//脉率
 @property(nonatomic,assign)ushort resp;//呼吸
 @property(nonatomic,assign)ushort tp;//体温
-@property(nonatomic,assign)ushort fingerflag;//手指探测状态
-@property(nonatomic,assign)ushort jeadsflag;//电击探测1电击脱落，0未脱落
+@property(nonatomic,assign)ushort fingerflag;//手指探测状态0-正常,1-脱落,2-导联线故障
+@property(nonatomic,assign)ushort jeadsflag;//电击探测0-正常,1-脱落
 @property(nonatomic,assign)ushort mask;//通道掩码
 
 @property(nonatomic,retain)NSMutableArray *ecgArray; //125  a[3][125]

@@ -613,7 +613,7 @@
     }
     selectedModel=info;
     //弹出框
-    UIAlertView *armShow=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否远程测试血压 注（未配带远程血压终端测试无效）" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    UIAlertView *armShow=[[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"是否要远程测量血压?(血压计未正常连接时无法回应)" delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
     armShow.tag=102;
     [armShow show];
 }
