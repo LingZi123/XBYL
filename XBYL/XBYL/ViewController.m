@@ -99,6 +99,9 @@
         if (tempArray.count<=0) {
             [infoArray removeAllObjects];
         }
+        if (infoArray) {
+            [infoArray removeAllObjects];
+        }
         for (PatientInfo *tempinfo in tempArray) {
             BOOL isexist=NO;
             for (PatientInfo *sourceInfo in infoArray) {
@@ -313,17 +316,31 @@
         }
     }
     else{
-         cell.onlineLabel.text=@"离线";
+        cell.onlineLabel.text=@"离线";
         cell.onlineImageView.backgroundColor=[UIColor grayColor];
     }
     
-    
     cell.typeLabel.text=@"手动测量血压";
     if (info.xueya) {
-        cell.xueyaLabel1.text=info.xueya.DBP;
-        cell.xueyaLabel2.text=info.xueya.shousuoya;
-        cell.mailvLabel.text=info.xueya.mailv;
+        if (!info.xueya.DBP||![info.xueya.DBP isEqual:[NSNull null]]) {
+            cell.xueyaLabel1.text=@"--";
+        }
+        else{
+            cell.xueyaLabel1.text=info.xueya.DBP;
+        }
+        if (!info.xueya.shousuoya||![info.xueya.shousuoya isEqual:[NSNull null]]) {
+            cell.xueyaLabel2.text=@"--";
+        }
+        else{
+            cell.xueyaLabel2.text=info.xueya.shousuoya;
+        }
         
+        if (info.xueya.mailv&&info.xueya.mailv>0) {
+             cell.mailvLabel.text=info.xueya.mailv;
+        }
+        else{
+            cell.mailvLabel.text=@"--";
+        }
         cell.xueyaLabel1.textColor=[UIColor blackColor];
         cell.xueyaLabel2.textColor=[UIColor blackColor];
         cell.mailvLabel.textColor=[UIColor blackColor];
@@ -366,16 +383,48 @@
 
         }
     }
+    else{
+        cell.xueyaLabel1.text=@"--";
+        cell.xueyaLabel2.text=@"--";
+        cell.mailvLabel.text=@"--";
+        cell.xueyaLabel1.textColor=[UIColor blackColor];
+        cell.xueyaLabel2.textColor=[UIColor blackColor];
+        cell.mailvLabel.textColor=[UIColor blackColor];
+
+    }
     if (info.mulData) {
-        cell.xinlvLabel.text=info.mulData.xinlv;
-        cell.xueyangLabel.text=info.mulData.xueyang;
+        if (!info.mulData.xinlv) {
+            cell.xinlvLabel.text=@"--";
+        }
+        else{
+            cell.xinlvLabel.text=info.mulData.xinlv;
+        }
+        if (!info.mulData.xueyang) {
+            cell.xueyangLabel.text=@"--";
+        }
+        else{
+            cell.xueyangLabel.text=info.mulData.xueyang;
+        }
+        
         cell.xinlvLabel.textColor=[UIColor blackColor];
         cell.xueyangLabel.textColor=[UIColor blackColor];
         
-        cell.huxiLabel.text=info.mulData.resp;
+        if (!info.mulData.resp) {
+            cell.huxiLabel.text=@"--";
+        }
+        else{
+            cell.huxiLabel.text=info.mulData.resp;
+        }
+       
         cell.huxiLabel.textColor=[UIColor blackColor];
         
-        cell.mailvLabel.text=info.mulData.mailv;
+        if (!info.mulData.mailv) {
+            cell.mailvLabel.text=@"--";
+        }
+        else{
+            cell.mailvLabel.text=info.mulData.mailv;
+        }
+        
         cell.mailvLabel.textColor=[UIColor blackColor];
         if (info.personSetting) {
             if ([info.personSetting.xinlvdownvalue integerValue]>[info.mulData.xinlv integerValue]||[info.mulData.xinlv integerValue]>[info.personSetting.xinlvupvalue integerValue]) {
@@ -419,6 +468,16 @@
                 cell.mailvLabel.textColor=[UIColor redColor];
             }
         }
+    }
+    else{
+        cell.xinlvLabel.text=@"--";
+        cell.xueyangLabel.text=@"--";
+        cell.xinlvLabel.textColor=[UIColor blackColor];
+        cell.xueyangLabel.textColor=[UIColor blackColor];
+        cell.huxiLabel.text=@"--";
+        cell.huxiLabel.textColor=[UIColor blackColor];
+        cell.mailvLabel.text=@"--";
+        cell.mailvLabel.textColor=[UIColor blackColor];
     }
 
     cell.accessoryType=UITableViewCellAccessoryDetailButton;
@@ -795,6 +854,12 @@
 
 -(void)reciveNotif:(NSNotification *)sender{
     if ([sender.name isEqualToString:NOTIF_loginClick]) {
+        BOOL isSameAccount=[sender.object boolValue];
+        if (!isSameAccount) {
+            if (infoArray) {
+                [infoArray removeAllObjects];
+            }
+        }
         //重新获取患者数据
         [self getPatientInfoList];
         if(self.navigationItem.rightBarButtonItems.count>1){
@@ -862,6 +927,7 @@
     else if ([sender.name isEqualToString:NOTIF_getbpmACK]){
 
         NSString *msg=sender.object;
+        NSLog(@"XueyaModel=%@",msg);
         XueyaModel *model=[XueyaModel getModelWithStringByTest:msg];
         [self updateXueya:model];
     }

@@ -142,12 +142,13 @@
 -(void)logingMessage:(NSString *)mes{
     
     if ([mes isEqualToString:@"success"]) {
+        
         //写入本地
         NSUserDefaults *defaults=[NSUserDefaults standardUserDefaults];
         if ([self appDelegate].loginUserInfo==nil) {
             [self appDelegate].loginUserInfo=[[LoginUserInfo alloc]init];
         }
-        
+        BOOL isSameAccount=YES;
     
         [self appDelegate].loginUserInfo.userName=userNameTextField.text;
         [self appDelegate].loginUserInfo.pwd=pwdTextField.text;
@@ -159,6 +160,7 @@
         if (olddata) {
             LoginUserInfo *olduser=[NSKeyedUnarchiver unarchiveObjectWithData:olddata];
             if (![olduser.userName isEqual:[self appDelegate].loginUserInfo.userName]) {
+                isSameAccount=NO;
                 //清空所有数据库
                 [HospitalInfo clearModels];
                 [PersonSettingInfo clearModels];
@@ -186,7 +188,7 @@
         [self dismissViewControllerAnimated:YES completion:^{
 //            [nstdcomm stdcommRefreshHosList];
 //            [nstdcomm stdcommRefreshPatList];
-            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_loginClick object:nil];
+            [[NSNotificationCenter defaultCenter]postNotificationName:NOTIF_loginClick object:[NSNumber numberWithBool:isSameAccount]];
             [SVProgressHUD dismiss];
         }];
         });
