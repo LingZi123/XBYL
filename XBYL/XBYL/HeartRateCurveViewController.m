@@ -358,12 +358,12 @@ static const NSInteger smallMultiple=512;
         self.respView.titileLabel.text=[NSString stringWithFormat:@"RESP:%d",model.resp];
         self.hrView.titileLabel.text=[NSString stringWithFormat:@"HR:%d",model.hr];
         
-        if (model.fingerflag==0) {
+        if (model.fingerflag==1) {
             self.fingerLabel.backgroundColor=[UIColor greenColor];
         }
         else{
             self.fingerLabel.backgroundColor=[UIColor redColor];
-            if (model.fingerflag==1) {
+            if (model.fingerflag==0) {
                 self.figerTextLabel.text=@"血氧夹子脱落";
             }
             else{
