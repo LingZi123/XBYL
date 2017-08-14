@@ -371,8 +371,12 @@
         cell.xueyangLabel.text=info.mulData.xueyang;
         cell.xinlvLabel.textColor=[UIColor blackColor];
         cell.xueyangLabel.textColor=[UIColor blackColor];
+        
         cell.huxiLabel.text=info.mulData.resp;
         cell.huxiLabel.textColor=[UIColor blackColor];
+        
+        cell.mailvLabel.text=info.mulData.mailv;
+        cell.mailvLabel.textColor=[UIColor blackColor];
         if (info.personSetting) {
             if ([info.personSetting.xinlvdownvalue integerValue]>[info.mulData.xinlv integerValue]||[info.mulData.xinlv integerValue]>[info.personSetting.xinlvupvalue integerValue]) {
                 cell.xinlvLabel.textColor=[UIColor redColor];
@@ -382,6 +386,9 @@
             }
             if ([info.personSetting.huxidownvalue integerValue]>[info.mulData.resp integerValue]||[info.mulData.resp integerValue]>[info.personSetting.huxiupvalue integerValue]) {
                 cell.huxiLabel.textColor=[UIColor redColor];
+            }
+            if ([info.personSetting.mailvdownvalue integerValue]>[info.mulData.mailv integerValue]||[info.mulData.mailv integerValue]>[info.personSetting.mailvupvalue integerValue]) {
+                cell.mailvLabel.textColor=[UIColor redColor];
             }
         }
         else if (appDelegate.defaultAlarmSetting){
@@ -394,6 +401,9 @@
             if ([appDelegate.defaultAlarmSetting.huxidownvalue integerValue]>[info.mulData.resp integerValue]||[info.mulData.resp integerValue]>[appDelegate.defaultAlarmSetting.huxiupvalue integerValue]) {
                 cell.huxiLabel.textColor=[UIColor redColor];
             }
+            if ([appDelegate.defaultAlarmSetting.mailvdownvalue integerValue]>[info.mulData.mailv integerValue]||[info.mulData.mailv integerValue]>[appDelegate.defaultAlarmSetting.mailvupvalue integerValue]) {
+                cell.mailvLabel.textColor=[UIColor redColor];
+            }
         }
         else{
             if (Default_Xinlv_Down>[info.mulData.xinlv integerValue]||[info.mulData.xinlv integerValue]>Default_Xinlv_Up) {
@@ -404,6 +414,9 @@
             }
             if (Default_Huxi_Down>[info.mulData.resp integerValue]||[info.mulData.resp integerValue]>Default_Huxi_Up) {
                 cell.huxiLabel.textColor=[UIColor redColor];
+            }
+            if (Default_Mailv_Down>[info.mulData.mailv integerValue]||[info.mulData.mailv integerValue]>Default_Mailv_Up) {
+                cell.mailvLabel.textColor=[UIColor redColor];
             }
         }
     }
