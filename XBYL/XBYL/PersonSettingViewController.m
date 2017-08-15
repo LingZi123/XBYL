@@ -17,7 +17,9 @@
 
 @end
 
-@implementation PersonSettingViewController
+@implementation PersonSettingViewController{
+    personAlarmSetComplate myblock;
+}
 
 -(instancetype)initWithTitle:(NSString *)title_ info:(PersonSettingInfo *)info{
     self=[super init];
@@ -136,6 +138,7 @@
     }
     if (result) {
         [SVProgressHUD showErrorWithStatus:@"保存成功"];
+        myblock(info);
     }
     else{
         [SVProgressHUD showErrorWithStatus:@"保存失败"];
@@ -146,4 +149,9 @@
 -(AppDelegate *)appdelegate{
     return (AppDelegate *)[[UIApplication sharedApplication]delegate];
 }
+
+-(void)personAlarmSetComplateBlock:(personAlarmSetComplate)block{
+    myblock=block;
+}
+
 @end

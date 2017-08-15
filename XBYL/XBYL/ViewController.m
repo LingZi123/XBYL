@@ -99,9 +99,9 @@
         if (tempArray.count<=0) {
             [infoArray removeAllObjects];
         }
-        if (infoArray) {
-            [infoArray removeAllObjects];
-        }
+//        if (infoArray) {
+//            [infoArray removeAllObjects];
+//        }
         for (PatientInfo *tempinfo in tempArray) {
             BOOL isexist=NO;
             for (PatientInfo *sourceInfo in infoArray) {
@@ -322,13 +322,13 @@
     
     cell.typeLabel.text=@"手动测量血压";
     if (info.xueya) {
-        if (!info.xueya.DBP||![info.xueya.DBP isEqual:[NSNull null]]) {
+        if (!info.xueya.DBP||[info.xueya.DBP isEqual:[NSNull null]]||[info.xueya.DBP isEqualToString:@"null"]) {
             cell.xueyaLabel1.text=@"--";
         }
         else{
             cell.xueyaLabel1.text=info.xueya.DBP;
         }
-        if (!info.xueya.shousuoya||![info.xueya.shousuoya isEqual:[NSNull null]]) {
+        if (!info.xueya.shousuoya||[info.xueya.shousuoya isEqual:[NSNull null]]||[info.xueya.shousuoya isEqualToString:@"null"]) {
             cell.xueyaLabel2.text=@"--";
         }
         else{
@@ -377,7 +377,7 @@
                 cell.xueyaLabel2.textColor=[UIColor redColor];
             }
 
-            if (Default_Xinlv_Down>[info.xueya.mailv integerValue]||[info.xueya.mailv integerValue]>Default_Xinlv_Up) {
+            if (Default_Mailv_Down>[info.xueya.mailv integerValue]||[info.xueya.mailv integerValue]>Default_Mailv_Up) {
                 cell.mailvLabel.textColor=[UIColor redColor];
             }
 
@@ -530,6 +530,11 @@
     PatientInfo *patient=[infoArray objectAtIndex:indexPath.row];
     PersonSettingViewController *p=[[PersonSettingViewController alloc]init];
     p.patient=patient;
+    [p personAlarmSetComplateBlock:^(PersonSettingInfo *result) {
+        p.patient.personSetting=result;
+        //刷新cell
+        [self refashTableViewCell:indexPath.row];
+    }];
     [self.navigationController pushViewController:p animated:YES];
 }
 - (void)reConnect:(id)sender {
@@ -741,6 +746,9 @@
     [SVProgressHUD dismiss];
     if ([mes isEqualToString:@"success"]) {
         //重新获取患者数据
+        if (infoArray) {
+            [infoArray removeAllObjects];
+        }
         [self getPatientInfoList];
         if(self.navigationItem.rightBarButtonItems.count>1){
             self.navigationItem.rightBarButtonItems=@[rigthBar];//连接成功后要消失

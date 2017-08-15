@@ -57,9 +57,9 @@
             model.patientWeight=arr[22];
             if (model.xueya==nil) {
                 model.xueya=[[XueyaModel alloc]init];
-                model.xueya.shousuoya=arr[23];
-                model.xueya.DBP=arr[24];
             }
+            model.xueya.shousuoya=arr[23];
+            model.xueya.DBP=arr[24];
             model.menzhenNo=arr[25];
             model.subTermType=arr[26];
             model.baseXueyaCheckDate=arr[27];

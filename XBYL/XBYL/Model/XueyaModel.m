@@ -12,6 +12,7 @@
 
 +(XueyaModel *)getModelWithString:(NSString *)str{
     if (str) {
+        NSLog(@"XueyaModel=%@",str);
         XueyaModel *model=[[XueyaModel alloc]init];
         NSArray *arr = [str componentsSeparatedByString:NSLocalizedString(@"|", nil)];
         if (arr) {

@@ -13,6 +13,9 @@
 #import "AlarmSettingView.h"
 #import "BaseViewController.h"
 
+
+typedef void(^personAlarmSetComplate)(PersonSettingInfo *result);
+
 @interface PersonSettingViewController : BaseViewController<UITableViewDataSource,UITableViewDelegate,AlarmPickViewDelegate,AlarmSettingViewDelegate>
 {
     NSString *titleName;
@@ -27,5 +30,7 @@
 
 -(instancetype)initWithTitle:(NSString *)title_;
 @property(nonatomic,retain)PatientInfo *patient;//病人信息
+-(void)personAlarmSetComplateBlock:(personAlarmSetComplate)block;
+
 
 @end
